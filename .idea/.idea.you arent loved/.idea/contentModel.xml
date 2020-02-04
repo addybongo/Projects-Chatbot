@@ -1,0 +1,49 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project version="4">
+  <component name="ContentModelStore">
+    <e p="C:\Users\adnan\.Rider2019.3\system\extResources" t="IncludeRecursive" />
+    <e p="C:\Users\adnan\.Rider2019.3\system\resharper-host\local\Transient\ReSharperHost\v193\SolutionCaches\_you arent loved.1828520989.00" t="ExcludeRecursive" />
+    <e p="C:\Users\adnan\OneDrive\Documents\Uni\Second Year\Systems Engineering\chatbot graveyard\you arent loved" t="IncludeFlat">
+      <e p="packages" t="ExcludeRecursive" />
+      <e p="you arent loved" t="IncludeRecursive">
+        <e p="AdapterWithErrorHandler.cs" t="Include" />
+        <e p="appsettings.Development.json" t="Include" />
+        <e p="appsettings.json" t="Include" />
+        <e p="bin" t="ExcludeRecursive" />
+        <e p="Controllers" t="Include">
+          <e p="BotController.cs" t="Include" />
+        </e>
+        <e p="DeploymentTemplates" t="Include">
+          <e p="new-rg-parameters.json" t="Include" />
+          <e p="preexisting-rg-parameters.json" t="Include" />
+          <e p="template-with-new-rg.json" t="Include" />
+          <e p="template-with-preexisting-rg.json" t="Include" />
+        </e>
+        <e p="Dialogs" t="Include">
+          <e p="MainDialog.cs" t="Include" />
+        </e>
+        <e p="obj" t="ExcludeRecursive">
+          <e p="Debug" t="Include">
+            <e p="netcoreapp2.1" t="Include">
+              <e p="you arent loved.AssemblyInfo.cs" t="Include" />
+              <e p="you arent loved.RazorAssemblyInfo.cs" t="Include" />
+            </e>
+          </e>
+        </e>
+        <e p="Program.cs" t="Include" />
+        <e p="Properties" t="Include">
+          <e p="launchSettings.json" t="Include" />
+        </e>
+        <e p="README.md" t="Include" />
+        <e p="sqlConnector.cs" t="Include" />
+        <e p="Startup.cs" t="Include" />
+        <e p="wwwroot" t="Include">
+          <e p="default.htm" t="Include" />
+        </e>
+        <e p="you arent loved.csproj" t="IncludeRecursive" />
+        <e p="you_arent_loved.cs" t="Include" />
+      </e>
+      <e p="you arent loved.sln" t="IncludeFlat" />
+    </e>
+  </component>
+</project>

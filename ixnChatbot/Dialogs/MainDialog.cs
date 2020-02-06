@@ -6,7 +6,7 @@ using Microsoft.Bot.Builder;
 using Microsoft.Bot.Builder.Dialogs;
 using MySql.Data.MySqlClient;
 
-namespace prototypeVer1.Dialogs
+namespace ixnChatbot.Dialogs
 {
     public class MainDialog : ComponentDialog
     {

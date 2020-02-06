@@ -8,7 +8,7 @@ using Microsoft.Bot.Builder.TraceExtensions;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.Logging;
 
-namespace you_arent_loved
+namespace ixnChatbot
 {
     public class AdapterWithErrorHandler : BotFrameworkHttpAdapter
     {

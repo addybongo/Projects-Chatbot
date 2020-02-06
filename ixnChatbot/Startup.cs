@@ -10,9 +10,9 @@ using Microsoft.Bot.Builder;
 using Microsoft.Bot.Builder.Integration.AspNet.Core;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
-using prototypeVer1.Dialogs;
+using ixnChatbot.Dialogs;
 
-namespace you_arent_loved
+namespace ixnChatbot
 {
     public class Startup
     {

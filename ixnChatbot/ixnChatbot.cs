@@ -10,9 +10,9 @@ using Microsoft.Bot.Builder.Dialogs;
 using Microsoft.Bot.Schema;
 using Microsoft.Extensions.Logging;
 using Newtonsoft.Json;
-using prototypeVer1.Dialogs;
+using ixnChatbot.Dialogs;
 
-namespace you_arent_loved
+namespace ixnChatbot
 {
     public class EmptyBot : ActivityHandler
     {

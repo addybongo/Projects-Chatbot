@@ -6,7 +6,7 @@
 using Microsoft.AspNetCore;
 using Microsoft.AspNetCore.Hosting;
 
-namespace you_arent_loved
+namespace ixnChatbot
 {
     public class Program
     {

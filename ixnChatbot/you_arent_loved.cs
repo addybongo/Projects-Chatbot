@@ -2,12 +2,14 @@
 // Licensed under the MIT License.
 
 using System.Collections.Generic;
+using System.IO;
 using System.Threading;
 using System.Threading.Tasks;
 using Microsoft.Bot.Builder;
 using Microsoft.Bot.Builder.Dialogs;
 using Microsoft.Bot.Schema;
 using Microsoft.Extensions.Logging;
+using Newtonsoft.Json;
 using prototypeVer1.Dialogs;
 
 namespace you_arent_loved
@@ -31,7 +33,10 @@ namespace you_arent_loved
             {
                 if (member.Id != turnContext.Activity.Recipient.Id)
                 {
-                    await turnContext.SendActivityAsync(MessageFactory.Text($"Hello world!"), cancellationToken);
+                    var welcomeCard = CreateAdaptiveCardAttachment();
+                    var response = MessageFactory.Attachment(welcomeCard);
+                    await turnContext.SendActivityAsync(response, cancellationToken);
+                    await _dialog.RunAsync(turnContext, _conversationState.CreateProperty<DialogState>(nameof(DialogState)), cancellationToken);
                 }
             }
         }
@@ -50,12 +55,24 @@ namespace you_arent_loved
             // Run the Dialog with the new message Activity.
             await _dialog.RunAsync(turnContext, _conversationState.CreateProperty<DialogState>(nameof(DialogState)), cancellationToken);
         }
- 
         
-        /*protected override async Task OnMessageActivityAsync(ITurnContext<IMessageActivity> turnContext, CancellationToken cancellationToken)
+        //Constructs a chatbot card from a JSON file (see Cards Folder)
+        private Attachment CreateAdaptiveCardAttachment()
         {
-            var replyText = $"Echo: {turnContext.Activity.Text}";
-            await turnContext.SendActivityAsync(MessageFactory.Text(replyText, replyText), cancellationToken);
-        }*/
+            var cardResourcePath = "ixnChatbot.Cards.welcomeCard.json";
+
+            using (var stream = GetType().Assembly.GetManifestResourceStream(cardResourcePath))
+            {
+                using (var reader = new StreamReader(stream))
+                {
+                    var adaptiveCard = reader.ReadToEnd();
+                    return new Attachment()
+                    {
+                        ContentType = "application/vnd.microsoft.card.adaptive",
+                        Content = JsonConvert.DeserializeObject(adaptiveCard),
+                    };
+                }
+            }
+        }
     }
 }

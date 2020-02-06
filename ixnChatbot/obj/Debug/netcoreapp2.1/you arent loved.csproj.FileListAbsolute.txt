@@ -18,3 +18,4 @@ C:\Users\adnan\OneDrive\Documents\Uni\Second Year\Systems Engineering\chatbot gr
 C:\Users\adnan\OneDrive\Documents\Uni\Second Year\Systems Engineering\chatbot graveyard\you arent loved\you arent loved\obj\Debug\netcoreapp2.1\you arent loved.RazorTargetAssemblyInfo.cache
 C:\Users\adnan\OneDrive\Documents\Uni\Second Year\Systems Engineering\chatbot graveyard\you arent loved\you arent loved\obj\Debug\netcoreapp2.1\you arent loved.dll
 C:\Users\adnan\OneDrive\Documents\Uni\Second Year\Systems Engineering\chatbot graveyard\you arent loved\you arent loved\obj\Debug\netcoreapp2.1\you arent loved.pdb
+C:\Users\adnan\OneDrive\Documents\Uni\Second Year\Systems Engineering\chatbot graveyard\you arent loved\you arent loved\bin\Debug\netcoreapp2.1\Cards\welcomeCard.json

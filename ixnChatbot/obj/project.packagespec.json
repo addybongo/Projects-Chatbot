@@ -1,10 +1,10 @@
 ﻿{
   "version": "1.0.0",
   "restore": {
-    "projectUniqueName": "C:\\Users\\adnan\\OneDrive\\Documents\\Uni\\Second Year\\Systems Engineering\\chatbot graveyard\\you arent loved\\you arent loved\\you arent loved.csproj",
-    "projectName": "you arent loved",
-    "projectPath": "C:\\Users\\adnan\\OneDrive\\Documents\\Uni\\Second Year\\Systems Engineering\\chatbot graveyard\\you arent loved\\you arent loved\\you arent loved.csproj",
-    "outputPath": "C:\\Users\\adnan\\OneDrive\\Documents\\Uni\\Second Year\\Systems Engineering\\chatbot graveyard\\you arent loved\\you arent loved\\obj\\",
+    "projectUniqueName": "C:\\Users\\adnan\\OneDrive\\Documents\\Uni\\Second Year\\Systems Engineering\\chatbot graveyard\\you arent loved\\ixnChatbot\\ixnChatbot.csproj",
+    "projectName": "ixnChatbot",
+    "projectPath": "C:\\Users\\adnan\\OneDrive\\Documents\\Uni\\Second Year\\Systems Engineering\\chatbot graveyard\\you arent loved\\ixnChatbot\\ixnChatbot.csproj",
+    "outputPath": "C:\\Users\\adnan\\OneDrive\\Documents\\Uni\\Second Year\\Systems Engineering\\chatbot graveyard\\you arent loved\\ixnChatbot\\obj\\",
     "projectStyle": "PackageReference",
     "originalTargetFrameworks": [
       "netcoreapp2.1"

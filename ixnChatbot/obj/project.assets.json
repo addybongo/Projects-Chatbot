@@ -13190,11 +13190,11 @@
   "project": {
     "version": "1.0.0",
     "restore": {
-      "projectUniqueName": "C:\\Users\\adnan\\OneDrive\\Documents\\Uni\\Second Year\\Systems Engineering\\chatbot graveyard\\you arent loved\\you arent loved\\you arent loved.csproj",
-      "projectName": "you arent loved",
-      "projectPath": "C:\\Users\\adnan\\OneDrive\\Documents\\Uni\\Second Year\\Systems Engineering\\chatbot graveyard\\you arent loved\\you arent loved\\you arent loved.csproj",
+      "projectUniqueName": "C:\\Users\\adnan\\OneDrive\\Documents\\Uni\\Second Year\\Systems Engineering\\chatbot graveyard\\you arent loved\\ixnChatbot\\ixnChatbot.csproj",
+      "projectName": "ixnChatbot",
+      "projectPath": "C:\\Users\\adnan\\OneDrive\\Documents\\Uni\\Second Year\\Systems Engineering\\chatbot graveyard\\you arent loved\\ixnChatbot\\ixnChatbot.csproj",
       "packagesPath": "C:\\Users\\adnan\\.nuget\\packages\\",
-      "outputPath": "C:\\Users\\adnan\\OneDrive\\Documents\\Uni\\Second Year\\Systems Engineering\\chatbot graveyard\\you arent loved\\you arent loved\\obj\\",
+      "outputPath": "C:\\Users\\adnan\\OneDrive\\Documents\\Uni\\Second Year\\Systems Engineering\\chatbot graveyard\\you arent loved\\ixnChatbot\\obj\\",
       "projectStyle": "PackageReference",
       "configFilePaths": [
         "C:\\Users\\adnan\\AppData\\Roaming\\NuGet\\NuGet.Config",

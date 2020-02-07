@@ -1,16 +1,18 @@
 ﻿{
   "version": "1.0.0",
   "restore": {
-    "projectUniqueName": "C:\\Users\\adnan\\OneDrive\\Documents\\Uni\\Second Year\\Systems Engineering\\chatbot graveyard\\you arent loved\\ixnChatbot\\ixnChatbot.csproj",
+    "projectUniqueName": "/home/rajesh/Documents/Year_2/COMP0016/42_chatbot/Projects-Chatbot/ixnChatbot/ixnChatbot.csproj",
     "projectName": "ixnChatbot",
-    "projectPath": "C:\\Users\\adnan\\OneDrive\\Documents\\Uni\\Second Year\\Systems Engineering\\chatbot graveyard\\you arent loved\\ixnChatbot\\ixnChatbot.csproj",
-    "outputPath": "C:\\Users\\adnan\\OneDrive\\Documents\\Uni\\Second Year\\Systems Engineering\\chatbot graveyard\\you arent loved\\ixnChatbot\\obj\\",
+    "projectPath": "/home/rajesh/Documents/Year_2/COMP0016/42_chatbot/Projects-Chatbot/ixnChatbot/ixnChatbot.csproj",
+    "outputPath": "/home/rajesh/Documents/Year_2/COMP0016/42_chatbot/Projects-Chatbot/ixnChatbot/obj/",
     "projectStyle": "PackageReference",
+    "fallbackFolders": [
+      "/usr/share/dotnet/sdk/NuGetFallbackFolder"
+    ],
     "originalTargetFrameworks": [
       "netcoreapp2.1"
     ],
     "sources": {
-      "C:\\Program Files (x86)\\Microsoft SDKs\\NuGetPackages\\": {},
       "https://api.nuget.org/v3/index.json": {}
     },
     "frameworks": {
@@ -70,7 +72,7 @@
       ],
       "assetTargetFallback": true,
       "warn": true,
-      "runtimeIdentifierGraphPath": "C:\\Program Files\\dotnet\\sdk\\3.1.100\\RuntimeIdentifierGraph.json"
+      "runtimeIdentifierGraphPath": "/usr/share/dotnet/sdk/3.1.101/RuntimeIdentifierGraph.json"
     }
   }
 }

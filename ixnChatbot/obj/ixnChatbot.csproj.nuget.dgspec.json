@@ -1,27 +1,28 @@
 {
   "format": 1,
   "restore": {
-    "C:\\Users\\adnan\\OneDrive\\Documents\\Uni\\Second Year\\Systems Engineering\\chatbot graveyard\\you arent loved\\ixnChatbot\\ixnChatbot.csproj": {}
+    "/home/rajesh/Documents/Year_2/COMP0016/42_chatbot/Projects-Chatbot/ixnChatbot/ixnChatbot.csproj": {}
   },
   "projects": {
-    "C:\\Users\\adnan\\OneDrive\\Documents\\Uni\\Second Year\\Systems Engineering\\chatbot graveyard\\you arent loved\\ixnChatbot\\ixnChatbot.csproj": {
+    "/home/rajesh/Documents/Year_2/COMP0016/42_chatbot/Projects-Chatbot/ixnChatbot/ixnChatbot.csproj": {
       "version": "1.0.0",
       "restore": {
-        "projectUniqueName": "C:\\Users\\adnan\\OneDrive\\Documents\\Uni\\Second Year\\Systems Engineering\\chatbot graveyard\\you arent loved\\ixnChatbot\\ixnChatbot.csproj",
+        "projectUniqueName": "/home/rajesh/Documents/Year_2/COMP0016/42_chatbot/Projects-Chatbot/ixnChatbot/ixnChatbot.csproj",
         "projectName": "ixnChatbot",
-        "projectPath": "C:\\Users\\adnan\\OneDrive\\Documents\\Uni\\Second Year\\Systems Engineering\\chatbot graveyard\\you arent loved\\ixnChatbot\\ixnChatbot.csproj",
-        "packagesPath": "C:\\Users\\adnan\\.nuget\\packages\\",
-        "outputPath": "C:\\Users\\adnan\\OneDrive\\Documents\\Uni\\Second Year\\Systems Engineering\\chatbot graveyard\\you arent loved\\ixnChatbot\\obj\\",
+        "projectPath": "/home/rajesh/Documents/Year_2/COMP0016/42_chatbot/Projects-Chatbot/ixnChatbot/ixnChatbot.csproj",
+        "packagesPath": "/home/rajesh/.nuget/packages/",
+        "outputPath": "/home/rajesh/Documents/Year_2/COMP0016/42_chatbot/Projects-Chatbot/ixnChatbot/obj/",
         "projectStyle": "PackageReference",
+        "fallbackFolders": [
+          "/usr/share/dotnet/sdk/NuGetFallbackFolder"
+        ],
         "configFilePaths": [
-          "C:\\Users\\adnan\\AppData\\Roaming\\NuGet\\NuGet.Config",
-          "C:\\Program Files (x86)\\NuGet\\Config\\Microsoft.VisualStudio.Offline.config"
+          "/home/rajesh/.nuget/NuGet/NuGet.Config"
         ],
         "originalTargetFrameworks": [
           "netcoreapp2.1"
         ],
         "sources": {
-          "C:\\Program Files (x86)\\Microsoft SDKs\\NuGetPackages\\": {},
           "https://api.nuget.org/v3/index.json": {}
         },
         "frameworks": {
@@ -81,7 +82,7 @@
           ],
           "assetTargetFallback": true,
           "warn": true,
-          "runtimeIdentifierGraphPath": "C:\\Program Files\\dotnet\\sdk\\3.1.100\\RuntimeIdentifierGraph.json"
+          "runtimeIdentifierGraphPath": "/usr/share/dotnet/sdk/3.1.101/RuntimeIdentifierGraph.json"
         }
       }
     }

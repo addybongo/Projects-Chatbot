@@ -20,11 +20,11 @@ namespace ixnChatbot
         protected readonly BotState _conversationState;
         protected readonly Dialog _dialog;
 
-        public EmptyBot(ConversationState conversationState, UserState userState)
+        public EmptyBot(ConversationState conversationState, UserState userState, Dialog luisDialogTest)
         {
             _conversationState = conversationState;
             _userState = userState;
-            _dialog = new MainDialog();
+            _dialog = luisDialogTest;
         }
         
         protected override async Task OnMembersAddedAsync(IList<ChannelAccount> membersAdded, ITurnContext<IConversationUpdateActivity> turnContext, CancellationToken cancellationToken)

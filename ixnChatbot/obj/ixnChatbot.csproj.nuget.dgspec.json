@@ -48,6 +48,10 @@
               "target": "Package",
               "version": "[4.7.2, )"
             },
+            "Microsoft.Bot.Builder.AI.Luis": {
+              "target": "Package",
+              "version": "[4.7.2, )"
+            },
             "Microsoft.Bot.Builder.Dialogs": {
               "target": "Package",
               "version": "[4.7.2, )"

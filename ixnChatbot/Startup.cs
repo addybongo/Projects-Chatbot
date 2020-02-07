@@ -37,7 +37,9 @@ namespace ixnChatbot
 
             services.AddSingleton<UserState>();
 
-            services.AddSingleton<MainDialog>();
+            services.AddSingleton<luisRecogniser>();
+
+            services.AddSingleton<luisDialogTest>();
             
             // Create the bot as a transient. In this case the ASP Controller is expecting an IBot.
             services.AddTransient<IBot, EmptyBot>();

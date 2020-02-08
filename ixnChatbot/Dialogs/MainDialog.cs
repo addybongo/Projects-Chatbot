@@ -15,10 +15,10 @@ namespace ixnChatbot.Dialogs
         protected readonly BotState _UserState;
         static string name;
 
-        public MainDialog()
+        public MainDialog(luisRecogniser luisRecogniser)
             : base(nameof(MainDialog))
         {
-            _luisRecogniser = _luisRecogniser;
+            _luisRecogniser = luisRecogniser;
             // Logger = _UserState;
             var waterfallSteps = new WaterfallStep[]
             {
@@ -37,15 +37,17 @@ namespace ixnChatbot.Dialogs
 
         private static async Task<DialogTurnResult> commandAsync(WaterfallStepContext stepcontext, CancellationToken cancellationtoken)
         {
-            // if (!_luisRecogniser.IsConfigured)
-            // {
-            //     await stepcontext.Context.SendActivityAsync(
-            //         MessageFactory.Text("NOTE: LUIS is not configured. To enable all capabilities, add 'LuisAppId', " +
-            //                             "'LuisAPIKey' and 'LuisAPIHostName' to the appsettings.json file.", inputHint: InputHints.IgnoringInput), cancellationtoken);
-            //
-            //     return await stepcontext.NextAsync(null, cancellationtoken);
-            // }
-            
+            // works if this if statement is commented out 
+            if (_luisRecogniser.IsConfigured)
+            {
+                Console.WriteLine("test");
+                await stepcontext.Context.SendActivityAsync(
+                    MessageFactory.Text("NOTE: LUIS is not configured. To enable all capabilities, add 'LuisAppId', " +
+                                        "'LuisAPIKey' and 'LuisAPIHostName' to the appsettings.json file.", inputHint: InputHints.IgnoringInput), cancellationtoken);
+                
+                return await stepcontext.NextAsync(null, cancellationtoken);
+            }
+
             var promptOptions = new PromptOptions { Prompt = MessageFactory.Text("Hi there! Please type in the organization you wish to search for.") };
 
             return await stepcontext.PromptAsync(nameof(TextPrompt), promptOptions, cancellationtoken);

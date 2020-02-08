@@ -19,12 +19,13 @@ namespace ixnChatbot
         protected readonly BotState _userState;
         protected readonly BotState _conversationState;
         protected readonly Dialog _dialog;
+        private static luisRecogniser _luisRecogniser;
 
         public EmptyBot(ConversationState conversationState, UserState userState)
         {
             _conversationState = conversationState;
             _userState = userState;
-            _dialog = new MainDialog();
+            _dialog = new MainDialog(_luisRecogniser);
         }
         
         protected override async Task OnMembersAddedAsync(IList<ChannelAccount> membersAdded, ITurnContext<IConversationUpdateActivity> turnContext, CancellationToken cancellationToken)

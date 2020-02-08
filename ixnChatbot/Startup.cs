@@ -36,7 +36,7 @@ namespace ixnChatbot
             services.AddSingleton<ConversationState>();
 
             services.AddSingleton<UserState>();
-
+            services.AddSingleton<MainDialog>(); 
             services.AddSingleton<luisRecogniser>();
 
             services.AddSingleton<luisDialogTest>();

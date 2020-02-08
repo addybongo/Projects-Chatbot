@@ -62,7 +62,7 @@ namespace ixnChatbot.Dialogs
 
             for (int i = 0; i < results[0].Count; i++)
             {
-                var projectEntry = (i + 1) + ". Project Title: " + results[0][i] + " led by " + results[1][i];
+                var projectEntry = "#" + (i + 1) + ". Project Title: " + results[0][i] + " led by " + results[1][i];
                 var projectEntryMessage = MessageFactory.Text(projectEntry, projectEntry);
                 await stepcontext.Context.SendActivityAsync(projectEntryMessage, cancellationtoken);
             }

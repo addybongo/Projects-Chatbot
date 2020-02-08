@@ -14,6 +14,9 @@ namespace ixnChatbot
 
         public enum Intent
         {
+            getProjectByContact,
+            getProjectByDetails,
+            getProjectByOrganization,
             listProjects,
             None
         };
@@ -23,13 +26,21 @@ namespace ixnChatbot
         
         public class Entities
         {
-            public string contactJob;
+            public string contactEmail;
+            public string contactJobTitle;
             public string contactName;
+            public string contactNumber;
+            public string organizationAddress;
             public string organizationName;
-            public string projectDevice;
+            public string overviewOrganization;
+            public string projectDevices;
             public string projectLocation;
-            public string projectSkill;
+            public string projectSkills;
             public string projectTitle;
+            public string projectTechnicalChallenges;
+            public string projectDataSamples;
+            public string projectDescription;
+            public string projectRequirements;
         }
         
         public Entities entities;

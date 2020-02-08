@@ -1,9 +1,5 @@
 ﻿# ixnChatbot
 
-Bot Framework v4 empty bot sample.
-
-This bot has been created using [Bot Framework](https://dev.botframework.com), it shows the minimum code required to build a bot.
-
 ## Prerequisites
 
 - [.NET Core SDK](https://dotnet.microsoft.com/download) version 2.1
@@ -15,29 +11,19 @@ This bot has been created using [Bot Framework](https://dev.botframework.com), i
 
 ## To try this sample
 
-- In a terminal, navigate to `you_arent_loved`
+- In a terminal, navigate to `ixnChatbot`
 
     ```bash
     # change into project folder
-    cd you_arent_loved
+    cd ixnChatbot
     ```
 
-- Run the bot from a terminal or from Visual Studio, choose option A or B.
-
-  A) From a terminal
+- Run the bot from a terminal
 
   ```bash
   # run the bot
   dotnet run
   ```
-
-  B) Or from Visual Studio
-
-  - Launch Visual Studio
-  - File -> Open -> Project/Solution
-  - Navigate to `you_arent_loved` folder
-  - Select `you_arent_loved.csproj` file
-  - Press `F5` to run the project
 
 ## Testing the bot using Bot Framework Emulator
 

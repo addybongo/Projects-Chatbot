@@ -134,7 +134,7 @@ namespace ixnChatbot
             String[] projectDevice,
             String[] projectLocation, String[] projectSkill, String[] projectTitle)
         {
-            string query = "SELECT * FROM Projects WHERE ";
+            string query = "SELECT projectTitle, organizationName, contactName FROM Projects WHERE ";
 
             if(contactJob != null) query+= likeStatementBuilder("contactJob", contactJob) + " OR ";
             if(contactName != null) query+= likeStatementBuilder("contactName", contactName) + " OR ";

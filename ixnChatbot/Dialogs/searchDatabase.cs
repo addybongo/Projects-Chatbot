@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.Threading;
 using System.Threading.Tasks;
+using ixnChatbot.Cards;
 using Microsoft.Bot.Builder;
 using Microsoft.Bot.Builder.Dialogs;
 
@@ -38,7 +39,7 @@ namespace ixnChatbot.Dialogs
                 return await stepContext.NextAsync(null, cancellationToken);
             }
             
-            var messageText = stepContext.Options?.ToString() ?? "Hi! Type in a sentence for me to examine";
+            var messageText = stepContext.Options?.ToString() ?? "Hi! What are you looking for?";
 
             var promptOptions = new PromptOptions { Prompt = MessageFactory.Text(messageText) };
             return await stepContext.PromptAsync("intentPrompt", promptOptions, cancellationToken);
@@ -55,7 +56,7 @@ namespace ixnChatbot.Dialogs
                 
                 default:
                 case luisResultContainer.Intent.None:
-                    var promptMessage = "Sorry, I am having trouble understanding you. Please try again";
+                    var promptMessage = "I'm sorry, I am having trouble understanding you. What would you like me to do?";
                     return await stepContext.ReplaceDialogAsync(InitialDialogId, promptMessage, cancellationToken);
             }
         }
@@ -65,21 +66,34 @@ namespace ixnChatbot.Dialogs
         {
             luisResultContainer._Entities entities = (luisResultContainer._Entities) stepContext.Result;
             sqlConnector connector = new sqlConnector();
+            jsonManager jsonManager = new jsonManager();
 
             string query = connector.selectionQueryBuilder(entities.contactJob, entities.contactName, entities.organizationName,
                 entities.projectDevice, entities.projectLocation, entities.projectSkill, entities.projectTitle);
             
             List<List<String>> queryResult = connector.select(query);
 
+            if (queryResult.Count == 0)
+            {
+                string errorMessage = "I'm sorry, I couldn't find any projects matching your parameters. Please try again with different keywords.";
+                return await stepContext.ReplaceDialogAsync(InitialDialogId, errorMessage, cancellationToken);
+            }
+            
+            await stepContext.Context.SendActivityAsync(MessageFactory.Text("Here are the projects I found."), cancellationToken);
+            
             for (int i = 0; i < queryResult.Count; i++)
             {
                 List<String> record = queryResult[i];
-                string recordData = record[8] + " partnered with " + record[1] + " led by " + record[4];
-                await stepContext.Context.SendActivityAsync(MessageFactory.Text(recordData), cancellationToken);
+                //string recordData = record[8] + " partnered with " + record[1] + " led by " + record[4];
+                //await stepContext.Context.SendActivityAsync(MessageFactory.Text(recordData), cancellationToken);
+
+                var projectCard = jsonManager.projectJsonEditor(record[0], record[1], record[2]);
+                var response = MessageFactory.Attachment(projectCard);
+                await stepContext.Context.SendActivityAsync(response, cancellationToken);
             }
             
-            string message = "Please type in another sentence";
-            return await stepContext.ReplaceDialogAsync(InitialDialogId, message, cancellationToken);
+            string finishedMessage = "Anything else I can help you with?";
+            return await stepContext.ReplaceDialogAsync(InitialDialogId, finishedMessage, cancellationToken);
         }
     } 
 }

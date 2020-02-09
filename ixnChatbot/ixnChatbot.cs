@@ -5,11 +5,10 @@ using System.Collections.Generic;
 using System.IO;
 using System.Threading;
 using System.Threading.Tasks;
+using ixnChatbot.Cards;
 using Microsoft.Bot.Builder;
 using Microsoft.Bot.Builder.Dialogs;
 using Microsoft.Bot.Schema;
-using Microsoft.Extensions.Logging;
-using Newtonsoft.Json;
 using ixnChatbot.Dialogs;
 
 namespace ixnChatbot
@@ -33,7 +32,8 @@ namespace ixnChatbot
             {
                 if (member.Id != turnContext.Activity.Recipient.Id)
                 {
-                    var welcomeCard = CreateAdaptiveCardAttachment();
+                    jsonManager jsonManager = new jsonManager();
+                    var welcomeCard = jsonManager.CreateAdaptiveCardAttachment();
                     var response = MessageFactory.Attachment(welcomeCard);
                     await turnContext.SendActivityAsync(response, cancellationToken);
                     await _dialog.RunAsync(turnContext, _conversationState.CreateProperty<DialogState>(nameof(DialogState)), cancellationToken);
@@ -54,25 +54,6 @@ namespace ixnChatbot
         {
             // Run the Dialog with the new message Activity.
             await _dialog.RunAsync(turnContext, _conversationState.CreateProperty<DialogState>(nameof(DialogState)), cancellationToken);
-        }
-        
-        //Constructs a chatbot card from a JSON file (see Cards Folder)
-        private Attachment CreateAdaptiveCardAttachment()
-        {
-            var cardResourcePath = "ixnChatbot.Cards.welcomeCard.json";
-
-            using (var stream = GetType().Assembly.GetManifestResourceStream(cardResourcePath))
-            {
-                using (var reader = new StreamReader(stream))
-                {
-                    var adaptiveCard = reader.ReadToEnd();
-                    return new Attachment()
-                    {
-                        ContentType = "application/vnd.microsoft.card.adaptive",
-                        Content = JsonConvert.DeserializeObject(adaptiveCard),
-                    };
-                }
-            }
         }
     }
 }

@@ -1,0 +1,153 @@
+{
+  "luis_schema_version": "4.0.0",
+  "versionId": "0.1",
+  "name": "ixnDialogApp",
+  "desc": "",
+  "culture": "en-us",
+  "tokenizerVersion": "1.0.0",
+  "intents": [
+    {
+      "name": "listProjects"
+    },
+    {
+      "name": "None"
+    }
+  ],
+  "entities": [
+    {
+      "name": "contactJob",
+      "roles": []
+    },
+    {
+      "name": "contactName",
+      "roles": []
+    },
+    {
+      "name": "organizationName",
+      "roles": []
+    },
+    {
+      "name": "projectDevice",
+      "roles": []
+    },
+    {
+      "name": "projectLocation",
+      "roles": []
+    },
+    {
+      "name": "projectSkill",
+      "roles": []
+    },
+    {
+      "name": "projectTitle",
+      "roles": []
+    }
+  ],
+  "composites": [],
+  "closedLists": [],
+  "patternAnyEntities": [],
+  "regex_entities": [],
+  "prebuiltEntities": [],
+  "model_features": [],
+  "regex_features": [],
+  "patterns": [],
+  "utterances": [
+    {
+      "text": "boolio slicio",
+      "intent": "None",
+      "entities": []
+    },
+    {
+      "text": "find all fihr projects developed in partnership with the nhs",
+      "intent": "listProjects",
+      "entities": [
+        {
+          "entity": "projectDevice",
+          "startPos": 9,
+          "endPos": 12
+        },
+        {
+          "entity": "organizationName",
+          "startPos": 57,
+          "endPos": 59
+        }
+      ]
+    },
+    {
+      "text": "get me all medical projects by ibm led by joseph connor",
+      "intent": "listProjects",
+      "entities": [
+        {
+          "entity": "projectSkill",
+          "startPos": 11,
+          "endPos": 17
+        },
+        {
+          "entity": "organizationName",
+          "startPos": 31,
+          "endPos": 33
+        },
+        {
+          "entity": "contactName",
+          "startPos": 42,
+          "endPos": 54
+        }
+      ]
+    },
+    {
+      "text": "list all artificial intelligence projects by microsoft",
+      "intent": "listProjects",
+      "entities": [
+        {
+          "entity": "projectSkill",
+          "startPos": 9,
+          "endPos": 31
+        }
+      ]
+    },
+    {
+      "text": "list all projects by the rcgp",
+      "intent": "listProjects",
+      "entities": [
+        {
+          "entity": "organizationName",
+          "startPos": 25,
+          "endPos": 28
+        }
+      ]
+    },
+    {
+      "text": "maths is rubbish",
+      "intent": "None",
+      "entities": []
+    },
+    {
+      "text": "show me all projects by the rcgp",
+      "intent": "listProjects",
+      "entities": [
+        {
+          "entity": "organizationName",
+          "startPos": 28,
+          "endPos": 31
+        }
+      ]
+    },
+    {
+      "text": "tyler the creator is the greatest rapper of all time",
+      "intent": "None",
+      "entities": []
+    },
+    {
+      "text": "which projects are developed in swansea",
+      "intent": "listProjects",
+      "entities": [
+        {
+          "entity": "projectLocation",
+          "startPos": 32,
+          "endPos": 38
+        }
+      ]
+    }
+  ],
+  "settings": []
+}

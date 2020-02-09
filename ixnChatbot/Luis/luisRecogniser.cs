@@ -25,6 +25,8 @@ namespace ixnChatbot
                 _recogniser = new LuisRecognizer(luisApp);
             }
         }
+        
+        public virtual bool IsConfigured => _recogniser != null;
 
         public virtual async Task<RecognizerResult> RecognizeAsync(ITurnContext turnContext, CancellationToken cancellationToken)
             => await _recogniser.RecognizeAsync(turnContext, cancellationToken);

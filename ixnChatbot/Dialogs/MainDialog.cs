@@ -48,7 +48,7 @@ namespace ixnChatbot.Dialogs
             await stepcontext.Context.SendActivityAsync(searchingMessage, cancellationtoken);
 
             // List<String>[] results = connector.Select("SELECT * FROM Projects WHERE organizationName='" + response + "';");
-            List<String>[] results = connector.Select("SELECT * FROM Projects WHERE organizationName LIKE'%" + response + "%';");
+            List<String>[] results = connector.selectOld("SELECT * FROM Projects WHERE organizationName LIKE'%" + response + "%';");
 
             if(results[0].Count == 0)
             {

@@ -1,0 +1,48 @@
+﻿{
+  "$schema": "http://adaptivecards.io/schemas/adaptive-card.json",
+  "type": "AdaptiveCard",
+  "version": "1.0",
+  "body": [
+    {
+      "type": "TextBlock",
+      "text": "Chatbot for Medical Development",
+      "weight": "Bolder",
+      "size": "Medium"
+    },
+    {
+      "type": "ColumnSet",
+      "columns": [
+        {
+          "type": "Column",
+          "width": "auto",
+          "items": [
+            {
+              "type": "Image",
+              "url": "https://pbs.twimg.com/profile_images/1158774308086386690/EAQg-OKY_400x400.jpg",
+              "size": "Small"
+            }
+          ]
+        },
+        {
+          "type": "Column",
+          "width": "stretch",
+          "items": [
+            {
+              "type": "TextBlock",
+              "text": "Royal College of General Practitioners",
+              "weight": "Bolder",
+              "wrap": true
+            },
+            {
+              "type": "TextBlock",
+              "spacing": "None",
+              "text": "Led By Joseph Connor",
+              "isSubtle": true,
+              "wrap": true
+            }
+          ]
+        }
+      ]
+    }
+  ]
+}

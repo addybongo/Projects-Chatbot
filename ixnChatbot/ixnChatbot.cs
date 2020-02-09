@@ -20,7 +20,7 @@ namespace ixnChatbot
         protected readonly BotState _conversationState;
         protected readonly Dialog _dialog;
 
-        public EmptyBot(ConversationState conversationState, UserState userState, luisDialogTest dialog)
+        public EmptyBot(ConversationState conversationState, UserState userState, searchDatabase dialog)
         {
             _conversationState = conversationState;
             _userState = userState;

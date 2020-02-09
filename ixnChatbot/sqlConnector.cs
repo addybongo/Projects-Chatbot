@@ -53,7 +53,7 @@ namespace ixnChatbot
             }
         }
 
-        public List<string>[] Select(String query)
+        public List<string>[] selectOld(String query)
         {
             //Create a list to store the result
             List<string>[] list = new List<string>[2];
@@ -88,6 +88,76 @@ namespace ixnChatbot
             {
                 return list;
             }
+        }
+        
+        public List<List<String>> select(String query)
+        {
+            //Create a list to store the result
+            List<List<String>> list = new List<List<String>>();
+
+            //Open connection
+            if (this.OpenConnection() == true)
+            {
+                //Create Command
+                MySqlCommand cmd = new MySqlCommand(query, connection);
+                //Create a data reader and Execute the command
+                MySqlDataReader dataReader = cmd.ExecuteReader();
+
+                //Read the data and store them in the list
+                while (dataReader.Read())
+                {
+                    List<String> record = new List<string>();
+                    
+                    for (int i = 0; i < dataReader.FieldCount; i++)
+                    {
+                        record.Add("" + dataReader[i]);
+                    }
+                    list.Add(record);
+                }
+
+                //close Data Reader
+                dataReader.Close();
+
+                //close Connection
+                this.CloseConnection();
+
+                //return list to be displayed
+                return list;
+            }
+            else
+            {
+                return null;
+            }
+        }
+        
+        public string selectionQueryBuilder(String[] contactJob, String[] contactName, String[] organizationName,
+            String[] projectDevice,
+            String[] projectLocation, String[] projectSkill, String[] projectTitle)
+        {
+            string query = "SELECT * FROM Projects WHERE ";
+
+            if(contactJob != null) query+= likeStatementBuilder("contactJob", contactJob) + " OR ";
+            if(contactName != null) query+= likeStatementBuilder("contactName", contactName) + " OR ";
+            if(organizationName != null) query+= likeStatementBuilder("organizationName", organizationName) + " OR ";
+            if(projectDevice != null) query+= likeStatementBuilder("projectDevice", projectDevice) + " OR ";
+            if(projectLocation != null) query+= likeStatementBuilder("projectLocation", projectLocation) + " OR ";
+            if(projectSkill != null) query+= likeStatementBuilder("projectSkill", projectSkill) + " OR ";
+            if(projectTitle != null) query+= likeStatementBuilder("projectTitle", projectTitle) + " OR";
+
+            return query.Substring(0, query.Length - 3) + ";";
+        }
+        
+        private string likeStatementBuilder(String entityName, String[] entities)
+        {
+            string likeStatement = "";
+            
+            for (int i = 0; i < entities.Length - 1; i++)
+            {
+                likeStatement += entityName + " LIKE'%" + entities[i] + "%' OR ";
+            }
+            likeStatement += entityName + " LIKE'%" + entities[entities.Length - 1] + "%'";
+            
+            return likeStatement;
         }
     }
 }

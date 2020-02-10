@@ -15,11 +15,11 @@ This bot has been created using [Bot Framework](https://dev.botframework.com), i
 
 ## To try this sample
 
-- In a terminal, navigate to `you_arent_loved`
+- In a terminal, navigate to `ixnChatbot`
 
     ```bash
     # change into project folder
-    cd you_arent_loved
+    cd ixnChatbot
     ```
 
 - Run the bot from a terminal or from Visual Studio, choose option A or B.
@@ -35,8 +35,8 @@ This bot has been created using [Bot Framework](https://dev.botframework.com), i
 
   - Launch Visual Studio
   - File -> Open -> Project/Solution
-  - Navigate to `you_arent_loved` folder
-  - Select `you_arent_loved.csproj` file
+  - Navigate to `ixnChatbot` folder
+  - Select `ixnChatbot.csproj` file
   - Press `F5` to run the project
 
 ## Testing the bot using Bot Framework Emulator

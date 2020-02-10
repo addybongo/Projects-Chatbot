@@ -11,11 +11,16 @@ namespace ixnChatbot.Dialogs
     public class searchDatabase : ComponentDialog
     {
         private readonly luisRecogniser _luisRecogniser;
+        private sqlConnector connector;
+        private jsonManager jsonManager;
         
         public searchDatabase(luisRecogniser luisRecogniser)
         {
             _luisRecogniser = luisRecogniser;
-            
+            connector = new sqlConnector();
+            jsonManager = new jsonManager();
+            connector.OpenConnection();
+
             var waterfallSteps = new WaterfallStep[]
             {
                 intentPrompt,
@@ -65,8 +70,6 @@ namespace ixnChatbot.Dialogs
             CancellationToken cancellationToken)
         {
             luisResultContainer._Entities entities = (luisResultContainer._Entities) stepContext.Result;
-            sqlConnector connector = new sqlConnector();
-            jsonManager jsonManager = new jsonManager();
 
             string query = connector.selectionQueryBuilder(entities.contactJob, entities.contactName, entities.organizationName,
                 entities.projectDevice, entities.projectLocation, entities.projectSkill, entities.projectTitle);

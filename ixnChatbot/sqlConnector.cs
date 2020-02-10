@@ -14,6 +14,8 @@ namespace ixnChatbot
         private string uid;
         private string password;
 
+        private bool connected = false;
+
         public sqlConnector()
         {
             server = "51.145.112.189";
@@ -26,11 +28,12 @@ namespace ixnChatbot
             connection = new MySqlConnection(connectionString);
         }
 
-        private bool OpenConnection()
+        public bool OpenConnection()
         {
             try
             {
                 connection.Open();
+                connected = true;
                 return true;
             }
             catch (MySqlException ex)
@@ -40,11 +43,12 @@ namespace ixnChatbot
             }
         }
 
-        private bool CloseConnection()
+        public bool CloseConnection()
         {
             try
             {
                 connection.Close();
+                connected = false;
                 return true;
             }
             catch (MySqlException ex)
@@ -95,39 +99,34 @@ namespace ixnChatbot
             //Create a list to store the result
             List<List<String>> list = new List<List<String>>();
 
-            //Open connection
-            if (this.OpenConnection() == true)
-            {
-                //Create Command
-                MySqlCommand cmd = new MySqlCommand(query, connection);
-                //Create a data reader and Execute the command
-                MySqlDataReader dataReader = cmd.ExecuteReader();
-
-                //Read the data and store them in the list
-                while (dataReader.Read())
-                {
-                    List<String> record = new List<string>();
-                    
-                    for (int i = 0; i < dataReader.FieldCount; i++)
-                    {
-                        record.Add("" + dataReader[i]);
-                    }
-                    list.Add(record);
-                }
-
-                //close Data Reader
-                dataReader.Close();
-
-                //close Connection
-                this.CloseConnection();
-
-                //return list to be displayed
-                return list;
-            }
-            else
+            //Check if connection hasn't been opened and
+            if (!connected)
             {
                 return null;
             }
+            
+            //Create Command
+            MySqlCommand cmd = new MySqlCommand(query, connection);
+            //Create a data reader and Execute the command
+            MySqlDataReader dataReader = cmd.ExecuteReader();
+
+            //Read the data and store them in the list
+            while (dataReader.Read())
+            {
+                List<String> record = new List<string>();
+            
+                for (int i = 0; i < dataReader.FieldCount; i++)
+                {
+                    record.Add("" + dataReader[i]);
+                }
+                list.Add(record);
+            }
+
+            //close Data Reader
+            dataReader.Close();
+            
+            //return list to be displayed
+            return list;
         }
         
         public string selectionQueryBuilder(String[] contactJob, String[] contactName, String[] organizationName,

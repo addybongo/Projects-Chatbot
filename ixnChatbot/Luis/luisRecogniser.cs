@@ -26,8 +26,8 @@ namespace ixnChatbot
             }
         }
         
-        // Returns true if luis is configured in the appsettings.json and initialized.
         public virtual bool IsConfigured => _recogniser != null;
+
         public virtual async Task<RecognizerResult> RecognizeAsync(ITurnContext turnContext, CancellationToken cancellationToken)
             => await _recogniser.RecognizeAsync(turnContext, cancellationToken);
 

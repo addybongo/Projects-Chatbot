@@ -15,7 +15,7 @@
   ],
   "entities": [
     {
-      "name": "contactJob",
+      "name": "contactJobTitle",
       "roles": []
     },
     {
@@ -27,7 +27,15 @@
       "roles": []
     },
     {
-      "name": "projectDevice",
+      "name": "organizationOverview",
+      "roles": []
+    },
+    {
+      "name": "projectCriteria",
+      "roles": []
+    },
+    {
+      "name": "projectDescription",
       "roles": []
     },
     {
@@ -35,11 +43,7 @@
       "roles": []
     },
     {
-      "name": "projectSkill",
-      "roles": []
-    },
-    {
-      "name": "projectTitle",
+      "name": "projectUsages",
       "roles": []
     }
   ],
@@ -53,6 +57,17 @@
   "patterns": [],
   "utterances": [
     {
+      "text": "are there any projects that use machine learning",
+      "intent": "listProjects",
+      "entities": [
+        {
+          "entity": "projectCriteria",
+          "startPos": 32,
+          "endPos": 47
+        }
+      ]
+    },
+    {
       "text": "boolio slicio",
       "intent": "None",
       "entities": []
@@ -62,7 +77,7 @@
       "intent": "listProjects",
       "entities": [
         {
-          "entity": "projectDevice",
+          "entity": "projectUsages",
           "startPos": 9,
           "endPos": 12
         },
@@ -74,11 +89,33 @@
       ]
     },
     {
+      "text": "find me projects by microsoft",
+      "intent": "listProjects",
+      "entities": [
+        {
+          "entity": "organizationName",
+          "startPos": 20,
+          "endPos": 28
+        }
+      ]
+    },
+    {
+      "text": "find projects led by joseph",
+      "intent": "listProjects",
+      "entities": [
+        {
+          "entity": "contactName",
+          "startPos": 21,
+          "endPos": 26
+        }
+      ]
+    },
+    {
       "text": "get me all medical projects by ibm led by joseph connor",
       "intent": "listProjects",
       "entities": [
         {
-          "entity": "projectSkill",
+          "entity": "projectCriteria",
           "startPos": 11,
           "endPos": 17
         },
@@ -95,13 +132,72 @@
       ]
     },
     {
+      "text": "get projects by rajesh",
+      "intent": "listProjects",
+      "entities": [
+        {
+          "entity": "organizationName",
+          "startPos": 16,
+          "endPos": 21
+        }
+      ]
+    },
+    {
+      "text": "hello?",
+      "intent": "None",
+      "entities": []
+    },
+    {
+      "text": "i back it tho",
+      "intent": "None",
+      "entities": []
+    },
+    {
+      "text": "im trying to be like adnan",
+      "intent": "None",
+      "entities": []
+    },
+    {
       "text": "list all artificial intelligence projects by microsoft",
       "intent": "listProjects",
       "entities": [
         {
-          "entity": "projectSkill",
+          "entity": "projectCriteria",
           "startPos": 9,
           "endPos": 31
+        }
+      ]
+    },
+    {
+      "text": "list all projects by ibm",
+      "intent": "listProjects",
+      "entities": [
+        {
+          "entity": "organizationName",
+          "startPos": 21,
+          "endPos": 23
+        }
+      ]
+    },
+    {
+      "text": "list all projects by joe mama",
+      "intent": "listProjects",
+      "entities": [
+        {
+          "entity": "organizationName",
+          "startPos": 21,
+          "endPos": 28
+        }
+      ]
+    },
+    {
+      "text": "list all projects by rcgp",
+      "intent": "listProjects",
+      "entities": [
+        {
+          "entity": "organizationName",
+          "startPos": 21,
+          "endPos": 24
         }
       ]
     },
@@ -117,9 +213,101 @@
       ]
     },
     {
+      "text": "list all projects by the rcgp led by joseph",
+      "intent": "listProjects",
+      "entities": [
+        {
+          "entity": "organizationName",
+          "startPos": 25,
+          "endPos": 28
+        },
+        {
+          "entity": "contactName",
+          "startPos": 37,
+          "endPos": 42
+        }
+      ]
+    },
+    {
+      "text": "list all projects led by joseph connor",
+      "intent": "listProjects",
+      "entities": [
+        {
+          "entity": "contactName",
+          "startPos": 25,
+          "endPos": 37
+        }
+      ]
+    },
+    {
+      "text": "list me projects by rcgp",
+      "intent": "listProjects",
+      "entities": [
+        {
+          "entity": "organizationName",
+          "startPos": 20,
+          "endPos": 23
+        }
+      ]
+    },
+    {
+      "text": "list projects by the rcgp",
+      "intent": "listProjects",
+      "entities": [
+        {
+          "entity": "organizationName",
+          "startPos": 21,
+          "endPos": 24
+        }
+      ]
+    },
+    {
+      "text": "make me become adnan",
+      "intent": "None",
+      "entities": []
+    },
+    {
       "text": "maths is rubbish",
       "intent": "None",
       "entities": []
+    },
+    {
+      "text": "ok",
+      "intent": "None",
+      "entities": []
+    },
+    {
+      "text": "projects from gosh",
+      "intent": "listProjects",
+      "entities": [
+        {
+          "entity": "organizationName",
+          "startPos": 14,
+          "endPos": 17
+        }
+      ]
+    },
+    {
+      "text": "projects involving joseph connor",
+      "intent": "listProjects",
+      "entities": [
+        {
+          "entity": "contactName",
+          "startPos": 19,
+          "endPos": 31
+        }
+      ]
+    },
+    {
+      "text": "projects led by joseph",
+      "intent": "listProjects",
+      "entities": [
+        {
+          "entity": "contactName",
+          "startPos": 16,
+          "endPos": 21
+        }
+      ]
     },
     {
       "text": "show me all projects by the rcgp",
@@ -131,6 +319,126 @@
           "endPos": 31
         }
       ]
+    },
+    {
+      "text": "show me fhir projects",
+      "intent": "listProjects",
+      "entities": [
+        {
+          "entity": "projectDescription",
+          "startPos": 8,
+          "endPos": 11
+        }
+      ]
+    },
+    {
+      "text": "show me projcets led by joseph",
+      "intent": "listProjects",
+      "entities": [
+        {
+          "entity": "contactName",
+          "startPos": 24,
+          "endPos": 29
+        }
+      ]
+    },
+    {
+      "text": "show me projects",
+      "intent": "listProjects",
+      "entities": []
+    },
+    {
+      "text": "show me projects by google",
+      "intent": "listProjects",
+      "entities": [
+        {
+          "entity": "organizationName",
+          "startPos": 20,
+          "endPos": 25
+        }
+      ]
+    },
+    {
+      "text": "show me projects by ibm",
+      "intent": "listProjects",
+      "entities": [
+        {
+          "entity": "organizationName",
+          "startPos": 20,
+          "endPos": 22
+        }
+      ]
+    },
+    {
+      "text": "show me projects by joe mama",
+      "intent": "listProjects",
+      "entities": [
+        {
+          "entity": "organizationName",
+          "startPos": 20,
+          "endPos": 27
+        }
+      ]
+    },
+    {
+      "text": "show me projects by joseph",
+      "intent": "listProjects",
+      "entities": [
+        {
+          "entity": "organizationName",
+          "startPos": 20,
+          "endPos": 25
+        }
+      ]
+    },
+    {
+      "text": "show me projects by rcgp",
+      "intent": "listProjects",
+      "entities": [
+        {
+          "entity": "organizationName",
+          "startPos": 20,
+          "endPos": 23
+        }
+      ]
+    },
+    {
+      "text": "show me projects by the rcgp",
+      "intent": "listProjects",
+      "entities": [
+        {
+          "entity": "organizationName",
+          "startPos": 24,
+          "endPos": 27
+        }
+      ]
+    },
+    {
+      "text": "show me projects involving joseph connor",
+      "intent": "listProjects",
+      "entities": [
+        {
+          "entity": "contactName",
+          "startPos": 27,
+          "endPos": 39
+        }
+      ]
+    },
+    {
+      "text": "show me projects led by joseph connor",
+      "intent": "listProjects",
+      "entities": [
+        {
+          "entity": "contactName",
+          "startPos": 24,
+          "endPos": 36
+        }
+      ]
+    },
+    {
+      "text": "show me who im trying to be like:",
+      "intent": "None",
+      "entities": []
     },
     {
       "text": "tyler the creator is the greatest rapper of all time",
@@ -147,6 +455,11 @@
           "endPos": 38
         }
       ]
+    },
+    {
+      "text": "yes",
+      "intent": "None",
+      "entities": []
     }
   ],
   "settings": []

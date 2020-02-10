@@ -129,19 +129,28 @@ namespace ixnChatbot
             return list;
         }
         
-        public string selectionQueryBuilder(String[] contactJob, String[] contactName, String[] organizationName,
-            String[] projectDevice,
-            String[] projectLocation, String[] projectSkill, String[] projectTitle)
+        public string selectionQueryBuilder(String[] contactJobTitle, String[] contactName, String[] organizationName,
+            String[] projectUsages,
+            String[] projectLocation, String[] projectCriteria, String[] projectDescription, String[] organizationOverview)
         {
             string query = "SELECT projectTitle, organizationName, contactName FROM Projects WHERE ";
 
-            if(contactJob != null) query+= likeStatementBuilder("contactJob", contactJob) + " OR ";
+            if(contactJobTitle != null) query+= likeStatementBuilder("contactTitle", contactJobTitle) + " OR ";
             if(contactName != null) query+= likeStatementBuilder("contactName", contactName) + " OR ";
+            if(contactName != null) query+= likeStatementBuilder("contactEmail", contactName) + " OR ";
             if(organizationName != null) query+= likeStatementBuilder("organizationName", organizationName) + " OR ";
-            if(projectDevice != null) query+= likeStatementBuilder("projectDevice", projectDevice) + " OR ";
+            if(organizationOverview != null) query+= likeStatementBuilder("organizationOverview", organizationOverview) + " OR ";
+            if(projectCriteria != null) query+= likeStatementBuilder("projectRequirements", projectCriteria) + " OR ";
+            if(projectCriteria != null) query+= likeStatementBuilder("projectTechnicalChallenges", projectCriteria) + " OR ";
+            if(projectCriteria != null) query+= likeStatementBuilder("projectSkills", projectCriteria) + " OR ";
+            if(projectCriteria != null) query+= likeStatementBuilder("anyOtherInformation", projectCriteria) + " OR ";
+            if(projectDescription != null) query+= likeStatementBuilder("projectTitle", projectDescription) + " OR ";
+            if(projectDescription != null) query+= likeStatementBuilder("projectDescription", projectDescription) + " OR ";
+            if(projectDescription != null) query+= likeStatementBuilder("anyOtherInformation", projectDescription) + " OR ";
             if(projectLocation != null) query+= likeStatementBuilder("projectLocation", projectLocation) + " OR ";
-            if(projectSkill != null) query+= likeStatementBuilder("projectSkill", projectSkill) + " OR ";
-            if(projectTitle != null) query+= likeStatementBuilder("projectTitle", projectTitle) + " OR";
+            if(projectUsages != null) query+= likeStatementBuilder("projectDevices", projectUsages) + " OR ";
+            if(projectUsages != null) query+= likeStatementBuilder("projectDataSamples", projectUsages) + " OR ";
+            if(projectUsages != null) query+= likeStatementBuilder("anyOtherInformation", projectUsages) + " OR ";
 
             return query.Substring(0, query.Length - 3) + ";";
         }
@@ -152,9 +161,9 @@ namespace ixnChatbot
             
             for (int i = 0; i < entities.Length - 1; i++)
             {
-                likeStatement += entityName + " LIKE'%" + entities[i] + "%' OR ";
+                likeStatement += entityName + " LIKE '%" + entities[i] + "%' OR ";
             }
-            likeStatement += entityName + " LIKE'%" + entities[entities.Length - 1] + "%'";
+            likeStatement += entityName + " LIKE '%" + entities[entities.Length - 1] + "%'";
             
             return likeStatement;
         }

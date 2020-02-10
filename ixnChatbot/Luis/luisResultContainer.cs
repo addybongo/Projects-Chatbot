@@ -8,7 +8,6 @@ using Newtonsoft.Json;
 using System.Collections.Generic;
 using Microsoft.Bot.Builder;
 using Microsoft.Bot.Builder.AI.Luis;
-
 namespace ixnChatbot
 {
     public partial class luisResultContainer: IRecognizerConvert
@@ -29,25 +28,27 @@ namespace ixnChatbot
         public class _Entities
         {
             // Simple entities
-            public string[] contactJob;
+            public string[] contactJobTitle;
             public string[] contactName;
             public string[] organizationName;
-            public string[] projectDevice;
+            public string[] organizationOverview;
+            public string[] projectCriteria;
+            public string[] projectDescription;
             public string[] projectLocation;
-            public string[] projectSkill;
-            public string[] projectTitle;
+            public string[] projectUsages;
 
 
             // Instance
             public class _Instance
             {
-                public InstanceData[] contactJob;
+                public InstanceData[] contactJobTitle;
                 public InstanceData[] contactName;
                 public InstanceData[] organizationName;
-                public InstanceData[] projectDevice;
+                public InstanceData[] organizationOverview;
+                public InstanceData[] projectCriteria;
+                public InstanceData[] projectDescription;
                 public InstanceData[] projectLocation;
-                public InstanceData[] projectSkill;
-                public InstanceData[] projectTitle;
+                public InstanceData[] projectUsages;
             }
             [JsonProperty("$instance")]
             public _Instance _instance;

@@ -71,9 +71,9 @@ namespace ixnChatbot.Dialogs
         {
             luisResultContainer._Entities entities = (luisResultContainer._Entities) stepContext.Result;
 
-            string query = connector.selectionQueryBuilder(entities.contactJob, entities.contactName, entities.organizationName,
-                entities.projectDevice, entities.projectLocation, entities.projectSkill, entities.projectTitle);
-            
+            string query = connector.selectionQueryBuilder(entities.contactJobTitle, entities.contactName, entities.organizationName,
+                entities.projectUsages, entities.projectLocation, entities.projectCriteria, entities.projectDescription, entities.organizationOverview);
+
             List<List<String>> queryResult = connector.select(query);
 
             if (queryResult.Count == 0)
@@ -81,9 +81,9 @@ namespace ixnChatbot.Dialogs
                 string errorMessage = "I'm sorry, I couldn't find any projects matching your parameters. Please try again with different keywords.";
                 return await stepContext.ReplaceDialogAsync(InitialDialogId, errorMessage, cancellationToken);
             }
-            
+
             await stepContext.Context.SendActivityAsync(MessageFactory.Text("Here are the projects I found."), cancellationToken);
-            
+
             for (int i = 0; i < queryResult.Count; i++)
             {
                 List<String> record = queryResult[i];

@@ -18,9 +18,9 @@ namespace ixnChatbot
 
         public sqlConnector()
         {
-            server = "51.145.112.189";
+            server = "ixnprojectsdb.mysql.database.azure.com";
             database = "RCGP_Projects";
-            uid = "rcgpadmin";
+            uid = "rcgpadmin@ixnprojectsdb";
             password = "rcgp!12345678";
             string connectionString = "SERVER=" + server + ";" + "DATABASE=" +
             database + ";" + "UID=" + uid + ";" + "PASSWORD=" + password + ";";

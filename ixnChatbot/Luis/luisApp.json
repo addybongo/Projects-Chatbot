@@ -7,6 +7,9 @@
   "tokenizerVersion": "1.0.0",
   "intents": [
     {
+      "name": "displayMoreProjects"
+    },
+    {
       "name": "listProjects"
     },
     {
@@ -57,6 +60,11 @@
   "patterns": [],
   "utterances": [
     {
+      "text": "are there any other results",
+      "intent": "displayMoreProjects",
+      "entities": []
+    },
+    {
       "text": "are there any projects that use machine learning",
       "intent": "listProjects",
       "entities": [
@@ -70,6 +78,11 @@
     {
       "text": "boolio slicio",
       "intent": "None",
+      "entities": []
+    },
+    {
+      "text": "display more results",
+      "intent": "displayMoreProjects",
       "entities": []
     },
     {
@@ -251,6 +264,11 @@
       ]
     },
     {
+      "text": "list more",
+      "intent": "displayMoreProjects",
+      "entities": []
+    },
+    {
       "text": "list projects by the rcgp",
       "intent": "listProjects",
       "entities": [
@@ -322,6 +340,17 @@
     },
     {
       "text": "show me fhir projects",
+      "intent": "listProjects",
+      "entities": [
+        {
+          "entity": "projectDescription",
+          "startPos": 8,
+          "endPos": 11
+        }
+      ]
+    },
+    {
+      "text": "show me fihr projects",
       "intent": "listProjects",
       "entities": [
         {
@@ -441,8 +470,23 @@
       "entities": []
     },
     {
+      "text": "show more",
+      "intent": "displayMoreProjects",
+      "entities": []
+    },
+    {
+      "text": "show more projects",
+      "intent": "displayMoreProjects",
+      "entities": []
+    },
+    {
       "text": "tyler the creator is the greatest rapper of all time",
       "intent": "None",
+      "entities": []
+    },
+    {
+      "text": "where are the rest of the results",
+      "intent": "displayMoreProjects",
       "entities": []
     },
     {

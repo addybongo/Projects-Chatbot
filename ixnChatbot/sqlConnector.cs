@@ -38,7 +38,6 @@ namespace ixnChatbot
             }
             catch (MySqlException ex)
             {
-                Console.WriteLine("AN ERROR OCCURED IN SQL");
                 return false;
             }
         }
@@ -94,12 +93,12 @@ namespace ixnChatbot
             }
         }
         
-        public List<List<String>> select(String query)
+        public List<List<String>> select(string query)
         {
             //Create a list to store the result
             List<List<String>> list = new List<List<String>>();
 
-            //Check if connection hasn't been opened and
+            //Check if connection hasn't been opened
             if (!connected)
             {
                 return null;
@@ -128,30 +127,55 @@ namespace ixnChatbot
             //return list to be displayed
             return list;
         }
+
+        public List<String> getFieldNames(string tableName)
+        {
+            List<String> fields = new List<string>();
+            string query = "DESCRIBE " + tableName + ";";
+            List<List<String>> queryResult = select(query);
+            
+            for (int i = 0; i < queryResult.Count; i++)
+            {
+                fields.Add(queryResult[i][0]);
+            }
+
+            return fields;
+        }
         
-        public string selectionQueryBuilder(String[] contactJobTitle, String[] contactName, String[] organizationName,
+        public string projectSelectionQueryBuilder(String[] contactJobTitle, String[] contactName, String[] organizationName,
             String[] projectUsages,
             String[] projectLocation, String[] projectCriteria, String[] projectDescription, String[] organizationOverview)
         {
-            string query = "SELECT projectTitle, organizationName, contactName FROM Projects WHERE ";
+            string query = "SELECT projectID, projectTitle, organizationName, contactName FROM Projects WHERE ";
 
             if(contactJobTitle != null) query+= likeStatementBuilder("contactTitle", contactJobTitle) + " OR ";
-            if(contactName != null) query+= likeStatementBuilder("contactName", contactName) + " OR ";
-            if(contactName != null) query+= likeStatementBuilder("contactEmail", contactName) + " OR ";
+            if(contactName != null)
+            {
+                query+= likeStatementBuilder("contactName", contactName) + " OR " + 
+                        likeStatementBuilder("contactEmail", contactName) + " OR ";
+            }
             if(organizationName != null) query+= likeStatementBuilder("organizationName", organizationName) + " OR ";
             if(organizationOverview != null) query+= likeStatementBuilder("organizationOverview", organizationOverview) + " OR ";
-            if(projectCriteria != null) query+= likeStatementBuilder("projectRequirements", projectCriteria) + " OR ";
-            if(projectCriteria != null) query+= likeStatementBuilder("projectTechnicalChallenges", projectCriteria) + " OR ";
-            if(projectCriteria != null) query+= likeStatementBuilder("projectSkills", projectCriteria) + " OR ";
-            if(projectCriteria != null) query+= likeStatementBuilder("anyOtherInformation", projectCriteria) + " OR ";
-            if(projectDescription != null) query+= likeStatementBuilder("projectTitle", projectDescription) + " OR ";
-            if(projectDescription != null) query+= likeStatementBuilder("projectDescription", projectDescription) + " OR ";
-            if(projectDescription != null) query+= likeStatementBuilder("anyOtherInformation", projectDescription) + " OR ";
+            if(projectCriteria != null)
+            {
+                query += likeStatementBuilder("projectRequirements", projectCriteria) + " OR " +
+                         likeStatementBuilder("projectTechnicalChallenges", projectCriteria) + " OR " +
+                         likeStatementBuilder("projectSkills", projectCriteria) + " OR " +
+                         likeStatementBuilder("anyOtherInformation", projectCriteria) + " OR ";
+            }
+            if (projectDescription != null)
+            {
+                query+= likeStatementBuilder("projectTitle", projectDescription) + " OR " + 
+                        likeStatementBuilder("projectDescription", projectDescription) + " OR " + 
+                        likeStatementBuilder("anyOtherInformation", projectDescription) + " OR ";
+            }
             if(projectLocation != null) query+= likeStatementBuilder("projectLocation", projectLocation) + " OR ";
-            if(projectUsages != null) query+= likeStatementBuilder("projectDevices", projectUsages) + " OR ";
-            if(projectUsages != null) query+= likeStatementBuilder("projectDataSamples", projectUsages) + " OR ";
-            if(projectUsages != null) query+= likeStatementBuilder("anyOtherInformation", projectUsages) + " OR ";
-
+            if (projectUsages != null)
+            {
+                query+= likeStatementBuilder("projectDevices", projectUsages) + " OR " + 
+                        likeStatementBuilder("projectDataSamples", projectUsages) + " OR " + 
+                        likeStatementBuilder("anyOtherInformation", projectUsages) + " OR ";
+            }
             return query.Substring(0, query.Length - 3) + ";";
         }
         

@@ -10,6 +10,7 @@ using Microsoft.Bot.Builder;
 using Microsoft.Bot.Builder.Dialogs;
 using Microsoft.Bot.Schema;
 using ixnChatbot.Dialogs;
+using Newtonsoft.Json;
 
 namespace ixnChatbot
 {
@@ -53,8 +54,26 @@ namespace ixnChatbot
 
         protected override async Task OnMessageActivityAsync(ITurnContext<IMessageActivity> turnContext, CancellationToken cancellationToken)
         {
+            if (turnContext.Activity.Value != null)
+            {
+                turnContext.Activity.Text = resolveCardActions(turnContext.Activity.Value.ToString());
+                turnContext.Activity.Value = null;
+            }
+
             // Run the Dialog with the new message Activity.
-            await _dialog.RunAsync(turnContext, _conversationState.CreateProperty<DialogState>(nameof(DialogState)), cancellationToken);
+            await _dialog.RunAsync(turnContext, _conversationState.CreateProperty<DialogState>(nameof(DialogState)),
+                cancellationToken);
+        }
+
+        private string resolveCardActions(string actionText)
+        {
+            dynamic jsonObj = JsonConvert.DeserializeObject(actionText);
+            if (jsonObj["id"] == "selectProject")
+            {
+                return "selectProject";
+            }
+
+            return "somethingElse";
         }
     }
 }

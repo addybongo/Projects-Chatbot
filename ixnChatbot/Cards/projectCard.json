@@ -2,6 +2,12 @@
   "$schema": "http://adaptivecards.io/schemas/adaptive-card.json",
   "type": "AdaptiveCard",
   "version": "1.0",
+  "selectAction": {
+    "type" : "Action.Submit",
+    "id": "selectProject",
+    "title": "selectProject",
+    "data": { "id": "selectProject" }
+  },
   "body": [
     {
       "type": "TextBlock",

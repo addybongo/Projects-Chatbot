@@ -29,7 +29,7 @@ namespace ixnChatbot.Cards
         public Attachment projectJsonEditor(string projectTitle, string organizationName, string contactName)
         {
             string json = File.ReadAllText("Cards/projectCard.json");
-            dynamic jsonObj = Newtonsoft.Json.JsonConvert.DeserializeObject(json);
+            dynamic jsonObj = JsonConvert.DeserializeObject(json);
             jsonObj["body"][0]["text"] = projectTitle;
             jsonObj["body"][1]["columns"][1]["items"][0]["text"] = organizationName;
             jsonObj["body"][1]["columns"][1]["items"][1]["text"] = contactName;

@@ -3,27 +3,21 @@ using System.Collections.Generic;
 using System.Threading;
 using System.Threading.Tasks;
 using ixnChatbot.Cards;
-using Microsoft.Bot.Builder;
+using Microsoft.Bot.Builder
+    ;
 using Microsoft.Bot.Builder.Dialogs;
 
 namespace ixnChatbot.Dialogs
 {
-    public class searchDatabase : ComponentDialog
+    public class searchDatabase : dialogBase
     {
-        private readonly luisRecogniser _luisRecogniser;
-        private sqlConnector connector;
-        private jsonManager jsonManager;
-
         private projectResultsContainer projectResults;
         private int SEARCH_RESULT_LIMIT = 4; //Number of projects that can be listed at once
         private int searchIndex = 0; //Index of projects currently being listen
         
-        public searchDatabase(luisRecogniser luisRecogniser)
+        public searchDatabase(luisRecogniser luisRecogniser) : base(luisRecogniser, nameof(searchDatabase))
         {
             _luisRecogniser = luisRecogniser;
-            connector = new sqlConnector();
-            jsonManager = new jsonManager();
-            connector.OpenConnection();
 
             var waterfallSteps = new WaterfallStep[]
             {
@@ -33,6 +27,7 @@ namespace ixnChatbot.Dialogs
 
             AddDialog(new WaterfallDialog("waterfall1", waterfallSteps));
             AddDialog(new TextPrompt("intentPrompt"));
+            AddDialog(new searchProject(luisRecogniser));
 
             InitialDialogId = "waterfall1";
         }
@@ -42,9 +37,7 @@ namespace ixnChatbot.Dialogs
         {
             if (!_luisRecogniser.IsConfigured)
             {
-                await stepContext.Context.SendActivityAsync(
-                MessageFactory.Text("Luis is not configured correctly."), cancellationToken);
-                return await stepContext.NextAsync(null, cancellationToken);
+                sendMessage(stepContext, "LUIS is not configured correctly!", cancellationToken);
             }
             
             var messageText = stepContext.Options?.ToString() ?? "Hi! What are you looking for?";
@@ -56,33 +49,48 @@ namespace ixnChatbot.Dialogs
         private async Task<DialogTurnResult> intentAnswer(WaterfallStepContext stepContext,
             CancellationToken cancellationToken)
         {
+            string response = (string) stepContext.Result;
+            
+            if (response == "selectProject")
+            {
+                DialogTurnResult returnContext = await stepContext.BeginDialogAsync(nameof(searchProject), stepContext.Result, cancellationToken);
+                stepContext.Context.Activity.Text = (string) returnContext.Result;
+            }
+            
             var luisResult = await _luisRecogniser.RecognizeAsync<luisResultContainer>(stepContext.Context, cancellationToken);
             luisResultContainer._Entities entities = luisResult.Entities;
-            
+
             switch (luisResult.TopIntent().intent)
             {
                 case luisResultContainer.Intent.listProjects:
                     searchIndex = 0;
                     string query = connector.projectSelectionQueryBuilder(entities.contactJobTitle, entities.contactName, entities.organizationName,
                         entities.projectUsages, entities.projectLocation, entities.projectCriteria, entities.projectDescription, entities.organizationOverview);
-                    projectResults = new projectResultsContainer(connector.select(query), connector.getFieldNames("Projects"));
+                    projectResultsContainer tempProjectResults = new projectResultsContainer(connector.select(query), connector.getFieldNames("Projects"));
                     
-                    if (projectResults.getNumberOfRecords() == 0)
+                    if (tempProjectResults.getNumberOfRecords() == 0)
                     {
-                        string errorMessage = "I'm sorry, I couldn't find any projects matching your parameters. Please try again with different keywords.";
-                        await stepContext.Context.SendActivityAsync(MessageFactory.Text(errorMessage), cancellationToken);
+                        sendMessage(stepContext, "I'm sorry, I couldn't find any projects matching your parameters. Please try again with different keywords.", cancellationToken);
                         break;
                     }
-                    string foundProjectInfo = "I found " + projectResults.getNumberOfRecords() + " related " + 
-                                              (projectResults.getNumberOfRecords() == 1 ? "project." : "projects. " + 
-                                                                                                       "Here are the top 4 results: ");
-                    await stepContext.Context.SendActivityAsync(MessageFactory.Text(foundProjectInfo), cancellationToken);
+                    projectResults = tempProjectResults;
+                    
+                    sendMessage(stepContext, "I found " + projectResults.getNumberOfRecords() + " related " + 
+                                (projectResults.getNumberOfRecords() == 1 ? "project." : "projects. ") + "Here are the top 4 results: ", cancellationToken);
                     await displayProjects(stepContext, cancellationToken);
                     break;
                 
                 case luisResultContainer.Intent.displayMoreProjects:
                     searchIndex += 4;
-                    await displayProjects(stepContext, cancellationToken);
+                    if (projectResults != null)
+                    {
+                        sendMessage(stepContext, "Here are some more results for your last search.", cancellationToken);
+                        await displayProjects(stepContext, cancellationToken);
+                    }
+                    else
+                    {
+                        sendMessage(stepContext, "There is no projects to show! Please search for projects first.", cancellationToken);
+                    }
                     break;
                 
                 default:
@@ -91,13 +99,13 @@ namespace ixnChatbot.Dialogs
             }
             return await stepContext.ReplaceDialogAsync(InitialDialogId, "Could I help you with anything else?", cancellationToken);
         }
-        
+
         private async Task displayProjects(WaterfallStepContext stepContext, CancellationToken cancellationToken)
         {
             for (int i = 0; i < SEARCH_RESULT_LIMIT; i++)
             {
                 int projectIndex = searchIndex + i;
-                var projectCard = jsonManager.projectJsonEditor(projectResults.getValue(projectIndex, 1), 
+                var projectCard = jsonManager.projectJsonEditor(projectResults.getValue(projectIndex, 1),
                     projectResults.getValue(projectIndex, 2), projectResults.getValue(projectIndex, 3));
                 var response = MessageFactory.Attachment(projectCard);
                 await stepContext.Context.SendActivityAsync(response, cancellationToken);

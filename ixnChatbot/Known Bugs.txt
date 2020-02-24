@@ -1,0 +1,5 @@
+﻿1) When leaving chatbot idle for a while and then sending a message, a SQL error occurs
+ 
+ "Unable to write data to the transport connection: An existing connection was forcibly closed by the remote host"
+ 
+ 

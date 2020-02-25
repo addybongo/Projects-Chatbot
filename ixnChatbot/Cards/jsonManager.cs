@@ -26,13 +26,32 @@ namespace ixnChatbot.Cards
             }
         }
 
-        public Attachment projectJsonEditor(string projectTitle, string organizationName, string contactName)
+        public Attachment projectCardGenerator(string id, string projectTitle, string organizationName, string contactName)
         {
             string json = File.ReadAllText("Cards/projectCard.json");
             dynamic jsonObj = JsonConvert.DeserializeObject(json);
+            jsonObj["selectAction"]["data"]["id"] = "#AC_SP";
+            jsonObj["selectAction"]["data"]["data"] = id;
             jsonObj["body"][0]["text"] = projectTitle;
             jsonObj["body"][1]["columns"][1]["items"][0]["text"] = organizationName;
             jsonObj["body"][1]["columns"][1]["items"][1]["text"] = contactName;
+
+            return new Attachment()
+            {
+                ContentType = "application/vnd.microsoft.card.adaptive",
+                Content = jsonObj
+            };
+        }
+        
+        public Attachment detailedProjectCardGenerator(string projectTitle, string organizationName, string institution, string contactName, string date)
+        {
+            string json = File.ReadAllText("Cards/projectDetailedCard.json");
+            dynamic jsonObj = JsonConvert.DeserializeObject(json);
+            jsonObj["body"][0]["columns"][1]["items"][0]["text"] = projectTitle;
+            jsonObj["body"][0]["columns"][1]["items"][1]["text"] = organizationName;
+            jsonObj["body"][1]["items"][0]["text"] = institution;
+            jsonObj["body"][1]["items"][1]["text"] = "Led By " + contactName;
+            jsonObj["body"][1]["items"][2]["text"] = "Uploaded On " + date;
 
             return new Attachment()
             {

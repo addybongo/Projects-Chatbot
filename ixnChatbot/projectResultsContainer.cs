@@ -17,15 +17,22 @@ namespace ixnChatbot
                 this.fieldNames.Add(fieldNames[i], i);
             }
         }
+
+        public string[] getRecord(int i)
+        {
+            return contents[i].ToArray();
+        }
         
-        public string getValue(int id, int field)
+        //This method is really ugly to use and makes code untidy so its split into getRecord and then accessed by index
+        
+        /*public string getValue(int id, int field)
         {
             if (id < getNumberOfRecords())
             { 
                 return contents[id][field];
             }
             return null;
-        }
+        }*/
 
         public int getNumberOfRecords()
         {

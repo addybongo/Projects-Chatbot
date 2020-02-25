@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Net.Mime;
 using System.Threading;
 using System.Threading.Tasks;
 using ixnChatbot.Cards;
@@ -22,14 +23,15 @@ namespace ixnChatbot.Dialogs
             var waterfallSteps = new WaterfallStep[]
             {
                 intentPrompt,
+                cardOrUser,
                 intentAnswer
             };
 
-            AddDialog(new WaterfallDialog("waterfall1", waterfallSteps));
-            AddDialog(new TextPrompt("intentPrompt"));
+            AddDialog(new WaterfallDialog(nameof(WaterfallDialog), waterfallSteps));
+            AddDialog(new TextPrompt(nameof(TextPrompt)));
             AddDialog(new searchProject(luisRecogniser));
 
-            InitialDialogId = "waterfall1";
+            InitialDialogId = nameof(WaterfallDialog);
         }
 
         private async Task<DialogTurnResult> intentPrompt(WaterfallStepContext stepContext,
@@ -41,22 +43,29 @@ namespace ixnChatbot.Dialogs
             }
             
             var messageText = stepContext.Options?.ToString() ?? "Hi! What are you looking for?";
-
             var promptOptions = new PromptOptions { Prompt = MessageFactory.Text(messageText) };
-            return await stepContext.PromptAsync("intentPrompt", promptOptions, cancellationToken);
+            return await stepContext.PromptAsync(nameof(TextPrompt), promptOptions, cancellationToken);
         }
 
+        //This step is needed to split up messages that came from a card action, or a typed message. It allows us to add
+        //another dialog to the stack that focuses on a specific project a user clicked.
+        private async Task<DialogTurnResult> cardOrUser(WaterfallStepContext stepContext,
+            CancellationToken cancellationToken)
+        {
+            //Message Code sent if user clicks on a card
+            if (stepContext.Result.ToString() == "#AC_SP")
+            {
+                return await stepContext.BeginDialogAsync(nameof(searchProject), stepContext.Context.Activity.Value, cancellationToken);
+            }
+            //Proceed to LUIS if the message was typed by user...
+            return await stepContext.NextAsync(stepContext.Result, cancellationToken);
+        }
+
+
+        //Responsible for resolving user language via LUIS
         private async Task<DialogTurnResult> intentAnswer(WaterfallStepContext stepContext,
             CancellationToken cancellationToken)
         {
-            string response = (string) stepContext.Result;
-            
-            if (response == "selectProject")
-            {
-                DialogTurnResult returnContext = await stepContext.BeginDialogAsync(nameof(searchProject), stepContext.Result, cancellationToken);
-                stepContext.Context.Activity.Text = (string) returnContext.Result;
-            }
-            
             var luisResult = await _luisRecogniser.RecognizeAsync<luisResultContainer>(stepContext.Context, cancellationToken);
             luisResultContainer._Entities entities = luisResult.Entities;
 
@@ -75,8 +84,6 @@ namespace ixnChatbot.Dialogs
                     }
                     projectResults = tempProjectResults;
                     
-                    sendMessage(stepContext, "I found " + projectResults.getNumberOfRecords() + " related " + 
-                                (projectResults.getNumberOfRecords() == 1 ? "project." : "projects. ") + "Here are the top 4 results: ", cancellationToken);
                     await displayProjects(stepContext, cancellationToken);
                     break;
                 
@@ -102,11 +109,21 @@ namespace ixnChatbot.Dialogs
 
         private async Task displayProjects(WaterfallStepContext stepContext, CancellationToken cancellationToken)
         {
-            for (int i = 0; i < SEARCH_RESULT_LIMIT; i++)
+            //If we have less records than the search result limit, set the number of cards to make to what is available
+            int numberOfSearchResults = projectResults.getNumberOfRecords() < SEARCH_RESULT_LIMIT
+                ? projectResults.getNumberOfRecords()
+                : SEARCH_RESULT_LIMIT;
+
+            sendMessage(stepContext, "I found " + projectResults.getNumberOfRecords() + " related " + 
+                                     (projectResults.getNumberOfRecords() == 1 ? "project. " : "projects. Here are the top results:") , cancellationToken);
+            
+            for (int i = 0; i < numberOfSearchResults; i++)
             {
+                string[] currentRecord = projectResults.getRecord(i);
+                
                 int projectIndex = searchIndex + i;
-                var projectCard = jsonManager.projectJsonEditor(projectResults.getValue(projectIndex, 1),
-                    projectResults.getValue(projectIndex, 2), projectResults.getValue(projectIndex, 3));
+                var projectCard = jsonManager.projectCardGenerator( currentRecord[0], currentRecord[1], 
+                    currentRecord[2], currentRecord[3]);
                 var response = MessageFactory.Attachment(projectCard);
                 await stepContext.Context.SendActivityAsync(response, cancellationToken);
             }

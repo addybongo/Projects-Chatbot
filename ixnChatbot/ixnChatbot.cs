@@ -56,8 +56,9 @@ namespace ixnChatbot
         {
             if (turnContext.Activity.Value != null)
             {
-                turnContext.Activity.Text = resolveCardActions(turnContext.Activity.Value.ToString());
-                turnContext.Activity.Value = null;
+                dynamic jsonObj = JsonConvert.DeserializeObject(turnContext.Activity.Value.ToString());
+
+                turnContext.Activity.Text = jsonObj["id"].ToString();
             }
 
             // Run the Dialog with the new message Activity.
@@ -65,15 +66,5 @@ namespace ixnChatbot
                 cancellationToken);
         }
 
-        private string resolveCardActions(string actionText)
-        {
-            dynamic jsonObj = JsonConvert.DeserializeObject(actionText);
-            if (jsonObj["id"] == "selectProject")
-            {
-                return "selectProject";
-            }
-
-            return "somethingElse";
-        }
     }
 }

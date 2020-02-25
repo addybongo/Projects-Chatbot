@@ -6,7 +6,10 @@
     "type" : "Action.Submit",
     "id": "selectProject",
     "title": "selectProject",
-    "data": { "id": "selectProject" }
+    "data": { 
+      "id": "#AC_SP",
+      "data": "0"
+    }
   },
   "body": [
     {

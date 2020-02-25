@@ -35,6 +35,9 @@ namespace ixnChatbot.Cards
             jsonObj["body"][0]["text"] = projectTitle;
             jsonObj["body"][1]["columns"][1]["items"][0]["text"] = organizationName;
             jsonObj["body"][1]["columns"][1]["items"][1]["text"] = contactName;
+            
+            jsonObj["body"][1]["columns"][0]["items"][0]["url"] = getOrganizationLogo(organizationName);
+
 
             return new Attachment()
             {
@@ -52,12 +55,30 @@ namespace ixnChatbot.Cards
             jsonObj["body"][1]["items"][0]["text"] = institution;
             jsonObj["body"][1]["items"][1]["text"] = "Led By " + contactName;
             jsonObj["body"][1]["items"][2]["text"] = "Uploaded On " + date;
+            
+            jsonObj["body"][1]["columns"][0]["items"][0]["url"] = getOrganizationLogo(organizationName);
 
             return new Attachment()
             {
                 ContentType = "application/vnd.microsoft.card.adaptive",
                 Content = jsonObj
             };
+        }
+
+        private string getOrganizationLogo(string organizationName)
+        {
+            string json = File.ReadAllText("Cards/companyLogos.json");
+            dynamic jsonObj = JsonConvert.DeserializeObject(json);
+            JArray logos = (JArray) jsonObj["logos"];
+            
+            for (int i = 0; i < logos.Count; i++)
+            {
+                if (organizationName.ToLower().Contains(logos[i]["name"].ToString()))
+                {
+                    return logos[i]["link"].ToString();
+                }
+            }
+            return jsonObj["default"];
         }
     }
 }

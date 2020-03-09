@@ -56,7 +56,7 @@ namespace ixnChatbot.Cards
             jsonObj["body"][1]["items"][1]["text"] = "Led By " + contactName;
             jsonObj["body"][1]["items"][2]["text"] = "Uploaded On " + date;
             
-            jsonObj["body"][1]["columns"][0]["items"][0]["url"] = getOrganizationLogo(organizationName);
+            jsonObj["body"][0]["columns"][0]["items"][0]["url"] = getOrganizationLogo(organizationName);
 
             return new Attachment()
             {

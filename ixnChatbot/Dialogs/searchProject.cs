@@ -21,6 +21,7 @@ namespace ixnChatbot.Dialogs
             var waterfallSteps = new WaterfallStep[]
             {
                 partOne,
+                cardOrUser,
                 partTwo
             };
 
@@ -46,6 +47,18 @@ namespace ixnChatbot.Dialogs
 
             var promptOptions = new PromptOptions { Prompt = MessageFactory.Text("What would you like to know about this project?") };
             return await stepContext.PromptAsync(nameof(TextPrompt), promptOptions, cancellationToken);
+        }
+        
+        private async Task<DialogTurnResult> cardOrUser(WaterfallStepContext stepContext,
+            CancellationToken cancellationToken)
+        {
+            //Message Code sent if user clicks on a card
+            if (stepContext.Result.ToString() == "#AC_SP")
+            {
+                return await stepContext.ReplaceDialogAsync(nameof(searchProject), stepContext.Context.Activity.Value, cancellationToken);
+            }
+            //Proceed to LUIS if the message was typed by user...
+            return await stepContext.NextAsync(stepContext.Result, cancellationToken);
         }
         
         private async Task<DialogTurnResult> partTwo(WaterfallStepContext stepContext,

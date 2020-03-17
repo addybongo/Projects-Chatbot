@@ -1,0 +1,111 @@
+﻿{
+  "$schema": "http://adaptivecards.io/schemas/adaptive-card.json",
+  "type": "AdaptiveCard",
+  "version": "1.0",
+  "body": [
+    {
+      "type": "ColumnSet",
+      "columns": [
+        {
+          "type": "Column",
+          "width": "auto",
+          "items": [
+            {
+              "type": "Image",
+              "url": "https://www.materialui.co/materialIcons/navigation/arrow_back_white_192x192.png",
+              "size": "Small",
+              "width": "40px",
+              "horizontalAlignment": "Center",
+              "spacing": "None",
+              "backgroundColor": "",
+              "style": "Person",
+              "selectAction": {
+                "type": "Action.Submit",
+                "title": "selectProject",
+                "data": {
+                  "id": "#AC_SP",
+                  "data": "0"
+                }
+              }
+            },
+            {
+              "type": "TextBlock",
+              "text": "Back",
+              "horizontalAlignment": "Center",
+              "spacing": "None",
+              "color": "Light",
+              "weight": "Bolder"
+            }
+          ],
+          "verticalContentAlignment": "Center"
+        },
+        {
+          "type": "Column",
+          "width": "stretch",
+          "items": [
+            {
+              "type": "TextBlock",
+              "text": "Project Description",
+              "horizontalAlignment": "Center",
+              "wrap": true,
+              "size": "Large",
+              "weight": "Bolder"
+            }
+          ],
+          "horizontalAlignment": "Center",
+          "height": "stretch",
+          "verticalContentAlignment": "Center",
+          "style": "accent"
+        }
+      ],
+      "bleed": true,
+      "minHeight": "0px",
+      "style": "accent"
+    },
+    {
+      "type": "TextBlock",
+      "text": "Full Project Title",
+      "weight": "Bolder",
+      "size": "Medium",
+      "spacing": "Small",
+      "color": "Accent"
+    },
+    {
+      "type": "TextBlock",
+      "text": "Chatbot for Medical Development",
+      "wrap": true,
+      "spacing": "Small",
+      "separator": true
+    },
+    {
+      "type": "TextBlock",
+      "text": "Project Description",
+      "weight": "Bolder",
+      "size": "Medium",
+      "spacing": "Small",
+      "color": "Accent"
+    },
+    {
+      "type": "TextBlock",
+      "text": "The RCGP has an accelerator for entrepreneurs who are GPs. They are creating new tech and startups to improve healthcare. However they struggle to understand the regulations and requirements to ensure their tech meets the regulatory requirements. This project aims to develop a pilot chatbot to bridge the gap and make existing guidance more approachable and so usable through a chatbot and NLP interface. ",
+      "spacing": "Small",
+      "wrap": true,
+      "separator": true
+    },
+    {
+      "type": "TextBlock",
+      "text": "Project Technical Challenges",
+      "weight": "Bolder",
+      "size": "Medium",
+      "spacing": "Small",
+      "color": "Accent"
+    },
+    {
+      "type": "TextBlock",
+      "text": "N/A",
+      "spacing": "Small",
+      "wrap": true,
+      "separator": true
+    }
+  ]
+}

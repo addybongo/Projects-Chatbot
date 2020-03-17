@@ -1,0 +1,118 @@
+﻿{
+  "$schema": "http://adaptivecards.io/schemas/adaptive-card.json",
+  "type": "AdaptiveCard",
+  "version": "1.0",
+  "body": [
+    {
+      "type": "ColumnSet",
+      "columns": [
+        {
+          "type": "Column",
+          "width": "auto",
+          "items": [
+            {
+              "type": "Image",
+              "url": "https://www.materialui.co/materialIcons/navigation/arrow_back_white_192x192.png",
+              "size": "Small",
+              "width": "40px",
+              "horizontalAlignment": "Center",
+              "spacing": "None",
+              "backgroundColor": "",
+              "style": "Person",
+              "selectAction": {
+                "type": "Action.Submit",
+                "title": "selectProject",
+                "data": {
+                  "id": "#AC_SP",
+                  "data": "0"
+                }
+              }
+            },
+            {
+              "type": "TextBlock",
+              "text": "Back",
+              "horizontalAlignment": "Center",
+              "spacing": "None",
+              "color": "Light",
+              "weight": "Bolder"
+            }
+          ],
+          "verticalContentAlignment": "Center"
+        },
+        {
+          "type": "Column",
+          "width": "stretch",
+          "items": [
+            {
+              "type": "TextBlock",
+              "text": "Skills, Data and Devices",
+              "horizontalAlignment": "Center",
+              "wrap": true,
+              "size": "Large",
+              "weight": "Bolder"
+            },
+            {
+              "type": "TextBlock",
+              "text": "Chatbot for Medical Development",
+              "spacing": "Small",
+              "horizontalAlignment": "Center",
+              "weight": "Lighter"
+            }
+          ],
+          "horizontalAlignment": "Center",
+          "height": "stretch",
+          "verticalContentAlignment": "Center",
+          "style": "accent"
+        }
+      ],
+      "bleed": true,
+      "minHeight": "0px",
+      "style": "accent"
+    },
+    {
+      "type": "TextBlock",
+      "text": "Project Skills",
+      "weight": "Bolder",
+      "size": "Medium",
+      "spacing": "Small",
+      "color": "Accent"
+    },
+    {
+      "type": "TextBlock",
+      "text": "No specific skills were required for this project.",
+      "wrap": true,
+      "spacing": "Small",
+      "separator": true
+    },
+    {
+      "type": "TextBlock",
+      "text": "Project Data Samples",
+      "weight": "Bolder",
+      "size": "Medium",
+      "spacing": "Small",
+      "color": "Accent"
+    },
+    {
+      "type": "TextBlock",
+      "text": "No information on data samples was provided with this project.",
+      "spacing": "Small",
+      "wrap": true,
+      "separator": true
+    },
+    {
+      "type": "TextBlock",
+      "text": "Project Devices",
+      "weight": "Bolder",
+      "size": "Medium",
+      "spacing": "Small",
+      "color": "Accent"
+    },
+    {
+      "type": "TextBlock",
+      "text": "No devices were needed for this project.",
+      "spacing": "Small",
+      "wrap": true,
+      "separator": true
+    }
+  ]
+}

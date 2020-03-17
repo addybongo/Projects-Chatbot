@@ -21,7 +21,7 @@ namespace ixnChatbot
         protected readonly Dialog _dialog;
         private static luisRecogniser _luisRecogniser;
         
-        public EmptyBot(ConversationState conversationState, UserState userState, searchDatabase dialog)
+        public EmptyBot(ConversationState conversationState, UserState userState, searchDatabase2 dialog)
         {
             _conversationState = conversationState;
             _userState = userState;

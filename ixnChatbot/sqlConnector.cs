@@ -14,23 +14,23 @@ namespace ixnChatbot
         private string uid;
         private string password;
 
-        private bool connected = false;
+        private bool connected;
 
         public sqlConnector()
         {
-            server = "ixnprojectsdb.mysql.database.azure.com";
+            // server = "ixnprojectsdb.mysql.database.azure.com";
+            // database = "RCGP_Projects";
+            // uid = "rcgpadmin@ixnprojectsdb";
+            // password = "rcgp!12345678";
+            // string connectionString = "SERVER=" + server + ";" + "DATABASE=" +
+            // database + ";" + "UID=" + uid + ";" + "PASSWORD=" + password + ";";
+            
+            server = "51.145.112.189";
             database = "RCGP_Projects";
-            uid = "rcgpadmin@ixnprojectsdb";
+            uid = "rcgpadmin";
             password = "rcgp!12345678";
             string connectionString = "SERVER=" + server + ";" + "DATABASE=" +
             database + ";" + "UID=" + uid + ";" + "PASSWORD=" + password + ";";
-            
-            //server = "51.145.112.189";
-            //database = "RCGP_Projects";
-            //uid = "rcgpadmin";
-            //password = "rcgp!12345678";
-            //string connectionString = "SERVER=" + server + ";" + "DATABASE=" +
-            //database + ";" + "UID=" + uid + ";" + "PASSWORD=" + password + ";";
 
             connection = new MySqlConnection(connectionString);
         }
@@ -43,9 +43,10 @@ namespace ixnChatbot
                 connected = true;
                 return true;
             }
-            catch (MySqlException ex)
+            catch (MySqlException)
             {
-                return false;
+                throw new Exception("The connection setting for the projects database are incorrect. Please " +
+                                    "change the configuration.");
             }
         }
 
@@ -59,7 +60,8 @@ namespace ixnChatbot
             }
             catch (MySqlException ex)
             {
-                return false;
+                throw new Exception("The connection could not be closed! Please check the database settings and" +
+                                    "restart the chatbot server.");
             }
         }
 
@@ -71,7 +73,7 @@ namespace ixnChatbot
             list[1] = new List<string>();
 
             //Open connection
-            if (this.OpenConnection() == true)
+            if (OpenConnection())
             {
                 //Create Command
                 MySqlCommand cmd = new MySqlCommand(query, connection);
@@ -89,7 +91,7 @@ namespace ixnChatbot
                 dataReader.Close();
 
                 //close Connection
-                this.CloseConnection();
+                CloseConnection();
 
                 //return list to be displayed
                 return list;
@@ -110,7 +112,6 @@ namespace ixnChatbot
             {
                 return null;
             }
-            
             //Create Command
             MySqlCommand cmd = new MySqlCommand(query, connection);
             //Create a data reader and Execute the command
@@ -127,7 +128,6 @@ namespace ixnChatbot
                 }
                 list.Add(record);
             }
-
             //close Data Reader
             dataReader.Close();
             
@@ -145,10 +145,9 @@ namespace ixnChatbot
             {
                 fields.Add(queryResult[i][0]);
             }
-
             return fields;
         }
-        
+
         public string projectSelectionQueryBuilder(String[] contactJobTitle, String[] contactName, String[] organizationName,
             String[] projectUsages,
             String[] projectLocation, String[] projectCriteria, String[] projectDescription, String[] organizationOverview)

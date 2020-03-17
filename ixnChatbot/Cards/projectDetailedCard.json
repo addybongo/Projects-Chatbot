@@ -89,11 +89,7 @@
     },
     {
       "type": "Action.Submit",
-      "title": "Organization Details"
-    },
-    {
-      "type": "Action.Submit",
-      "title": "Contact Details"
+      "title": "Partner Details"
     }
   ]
 }

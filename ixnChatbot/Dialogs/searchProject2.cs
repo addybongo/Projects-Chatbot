@@ -10,11 +10,12 @@ using Newtonsoft.Json;
 
 namespace ixnChatbot.Dialogs
 {
-    public class searchProject : dialogBase
+    public class searchProject2 : dialogBase
     {
         private int SEARCH_RESULT_LIMIT = 4;
+        private Project project; //The project that this dialog focuses on
         
-        public searchProject(luisRecogniser luisRecogniser) : base(luisRecogniser, nameof(searchProject))
+        public searchProject2(luisRecogniser luisRecogniser) : base(luisRecogniser, nameof(searchProject2))
         {
             jsonManager = new jsonManager();
 
@@ -34,13 +35,11 @@ namespace ixnChatbot.Dialogs
         private async Task<DialogTurnResult> partOne(WaterfallStepContext stepContext,
             CancellationToken cancellationToken)
         {
-            string query = projectQueryCreator(stepContext.Options.ToString());
-            
-            string[] projectRecord = new projectResultsContainer(connector.select(query), 
-                connector.getFieldNames("Projects")).getRecord(0);
-
-            Attachment projectCard =  jsonManager.detailedProjectCardGenerator(projectRecord[8], projectRecord[1], projectRecord[17],
-                projectRecord[4], projectRecord[16]);
+            project = (Project) stepContext.Options;
+            project.toDetailedProject();
+            Attachment projectCard =  jsonManager.detailedProjectCardGenerator(project.getValue("projectTitle"), 
+                project.getValue("organisationName"), project.getValue("institute"),
+                project.getValue("industrySupervisor"), project.getValue("projectStart"));
             var response = MessageFactory.Attachment(projectCard);
             
             await stepContext.Context.SendActivityAsync(response, cancellationToken);
@@ -74,14 +73,6 @@ namespace ixnChatbot.Dialogs
                 default:
                     return await stepContext.ReplaceDialogAsync(nameof(WaterfallDialog), stepContext.Result, cancellationToken);
             }
-        }
-
-        private string projectQueryCreator(string activityValue)
-        {
-            dynamic jsonObj = JsonConvert.DeserializeObject(activityValue);
-            string id = jsonObj["data"];
-
-            return "SELECT * FROM Projects p INNER JOIN IXN_database_entries ixn ON p.projectID = ixn.ixnEntry WHERE projectID = " + id + ";";
         }
     } 
 }

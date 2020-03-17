@@ -1,0 +1,15 @@
+﻿string[] fields = transpose(_sqlConnector.select(fieldGetterQueryWholeTable)).ToArray();
+            int ixnTableSize = _sqlConnector.select(fieldGetterQueryIXNTable).Count;
+            
+            for (int i = 0; i < projectSearchResults.Count; i++)
+            {
+                if (projectSearchResults[i][getIndexOfField("ixnID", fields)] == "")
+                {
+                    projects.Add(new Project(getIndexOfField("ixnEntry", fields), 
+                        fields.Take(ixnTableSize).ToArray(), projectSearchResults[i].Take(ixnTableSize).ToArray()));
+                }
+                else
+                {
+                    projects.Add(new Project(getIndexOfField("ixnEntry", fields), 
+                        fields, projectSearchResults[i].ToArray()));
+                }

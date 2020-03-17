@@ -64,6 +64,7 @@ namespace ixnChatbot.Cards
                 Content = jsonObj
             };
         }
+        
 
         private string getOrganizationLogo(string organizationName)
         {

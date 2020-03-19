@@ -3,6 +3,7 @@ using System.Collections.Generic;
 
 namespace ixnChatbot
 {
+    //No Longer Used. See projectBundle for new implementation. Kept for legacy code.
     public class projectResultsContainer
     {
         List<List<String>> contents = new List<List<String>>();

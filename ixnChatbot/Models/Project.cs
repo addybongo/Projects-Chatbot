@@ -1,5 +1,9 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.IO;
+using Microsoft.Bot.Schema;
+using Newtonsoft.Json;
+using Newtonsoft.Json.Linq;
 
 namespace ixnChatbot
 {
@@ -8,33 +12,24 @@ namespace ixnChatbot
         protected readonly int ixnID;
         protected Dictionary<string, int> fields;
         protected string[] values;
-        private bool hasIXNFormData;
         
-        private static readonly string fieldGetterQueryWholeTable
-            = "SELECT COLUMN_NAME FROM information_schema.columns WHERE table_name in('Projects','IXN_database_entries')";
+        protected string fieldGetterQueryWholeTable
+            = "SELECT COLUMN_NAME FROM information_schema.columns WHERE table_name in('IXN_database_entries')";
+        protected string searchQuery;
 
-        public Project(string[] fields, string[] values, bool hasIxnFormData)
+        public Project(string[] fields, string[] values)
         {
             this.fields = new Dictionary<string, int>();
             this.values = values;
-            this.hasIXNFormData = hasIxnFormData;
 
             for (int i = 0; i < fields.Length; i++)
             {
-                //There may be fields with the same name e.g. Project Title in both tables. In this case, the try block
-                //is used so that the constructor doesn't crash. If the class needs to store this second instance of the
-                //field e.g. if it has an IXN form, it handles all that in the inheriting class, IXN_Project
-                try
-                {
-                    this.fields.Add(fields[i], i);
-                }
-                catch (Exception)
-                {
-                    this.fields.Add("f." + fields[i], i);
-                }
+                this.fields.Add(fields[i], i);
             }
 
             ixnID = Int32.Parse(values[this.fields["ixnID"]]);
+            searchQuery =
+                "SELECT * FROM RCGP_Projects.IXN_database_entries i WHERE i.ixnID = " + ixnID;
         }
 
         //When a project is first instantiated, it only stores information on ixnID, ixnEntry, projectTitle,
@@ -42,9 +37,6 @@ namespace ixnChatbot
         //values with all the information available for this Project
         public void toDetailedProject()
         {
-            string searchQuery =
-                "SELECT * FROM RCGP_Projects.IXN_database_entries i LEFT JOIN RCGP_Projects.Projects p ON "
-                + "i.ixnEntry = p.projectID WHERE i.ixnID = " + ixnID;
             sqlConnector _sqlConnector = new sqlConnector();
             _sqlConnector.OpenConnection();
             
@@ -94,7 +86,42 @@ namespace ixnChatbot
 
         public bool hasIxnFormData()
         {
-            return hasIXNFormData;
+            return false;
+        }
+        
+        public virtual Attachment getPatientCard()
+        {
+            string json = File.ReadAllText("Cards/detailedProjectCard.json");
+            dynamic jsonObj = JsonConvert.DeserializeObject(json);
+            jsonObj["body"][0]["columns"][1]["items"][0]["text"] = getValue("projectTitle");
+            jsonObj["body"][0]["columns"][1]["items"][1]["text"] = getValue("organisationName");
+            jsonObj["body"][1]["items"][0]["text"] = getValue("institute");
+            jsonObj["body"][1]["items"][1]["text"] = "Led By " + getValue("industrySupervisor");
+            jsonObj["body"][1]["items"][2]["text"] = "Uploaded On " + getValue("projectStart");
+            jsonObj["body"][0]["columns"][0]["items"][0]["url"] = getOrganizationLogo(getValue("organisationName"));
+            jsonObj["body"][3]["text"] = getValue("projectAbstract");
+
+            return new Attachment()
+            {
+                ContentType = "application/vnd.microsoft.card.adaptive",
+                Content = jsonObj
+            };
+        }
+        
+        protected string getOrganizationLogo(string organizationName)
+        {
+            string json = File.ReadAllText("Cards/companyLogos.json");
+            dynamic jsonObj = JsonConvert.DeserializeObject(json);
+            JArray logos = (JArray) jsonObj["logos"];
+            
+            for (int i = 0; i < logos.Count; i++)
+            {
+                if (organizationName.ToLower().Contains(logos[i]["name"].ToString()))
+                {
+                    return logos[i]["link"].ToString();
+                }
+            }
+            return jsonObj["default"];
         }
     }
 }

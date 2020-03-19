@@ -76,20 +76,25 @@
       ],
       "style": "emphasis",
       "spacing": "Small"
+    },
+    {
+      "type": "TextBlock",
+      "text": "Abstract",
+      "size": "Medium",
+      "color": "Accent",
+      "separator": true
+    },
+    {
+      "type": "TextBlock",
+      "text": "A project to develop a medical chatbot.",
+      "spacing": "Small",
+      "wrap": true
     }
   ],
   "actions": [
     {
       "type": "Action.Submit",
-      "title": "Project Description"
-    },
-    {
-      "type": "Action.Submit",
-      "title": "Skills, Data and Devices Required"
-    },
-    {
-      "type": "Action.Submit",
-      "title": "Partner Details"
+      "title": "Contract Details"
     }
   ]
 }

@@ -36,11 +36,11 @@ namespace ixnChatbot
             {
                 if (projectSearchResults[i][getIndexOfField("ixnID", fields)] == "")
                 {
-                    projects.Add(new Project(fields, projectSearchResults[i].ToArray(), false));
+                    projects.Add(new Project(fields, projectSearchResults[i].ToArray()));
                 }
                 else
                 {
-                    projects.Add(new Project(fields, projectSearchResults[i].ToArray(), true));
+                    projects.Add(new IXN_Project(fields, projectSearchResults[i].ToArray()));
                 }
             }
             this.projects = projects.ToArray();

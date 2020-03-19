@@ -17,8 +17,6 @@ namespace ixnChatbot.Dialogs
         
         public searchProject2(luisRecogniser luisRecogniser) : base(luisRecogniser, nameof(searchProject2))
         {
-            jsonManager = new jsonManager();
-
             var waterfallSteps = new WaterfallStep[]
             {
                 partOne,
@@ -37,12 +35,7 @@ namespace ixnChatbot.Dialogs
         {
             project = (Project) stepContext.Options;
             project.toDetailedProject();
-            Attachment projectCard =  jsonManager.detailedProjectCardGenerator(project.getValue("projectTitle"), 
-                project.getValue("organisationName"), project.getValue("institute"),
-                project.getValue("industrySupervisor"), project.getValue("projectStart"));
-            var response = MessageFactory.Attachment(projectCard);
-            
-            await stepContext.Context.SendActivityAsync(response, cancellationToken);
+            await stepContext.Context.SendActivityAsync(MessageFactory.Attachment(project.getPatientCard()), cancellationToken);
 
             var promptOptions = new PromptOptions { Prompt = MessageFactory.Text("What would you like to know about this project?") };
             return await stepContext.PromptAsync(nameof(TextPrompt), promptOptions, cancellationToken);
@@ -51,12 +44,22 @@ namespace ixnChatbot.Dialogs
         private async Task<DialogTurnResult> cardOrUser(WaterfallStepContext stepContext,
             CancellationToken cancellationToken)
         {
-            //Message Code sent if user clicks on a card
-            if (stepContext.Result.ToString() == "#AC_SP")
+            await stepContext.Context.SendActivityAsync(stepContext.Result.ToString());
+            string action = resolveCardActionCode(stepContext.Result.ToString());
+            
+            if (action == "#AC_SP")
             {
                 return await stepContext.ReplaceDialogAsync(nameof(searchProject), stepContext.Context.Activity.Value, cancellationToken);
             }
-            //Proceed to LUIS if the message was typed by user...
+            
+            if (action == "#AC_Description")
+            {
+                IXN_Project project = (IXN_Project) this.project;
+                await stepContext.Context.SendActivityAsync(MessageFactory.Attachment(project.getDescriptionCard()),
+                    cancellationToken);
+                return await stepContext.NextAsync(null, cancellationToken);
+            }
+            // //Proceed to LUIS if the message was typed by user...
             return await stepContext.NextAsync(stepContext.Result, cancellationToken);
         }
         
@@ -73,6 +76,12 @@ namespace ixnChatbot.Dialogs
                 default:
                     return await stepContext.ReplaceDialogAsync(nameof(WaterfallDialog), stepContext.Result, cancellationToken);
             }
+        }
+
+        private string resolveCardActionCode(string activityValue)
+        {
+            dynamic jsonObj = JsonConvert.DeserializeObject(activityValue);
+            return jsonObj["id"];
         }
     } 
 }

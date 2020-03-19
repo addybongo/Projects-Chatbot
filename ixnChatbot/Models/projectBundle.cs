@@ -9,12 +9,6 @@ namespace ixnChatbot
         private Project[] projects;
         private Dictionary<int, Project> idToProject;
         private readonly sqlConnector _sqlConnector;
-        //The query below is used to get the fields names in the ixn_database_entries and projects tables
-        private readonly string fieldGetterQueryWholeTable
-        = "SELECT COLUMN_NAME FROM information_schema.columns WHERE table_name in('Projects','IXN_database_entries')";
-        
-        private readonly string fieldGetterQueryIXNTable
-            = "SELECT COLUMN_NAME FROM information_schema.columns WHERE table_name in('IXN_database_entries')";
 
         private string[] fields = {"ixnID", "ixnEntry", "projectTitle", "organisationName", "industrySupervisor"};
         
@@ -30,7 +24,6 @@ namespace ixnChatbot
                 entities.organizationOverview);
 
             List<List<String>> projectSearchResults = _sqlConnector.select(searchQuery);
-            int ixnTableSize = _sqlConnector.select(fieldGetterQueryIXNTable).Count;
             
             for (int i = 0; i < projectSearchResults.Count; i++)
             {
@@ -50,6 +43,18 @@ namespace ixnChatbot
         public Project getProject(int id)
         {
             return projects[id];
+        }
+        
+        public Project getProjectByID(int id)
+        {
+            for (int i = 0; i < getNumberOfProjects(); i++)
+            {
+                if (projects[i].getValue("ixnID") == id.ToString())
+                {
+                    return projects[i];
+                }
+            }
+            return null;
         }
 
         public int getNumberOfProjects()
@@ -115,17 +120,6 @@ namespace ixnChatbot
             likeStatement += "p." + entityName + " LIKE '%" + entities[entities.Length - 1] + "%'";
             
             return likeStatement;
-        }
-        
-        private List<String> transpose(List<List<String>> data)
-        {
-            List<String> result = new List<String>();
-            
-            for (int i = 0; i < data.Count; i++)
-            {
-                result.Add(data[i][0]);
-            }
-            return result;
         }
     }
 }

@@ -3,16 +3,16 @@ using System.Collections.Generic;
 using System.Net.Mime;
 using System.Threading;
 using System.Threading.Tasks;
-using ixnChatbot.Cards;
 using Microsoft.Bot.Builder
     ;
 using Microsoft.Bot.Builder.Dialogs;
+using Newtonsoft.Json;
 
 namespace ixnChatbot.Dialogs
 {
     public class searchDatabase : dialogBase
     {
-        private projectResultsContainer projectResults;
+        private projectBundle projectResults;
         private int SEARCH_RESULT_LIMIT = 4; //Number of projects that can be listed at once
         private int searchIndex = 0; //Index of projects currently being listen
         
@@ -55,7 +55,10 @@ namespace ixnChatbot.Dialogs
             //Message Code sent if user clicks on a card
             if (stepContext.Result.ToString() == "#AC_SP")
             {
-                return await stepContext.BeginDialogAsync(nameof(searchProject), stepContext.Context.Activity.Value, cancellationToken);
+                dynamic jsonObj = JsonConvert.DeserializeObject(stepContext.Context.Activity.Value.ToString());
+                int id = jsonObj["data"];
+                
+                return await stepContext.BeginDialogAsync(nameof(searchProject), projectResults.getProjectByID(id), cancellationToken);
             }
             //Proceed to LUIS if the message was typed by user...
             return await stepContext.NextAsync(stepContext.Result, cancellationToken);
@@ -73,18 +76,15 @@ namespace ixnChatbot.Dialogs
             {
                 case luisResultContainer.Intent.listProjects:
                     searchIndex = 0;
-                    string query = connector.projectSelectionQueryBuilder(entities.contactJobTitle, entities.contactName, entities.organizationName,
-                        entities.projectUsages, entities.projectLocation, entities.projectCriteria, entities.projectDescription, entities.organizationOverview);
-                    projectResultsContainer tempProjectResults = new projectResultsContainer(connector.select(query), connector.getFieldNames("Projects"));
+                    projectBundle searchResult = new projectBundle(entities);
                     
-                    if (tempProjectResults.getNumberOfRecords() == 0)
+                    if (searchResult.getNumberOfProjects() == 0)
                     {
                         sendMessage(stepContext, "I'm sorry, I couldn't find any projects matching your parameters. Please try again with different keywords.", cancellationToken);
                         break;
                     }
-                    projectResults = tempProjectResults;
                     
-                    await displayProjects(stepContext, cancellationToken);
+                    await displayProjects(searchResult, stepContext, cancellationToken);
                     break;
                 
                 case luisResultContainer.Intent.displayMoreProjects:
@@ -92,7 +92,7 @@ namespace ixnChatbot.Dialogs
                     if (projectResults != null)
                     {
                         sendMessage(stepContext, "Here are some more results for your last search.", cancellationToken);
-                        await displayProjects(stepContext, cancellationToken);
+                        await displayProjects(projectResults, stepContext, cancellationToken);
                     }
                     else
                     {
@@ -107,26 +107,24 @@ namespace ixnChatbot.Dialogs
             return await stepContext.ReplaceDialogAsync(InitialDialogId, "Could I help you with anything else?", cancellationToken);
         }
 
-        private async Task displayProjects(WaterfallStepContext stepContext, CancellationToken cancellationToken)
+        private async Task displayProjects(projectBundle searchResult, WaterfallStepContext stepContext, CancellationToken cancellationToken)
         {
             //If we have less records than the search result limit, set the number of cards to make to what is available
-            int numberOfSearchResults = projectResults.getNumberOfRecords() < SEARCH_RESULT_LIMIT
-                ? projectResults.getNumberOfRecords()
-                : SEARCH_RESULT_LIMIT;
+            int numberOfSearchResults = searchResult.getNumberOfProjects() < SEARCH_RESULT_LIMIT
+                ? searchResult.getNumberOfProjects() : SEARCH_RESULT_LIMIT;
 
-            sendMessage(stepContext, "I found " + projectResults.getNumberOfRecords() + " related " + 
-                                     (projectResults.getNumberOfRecords() == 1 ? "project. " : "projects. Here are the top results:") , cancellationToken);
+            sendMessage(stepContext, "I found " + searchResult.getNumberOfProjects() + " related " + 
+                                     (searchResult.getNumberOfProjects() == 1 ? "project. " : "projects. Here are the top results:") , cancellationToken);
             
             for (int i = 0; i < numberOfSearchResults; i++)
             {
-                string[] currentRecord = projectResults.getRecord(i);
-                
-                int projectIndex = searchIndex + i;
-                var projectCard = jsonManager.projectCardGenerator( currentRecord[0], currentRecord[1], 
-                    currentRecord[2], currentRecord[3]);
-                var response = MessageFactory.Attachment(projectCard);
+                Project currentRecord = searchResult.getProject(i);
+                var response = MessageFactory.Attachment(currentRecord.getSimplePatientCard());
                 await stepContext.Context.SendActivityAsync(response, cancellationToken);
             }
+
+            //Assigns the current search to the scope of the dialog in case the user wants to do more with these results
+            projectResults = searchResult;
         }
     } 
 }

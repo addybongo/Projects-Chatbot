@@ -2,7 +2,6 @@
 using System.Collections.Generic;
 using System.Threading;
 using System.Threading.Tasks;
-using ixnChatbot.Cards;
 using Microsoft.Bot.Builder;
 using Microsoft.Bot.Builder.Dialogs;
 using Microsoft.Bot.Schema;
@@ -13,11 +12,10 @@ namespace ixnChatbot.Dialogs
     public class searchProject : dialogBase
     {
         private int SEARCH_RESULT_LIMIT = 4;
+        private Project project; //The project that this dialog focuses on
         
         public searchProject(luisRecogniser luisRecogniser) : base(luisRecogniser, nameof(searchProject))
         {
-            jsonManager = new jsonManager();
-
             var waterfallSteps = new WaterfallStep[]
             {
                 partOne,
@@ -34,16 +32,15 @@ namespace ixnChatbot.Dialogs
         private async Task<DialogTurnResult> partOne(WaterfallStepContext stepContext,
             CancellationToken cancellationToken)
         {
-            string query = projectQueryCreator(stepContext.Options.ToString());
-            
-            string[] projectRecord = new projectResultsContainer(connector.select(query), 
-                connector.getFieldNames("Projects")).getRecord(0);
-
-            Attachment projectCard =  jsonManager.detailedProjectCardGenerator(projectRecord[8], projectRecord[1], projectRecord[17],
-                projectRecord[4], projectRecord[16]);
-            var response = MessageFactory.Attachment(projectCard);
-            
-            await stepContext.Context.SendActivityAsync(response, cancellationToken);
+            //If options given to dialog, it has just begun, which means we show the starting menu card
+            if (stepContext.Options != null)
+            {
+                project ??= (Project) stepContext
+                    .Options; 
+                project.toDetailedProject();
+                await stepContext.Context.SendActivityAsync(MessageFactory.Attachment(project.getPatientCard()),
+                    cancellationToken);
+            }
 
             var promptOptions = new PromptOptions { Prompt = MessageFactory.Text("What would you like to know about this project?") };
             return await stepContext.PromptAsync(nameof(TextPrompt), promptOptions, cancellationToken);
@@ -52,13 +49,29 @@ namespace ixnChatbot.Dialogs
         private async Task<DialogTurnResult> cardOrUser(WaterfallStepContext stepContext,
             CancellationToken cancellationToken)
         {
-            //Message Code sent if user clicks on a card
-            if (stepContext.Result.ToString() == "#AC_SP")
-            {
-                return await stepContext.ReplaceDialogAsync(nameof(searchProject), stepContext.Context.Activity.Value, cancellationToken);
+            IXN_Project asIxnProject = (IXN_Project) project;
+
+            switch (stepContext.Result.ToString())
+            { 
+                case "#AC_SP":
+                    return await stepContext.ReplaceDialogAsync(InitialDialogId, project, cancellationToken);
+                case "#AC_Description":
+                    await stepContext.Context.SendActivityAsync(MessageFactory.Attachment(asIxnProject.getDescriptionCard()),
+                        cancellationToken);
+                    return await stepContext.ReplaceDialogAsync(InitialDialogId, null, cancellationToken);
+                    break;
+                case "#AC_SDD":
+                    asIxnProject = (IXN_Project) project;
+                    await stepContext.Context.SendActivityAsync(MessageFactory.Attachment(asIxnProject.getSkillsDataAndDevicesCard()),
+                        cancellationToken);
+                    return await stepContext.ReplaceDialogAsync(InitialDialogId, null, cancellationToken);
+                case "#AC_Partner":
+                    await stepContext.Context.SendActivityAsync(MessageFactory.Attachment(asIxnProject.getPartnerCard()),
+                        cancellationToken);
+                    return await stepContext.ReplaceDialogAsync(InitialDialogId, null, cancellationToken);
             }
             //Proceed to LUIS if the message was typed by user...
-            return await stepContext.NextAsync(stepContext.Result, cancellationToken);
+            return await stepContext.NextAsync(stepContext.Result.ToString(), cancellationToken);
         }
         
         private async Task<DialogTurnResult> partTwo(WaterfallStepContext stepContext,
@@ -72,16 +85,14 @@ namespace ixnChatbot.Dialogs
                 case luisResultContainer.Intent.listProjects:
                     return await stepContext.EndDialogAsync(stepContext.Result, cancellationToken);
                 default:
-                    return await stepContext.ReplaceDialogAsync(nameof(WaterfallDialog), stepContext.Result, cancellationToken);
+                    return await stepContext.ReplaceDialogAsync(InitialDialogId, null, cancellationToken);
             }
         }
 
-        private string projectQueryCreator(string activityValue)
+        private string resolveCardActionCode(string activityValue)
         {
             dynamic jsonObj = JsonConvert.DeserializeObject(activityValue);
-            string id = jsonObj["data"];
-
-            return "SELECT * FROM Projects p INNER JOIN IXN_database_entries ixn ON p.projectID = ixn.ixnEntry WHERE projectID = " + id + ";";
+            return jsonObj["id"];
         }
     } 
 }

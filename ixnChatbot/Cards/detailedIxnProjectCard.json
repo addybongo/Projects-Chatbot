@@ -81,9 +81,26 @@
   "actions": [
     {
       "type": "Action.Submit",
+      "id": "Description",
       "title": "Project Description",
       "data": {
         "id": "#AC_Description"
+      }
+    },
+    {
+      "type": "Action.Submit",
+      "id": "Skills,Data and Devices",
+      "title": "Skills, Data and Devices",
+      "data": {
+        "id": "#AC_SDD"
+      }
+    },
+    {
+      "type": "Action.Submit",
+      "id": "Partner",
+      "title": "Partner Details",
+      "data": {
+        "id": "#AC_Partner"
       }
     }
   ]

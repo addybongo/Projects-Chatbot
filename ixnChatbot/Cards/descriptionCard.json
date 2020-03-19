@@ -75,7 +75,8 @@
       "text": "Chatbot for Medical Development",
       "wrap": true,
       "spacing": "Small",
-      "separator": true
+      "separator": true,
+      "weight": "Bolder"
     },
     {
       "type": "TextBlock",

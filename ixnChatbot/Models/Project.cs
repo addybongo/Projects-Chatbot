@@ -10,24 +10,29 @@ namespace ixnChatbot
     public class Project
     {
         protected readonly int ixnID;
-        protected Dictionary<string, int> fields;
-        protected string[] values;
+        private Dictionary<string, int> fields = new Dictionary<string, int>();
+        private string[] values;
         
         protected string fieldGetterQueryWholeTable
             = "SELECT COLUMN_NAME FROM information_schema.columns WHERE table_name in('IXN_database_entries')";
         protected string searchQuery;
 
-        public Project(string[] fields, string[] values)
+        public Project()
         {
-            this.fields = new Dictionary<string, int>();
+            //This empty constructor is used to stop MS bot framework from trying to reconstruct the object when passing
+            //between waterfall steps
+        }
+        
+        public Project(string[] rawFields, string[] values)
+        {
             this.values = values;
 
-            for (int i = 0; i < fields.Length; i++)
+            for (int i = 0; i < rawFields.Length; i++)
             {
-                this.fields.Add(fields[i], i);
+                fields.Add(rawFields[i], i);
             }
 
-            ixnID = Int32.Parse(values[this.fields["ixnID"]]);
+            ixnID = Int32.Parse(values[fields["ixnID"]]);
             searchQuery =
                 "SELECT * FROM RCGP_Projects.IXN_database_entries i WHERE i.ixnID = " + ixnID;
         }
@@ -100,6 +105,25 @@ namespace ixnChatbot
             jsonObj["body"][1]["items"][2]["text"] = "Uploaded On " + getValue("projectStart");
             jsonObj["body"][0]["columns"][0]["items"][0]["url"] = getOrganizationLogo(getValue("organisationName"));
             jsonObj["body"][3]["text"] = getValue("projectAbstract");
+
+            return new Attachment()
+            {
+                ContentType = "application/vnd.microsoft.card.adaptive",
+                Content = jsonObj
+            };
+        }
+        
+        public Attachment getSimplePatientCard()
+        {
+            string json = File.ReadAllText("Cards/projectCard.json");
+            dynamic jsonObj = JsonConvert.DeserializeObject(json);
+            jsonObj["selectAction"]["data"]["data"] = "" + ixnID;
+            jsonObj["body"][0]["text"] = getValue("projectTitle");
+            jsonObj["body"][1]["columns"][1]["items"][0]["text"] = getValue("organisationName");
+            jsonObj["body"][1]["columns"][1]["items"][1]["text"] = getValue("industrySupervisor");
+            
+            jsonObj["body"][1]["columns"][0]["items"][0]["url"] = getOrganizationLogo(getValue("organisationName"));
+
 
             return new Attachment()
             {

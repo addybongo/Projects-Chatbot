@@ -1,6 +1,5 @@
 ﻿using System.Threading;
 using System.Threading.Tasks;
-using ixnChatbot.Cards;
 using Microsoft.Bot.Builder;
 using Microsoft.Bot.Builder.Dialogs;
 using Newtonsoft.Json;
@@ -11,13 +10,11 @@ namespace ixnChatbot.Dialogs
     {
         protected luisRecogniser _luisRecogniser;
         protected sqlConnector connector;
-        protected jsonManager jsonManager;
 
         public dialogBase(luisRecogniser luisRecogniser, string dialogID) : base(dialogID)
         {
             _luisRecogniser = luisRecogniser;
             connector = new sqlConnector();
-            jsonManager = new jsonManager();
 
             connector.OpenConnection();
         }

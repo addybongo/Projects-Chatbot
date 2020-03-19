@@ -5,7 +5,6 @@ using System.Collections.Generic;
 using System.IO;
 using System.Threading;
 using System.Threading.Tasks;
-using ixnChatbot.Cards;
 using Microsoft.Bot.Builder;
 using Microsoft.Bot.Builder.Dialogs;
 using Microsoft.Bot.Schema;
@@ -21,7 +20,7 @@ namespace ixnChatbot
         protected readonly Dialog _dialog;
         private static luisRecogniser _luisRecogniser;
         
-        public EmptyBot(ConversationState conversationState, UserState userState, searchDatabase2 dialog)
+        public EmptyBot(ConversationState conversationState, UserState userState, searchDatabase dialog)
         {
             _conversationState = conversationState;
             _userState = userState;
@@ -34,8 +33,7 @@ namespace ixnChatbot
             {
                 if (member.Id != turnContext.Activity.Recipient.Id)
                 {
-                    jsonManager jsonManager = new jsonManager();
-                    var welcomeCard = jsonManager.CreateAdaptiveCardAttachment();
+                    var welcomeCard = CreateAdaptiveCardAttachment();
                     var response = MessageFactory.Attachment(welcomeCard);
                     await turnContext.SendActivityAsync(response, cancellationToken);
                     await _dialog.RunAsync(turnContext, _conversationState.CreateProperty<DialogState>(nameof(DialogState)), cancellationToken);
@@ -65,6 +63,23 @@ namespace ixnChatbot
             await _dialog.RunAsync(turnContext, _conversationState.CreateProperty<DialogState>(nameof(DialogState)),
                 cancellationToken);
         }
+        
+        public Attachment CreateAdaptiveCardAttachment()
+        {
+            var cardResourcePath = "ixnChatbot.Cards.welcomeCard.json";
 
+            using (var stream = GetType().Assembly.GetManifestResourceStream(cardResourcePath))
+            {
+                using (var reader = new StreamReader(stream))
+                {
+                    var adaptiveCard = reader.ReadToEnd();
+                    return new Attachment()
+                    {
+                        ContentType = "application/vnd.microsoft.card.adaptive",
+                        Content = JsonConvert.DeserializeObject(adaptiveCard),
+                    };
+                }
+            }
+        }
     }
 }

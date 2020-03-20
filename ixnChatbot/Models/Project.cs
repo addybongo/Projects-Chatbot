@@ -124,7 +124,6 @@ namespace ixnChatbot
             
             jsonObj["body"][1]["columns"][0]["items"][0]["url"] = getOrganizationLogo(getValue("organisationName"));
 
-
             return new Attachment()
             {
                 ContentType = "application/vnd.microsoft.card.adaptive",

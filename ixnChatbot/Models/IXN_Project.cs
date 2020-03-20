@@ -87,6 +87,7 @@ namespace ixnChatbot
         {
             string json = File.ReadAllText("Cards/industryPartnerCard.json");
             dynamic jsonObj = JsonConvert.DeserializeObject(json);
+            jsonObj["body"][0]["columns"][0]["items"][0]["url"] = getOrganizationLogo(getValue("organizationName"));
             jsonObj["body"][0]["columns"][1]["items"][0]["text"] = getValue("organizationName");
             jsonObj["body"][2]["text"] = getValue("organizationOverview");
             jsonObj["body"][4]["text"] = getValue("organizationAddress");

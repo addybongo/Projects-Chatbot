@@ -102,6 +102,30 @@
       "data": {
         "id": "#AC_Partner"
       }
+    },
+    {
+      "type": "Action.Submit",
+      "id": "Contract",
+      "title": "Contract Information",
+      "data": {
+        "id": "#AC_Contract"
+      }
+    },
+    {
+      "type": "Action.Submit",
+      "id": "NDA",
+      "title": "NDA Information",
+      "data": {
+        "id": "#AC_NDA"
+      }
+    },
+    {
+      "type": "Action.Submit",
+      "id": "Academic",
+      "title": "Academic Information",
+      "data": {
+        "id": "#AC_Academic"
+      }
     }
   ]
 }

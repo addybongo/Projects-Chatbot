@@ -10,7 +10,7 @@ namespace ixnChatbot
         private Dictionary<int, Project> idToProject;
         private readonly sqlConnector _sqlConnector;
 
-        private string[] fields = {"ixnID", "ixnEntry", "projectTitle", "organisationName", "industrySupervisor"};
+        private string[] fields = {"projectID", "ixnID", "contractID", "academicID", "projectTitle", "organizationName", "contactName"};
         
         public projectBundle(luisResultContainer._Entities entities)
         {
@@ -27,14 +27,7 @@ namespace ixnChatbot
             
             for (int i = 0; i < projectSearchResults.Count; i++)
             {
-                if (projectSearchResults[i][getIndexOfField("ixnID", fields)] == "")
-                {
-                    projects.Add(new Project(fields, projectSearchResults[i].ToArray()));
-                }
-                else
-                {
-                    projects.Add(new IXN_Project(fields, projectSearchResults[i].ToArray()));
-                }
+                projects.Add(new Project(fields, projectSearchResults[i].ToArray()));
             }
             this.projects = projects.ToArray();
             _sqlConnector.CloseConnection();
@@ -49,7 +42,7 @@ namespace ixnChatbot
         {
             for (int i = 0; i < getNumberOfProjects(); i++)
             {
-                if (projects[i].getValue("ixnID") == id.ToString())
+                if (projects[i].getValue("projectID") == id.ToString())
                 {
                     return projects[i];
                 }
@@ -75,8 +68,8 @@ namespace ixnChatbot
             String[] projectUsages,
             String[] projectLocation, String[] projectCriteria, String[] projectDescription, String[] organizationOverview)
         {
-            string query = "SELECT i.ixnID, i.ixnEntry, i.projectTitle, i.organisationName, i.industrySupervisor " + 
-                           "FROM RCGP_Projects.IXN_database_entries i LEFT JOIN RCGP_Projects.Projects p ON i.ixnEntry = p.projectID WHERE ";
+            string query = "SELECT i.projectID, i.ixnID, i.contractID, i.academicID, p.projectTitle, "
+            + "p.organizationName, p.contactName FROM RCGP_Projects.projectentries i LEFT JOIN RCGP_Projects.Projects p ON i.ixnID = p.projectID WHERE ";
 
             if(contactJobTitle != null) query+= likeStatementBuilder("contactTitle", contactJobTitle) + " OR ";
             if(contactName != null)

@@ -18,19 +18,19 @@ namespace ixnChatbot
 
         public sqlConnector()
         {
-            // server = "ixnprojectsdb.mysql.database.azure.com";
+        server = "rcgpprojects.mysql.database.azure.com";
+        database = "RCGP_Projects";
+        uid = "rcgpadmin@rcgpprojects";
+        password = "rcgp!12345678";
+        string connectionString = "SERVER=" + server + ";" + "DATABASE=" +
+        database + ";" + "UID=" + uid + ";" + "PASSWORD=" + password + ";";
+            
+            // server = "51.145.112.189";
             // database = "RCGP_Projects";
-            // uid = "rcgpadmin@ixnprojectsdb";
+            // uid = "rcgpadmin";
             // password = "rcgp!12345678";
             // string connectionString = "SERVER=" + server + ";" + "DATABASE=" +
             // database + ";" + "UID=" + uid + ";" + "PASSWORD=" + password + ";";
-            
-            server = "51.145.112.189";
-            database = "RCGP_Projects";
-            uid = "rcgpadmin";
-            password = "rcgp!12345678";
-            string connectionString = "SERVER=" + server + ";" + "DATABASE=" +
-            database + ";" + "UID=" + uid + ";" + "PASSWORD=" + password + ";";
 
             connection = new MySqlConnection(connectionString);
         }

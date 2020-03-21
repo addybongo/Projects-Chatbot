@@ -1,0 +1,216 @@
+﻿{
+  "type": "AdaptiveCard",
+  "body": [
+    {
+      "type": "ColumnSet",
+      "columns": [
+        {
+          "type": "Column",
+          "width": "auto",
+          "items": [
+            {
+              "type": "Image",
+              "altText": "",
+              "url": "https://cdn2.iconfinder.com/data/icons/simple-circular-icons-line/84/Left_Arrow_-512.png",
+              "width": "40px",
+              "style": "Person",
+              "selectAction": {
+                "type": "Action.Submit",
+                "title": "selectProject",
+                "data": {
+                  "id": "#AC_SP",
+                  "data": "0"
+                }
+              }
+            },
+            {
+              "type": "TextBlock",
+              "text": "Back",
+              "horizontalAlignment": "Center",
+              "spacing": "None",
+              "weight": "Bolder"
+            }
+          ]
+        },
+        {
+          "type": "Column",
+          "width": "stretch",
+          "items": [
+            {
+              "type": "TextBlock",
+              "text": "Academic Details",
+              "size": "Large",
+              "horizontalAlignment": "Center",
+              "weight": "Bolder",
+              "color": "Accent"
+            }
+          ],
+          "verticalContentAlignment": "Center"
+        }
+      ],
+      "style": "emphasis",
+      "horizontalAlignment": "Center",
+      "bleed": true
+    },
+    {
+      "type": "TextBlock",
+      "text": "This project was developed in partnership with an academic institution, so information regarding academic progress can be found here.",
+      "horizontalAlignment": "Left",
+      "wrap": true,
+      "spacing": "Small"
+    },
+    {
+      "type": "ColumnSet",
+      "columns": [
+        {
+          "type": "Column",
+          "width": "stretch",
+          "items": [
+            {
+              "type": "TextBlock",
+              "text": "",
+              "weight": "Bolder"
+            }
+          ]
+        },
+        {
+          "type": "Column",
+          "width": "stretch",
+          "items": [
+            {
+              "type": "TextBlock",
+              "text": "UCL",
+              "color": "Accent"
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "type": "TextBlock",
+      "text": "Ethics Assessment",
+      "separator": true,
+      "weight": "Bolder"
+    },
+    {
+      "type": "ColumnSet",
+      "columns": [
+        {
+          "type": "Column",
+          "width": "stretch",
+          "items": [
+            {
+              "type": "TextBlock",
+              "text": "Ethics Approval",
+              "spacing": "Small"
+            },
+            {
+              "type": "TextBlock",
+              "text": "",
+              "spacing": "Small"
+            },
+            {
+              "type": "TextBlock",
+              "text": "",
+              "spacing": "Small"
+            }
+          ]
+        },
+        {
+          "type": "Column",
+          "width": "stretch",
+          "items": [
+            {
+              "type": "TextBlock",
+              "text": "Yes",
+              "spacing": "Small",
+              "color": "Good"
+            },
+            {
+              "type": "TextBlock",
+              "text": "",
+              "spacing": "Small",
+              "color": "Accent"
+            },
+            {
+              "type": "TextBlock",
+              "text": "",
+              "spacing": "Small",
+              "color": "Accent"
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "type": "TextBlock",
+      "text": "Academic Assessment",
+      "separator": true,
+      "weight": "Bolder"
+    },
+    {
+      "type": "ColumnSet",
+      "columns": [
+        {
+          "type": "Column",
+          "width": "stretch",
+          "items": [
+            {
+              "type": "TextBlock",
+              "text": "Primary Assessor",
+              "spacing": "Small"
+            },
+            {
+              "type": "TextBlock",
+              "text": "Secondary Assessor",
+              "spacing": "Small"
+            },
+            {
+              "type": "TextBlock",
+              "text": "Date Assessed",
+              "spacing": "Small"
+            }
+          ]
+        },
+        {
+          "type": "Column",
+          "width": "stretch",
+          "items": [
+            {
+              "type": "TextBlock",
+              "text": "Dean Mohamedally",
+              "spacing": "Small",
+              "color": "Accent"
+            },
+            {
+              "type": "TextBlock",
+              "text": "Graham Roberts",
+              "spacing": "Small",
+              "color": "Accent"
+            },
+            {
+              "type": "TextBlock",
+              "text": "20/03/2020",
+              "spacing": "Small",
+              "color": "Accent"
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "type": "TextBlock",
+      "text": "Comments",
+      "separator": true,
+      "weight": "Bolder"
+    },
+    {
+      "type": "TextBlock",
+      "text": "",
+      "separator": true,
+      "wrap": true
+    }
+  ],
+  "$schema": "http://adaptivecards.io/schemas/adaptive-card.json",
+  "version": "1.0"
+}

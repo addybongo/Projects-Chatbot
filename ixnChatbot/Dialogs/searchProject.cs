@@ -49,29 +49,40 @@ namespace ixnChatbot.Dialogs
         private async Task<DialogTurnResult> cardOrUser(WaterfallStepContext stepContext,
             CancellationToken cancellationToken)
         {
-            IXN_Project asIxnProject = (IXN_Project) project;
 
             switch (stepContext.Result.ToString())
             { 
                 case "#AC_SP":
                     return await stepContext.ReplaceDialogAsync(InitialDialogId, project, cancellationToken);
                 case "#AC_Description":
-                    await stepContext.Context.SendActivityAsync(MessageFactory.Attachment(asIxnProject.getDescriptionCard()),
+                    await stepContext.Context.SendActivityAsync(MessageFactory.Attachment(project.getDescriptionCard()),
                         cancellationToken);
-                    return await stepContext.ReplaceDialogAsync(InitialDialogId, null, cancellationToken);
                     break;
                 case "#AC_SDD":
-                    asIxnProject = (IXN_Project) project;
-                    await stepContext.Context.SendActivityAsync(MessageFactory.Attachment(asIxnProject.getSkillsDataAndDevicesCard()),
+                    await stepContext.Context.SendActivityAsync(MessageFactory.Attachment(project.getSkillsDataAndDevicesCard()),
                         cancellationToken);
-                    return await stepContext.ReplaceDialogAsync(InitialDialogId, null, cancellationToken);
+                    break;
                 case "#AC_Partner":
-                    await stepContext.Context.SendActivityAsync(MessageFactory.Attachment(asIxnProject.getPartnerCard()),
+                    await stepContext.Context.SendActivityAsync(MessageFactory.Attachment(project.getPartnerCard()),
                         cancellationToken);
-                    return await stepContext.ReplaceDialogAsync(InitialDialogId, null, cancellationToken);
+                    break;
+                case "#AC_Contract":
+                    await stepContext.Context.SendActivityAsync(MessageFactory.Attachment(project.getContractCard()),
+                        cancellationToken);
+                    break;
+                case "#AC_NDA":
+                    await stepContext.Context.SendActivityAsync(MessageFactory.Attachment(project.getNDACard()),
+                        cancellationToken);
+                    break;
+                case "#AC_Academic":
+                    await stepContext.Context.SendActivityAsync(MessageFactory.Attachment(project.getAcademicCard()),
+                        cancellationToken);
+                    break;
+                default:
+                    //Proceed to LUIS if the message was typed by user...
+                    return await stepContext.NextAsync(stepContext.Result.ToString(), cancellationToken);
             }
-            //Proceed to LUIS if the message was typed by user...
-            return await stepContext.NextAsync(stepContext.Result.ToString(), cancellationToken);
+            return await stepContext.ReplaceDialogAsync(InitialDialogId, null, cancellationToken);
         }
         
         private async Task<DialogTurnResult> partTwo(WaterfallStepContext stepContext,

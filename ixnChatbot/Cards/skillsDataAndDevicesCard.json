@@ -12,7 +12,7 @@
           "items": [
             {
               "type": "Image",
-              "url": "https://www.materialui.co/materialIcons/navigation/arrow_back_white_192x192.png",
+              "url": "https://cdn2.iconfinder.com/data/icons/simple-circular-icons-line/84/Left_Arrow_-512.png",
               "size": "Small",
               "width": "40px",
               "horizontalAlignment": "Center",
@@ -33,7 +33,7 @@
               "text": "Back",
               "horizontalAlignment": "Center",
               "spacing": "None",
-              "color": "Light",
+              "color": "Dark",
               "weight": "Bolder"
             }
           ],
@@ -49,7 +49,8 @@
               "horizontalAlignment": "Center",
               "wrap": true,
               "size": "Large",
-              "weight": "Bolder"
+              "weight": "Bolder",
+              "color": "Accent"
             },
             {
               "type": "TextBlock",
@@ -62,20 +63,19 @@
           "horizontalAlignment": "Center",
           "height": "stretch",
           "verticalContentAlignment": "Center",
-          "style": "accent"
+          "style": "emphasis"
         }
       ],
       "bleed": true,
       "minHeight": "0px",
-      "style": "accent"
+      "style": "emphasis"
     },
     {
       "type": "TextBlock",
       "text": "Project Skills",
       "weight": "Bolder",
       "size": "Medium",
-      "spacing": "Small",
-      "color": "Accent"
+      "spacing": "Small"
     },
     {
       "type": "TextBlock",
@@ -89,8 +89,7 @@
       "text": "Project Data Samples",
       "weight": "Bolder",
       "size": "Medium",
-      "spacing": "Small",
-      "color": "Accent"
+      "spacing": "Small"
     },
     {
       "type": "TextBlock",
@@ -104,8 +103,7 @@
       "text": "Project Devices",
       "weight": "Bolder",
       "size": "Medium",
-      "spacing": "Small",
-      "color": "Accent"
+      "spacing": "Small"
     },
     {
       "type": "TextBlock",

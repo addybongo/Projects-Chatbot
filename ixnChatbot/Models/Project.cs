@@ -12,9 +12,9 @@ namespace ixnChatbot
         protected readonly int projectID;
         private Dictionary<string, int> fields = new Dictionary<string, int>();
         private string[] values;
-        private bool academicProject;
-        private bool contractInfo;
-        
+        private bool isAcademic;
+        private bool hasNda;
+
         protected string[] fieldGetterQueryWholeTable
             =
             {
@@ -23,6 +23,7 @@ namespace ixnChatbot
                 "SELECT COLUMN_NAME FROM information_schema.columns WHERE table_name in('contracts')",
                 "SELECT COLUMN_NAME FROM information_schema.columns WHERE table_name in('academics')"
             };
+
         protected string searchQuery;
 
         public Project()
@@ -30,12 +31,11 @@ namespace ixnChatbot
             //This empty constructor is used to stop MS bot framework from trying to reconstruct the object when passing
             //between waterfall steps
         }
-        
+
         public Project(string[] rawFields, string[] values)
         {
             this.values = values;
-            contractInfo = values[2] == "" ? false : true;
-            academicProject = values[3] == "" ? false : true;
+            isAcademic = values[3] == "" ? false : true;
 
             for (int i = 0; i < rawFields.Length; i++)
             {
@@ -56,10 +56,10 @@ namespace ixnChatbot
         {
             sqlConnector _sqlConnector = new sqlConnector();
             _sqlConnector.OpenConnection();
-            
+
             values = _sqlConnector.select(searchQuery)[0].ToArray();
             this.fields = new Dictionary<string, int>(); //Resets the field dictionary to empty
-            
+
             List<String> fields = new List<string>();
             // int ixnTableSize = _sqlConnector.select(fieldGetterQueryIXNTable).Count;
             for (int i = 0; i < fieldGetterQueryWholeTable.Length; i++)
@@ -70,13 +70,18 @@ namespace ixnChatbot
             //Re add all values to the fields dictionary
             for (int i = 0; i < fields.Count; i++)
             {
-                try {
+                try
+                {
                     this.fields.Add(fields[i], i);
                 }
-                catch (Exception) {
+                catch (Exception)
+                {
                     this.fields.Add("f." + fields[i], i);
                 }
             }
+
+            hasNda = (getValue("ndaRequired") == "True");
+            isAcademic = getValue("academicID") != "";
         }
 
         public string getValue(string field)
@@ -93,15 +98,16 @@ namespace ixnChatbot
                                     + field + "! Please check your field name or the database schema");
             }
         }
-        
+
         private List<String> transpose(List<List<String>> data)
         {
             List<String> result = new List<String>();
-            
+
             for (int i = 0; i < data.Count; i++)
             {
                 result.Add(data[i][0]);
             }
+
             return result;
         }
 
@@ -111,12 +117,12 @@ namespace ixnChatbot
             dynamic jsonObj = JsonConvert.DeserializeObject(json);
 
             string x = getValue("requiresContract");
-            
+
             if (getValue("requiresContract") == "False")
             {
                 jsonObj["actions"][3] = "";
             }
-            
+
             if (getValue("ndaRequired") == "False")
             {
                 jsonObj["actions"][4] = "";
@@ -127,13 +133,13 @@ namespace ixnChatbot
                 jsonObj["actions"][5] = "";
 
             }
-            
+
             jsonObj["body"][0]["columns"][1]["items"][0]["text"] = getValue("projectTitle");
             jsonObj["body"][0]["columns"][1]["items"][1]["text"] = getValue("organizationName");
             jsonObj["body"][1]["items"][0]["text"] = getValue("institute");
             jsonObj["body"][1]["items"][1]["text"] = "Led By " + getValue("contactName");
             jsonObj["body"][1]["items"][2]["text"] = "Uploaded On " + getValue("dateUploaded");
-            
+
             jsonObj["body"][0]["columns"][0]["items"][0]["url"] = getOrganizationLogo(getValue("organizationName"));
 
             return new Attachment()
@@ -142,37 +148,43 @@ namespace ixnChatbot
                 Content = jsonObj
             };
         }
-        
+
         public Attachment getDescriptionCard()
         {
             string json = File.ReadAllText("Cards/descriptionCard.json");
             dynamic jsonObj = JsonConvert.DeserializeObject(json);
             //Setup settings for back button so that it points back to the ID of this project
             jsonObj["body"][0]["columns"][0]["items"][0]["selectAction"]["data"]["data"] = "" + projectID;
-            
+
             jsonObj["body"][2]["text"] = getValue("projectTitle");
             jsonObj["body"][4]["text"] = getValue("projectDescription");
             jsonObj["body"][6]["text"] = getValue("projectTechnicalChallenges");
-            
+
             return new Attachment()
             {
                 ContentType = "application/vnd.microsoft.card.adaptive",
                 Content = jsonObj
             };
         }
-        
+
         public Attachment getSkillsDataAndDevicesCard()
         {
             string json = File.ReadAllText("Cards/skillsDataAndDevicesCard.json");
             dynamic jsonObj = JsonConvert.DeserializeObject(json);
             //Setup settings for back button so that it points back to the ID of this project
             jsonObj["body"][0]["columns"][0]["items"][0]["selectAction"]["data"]["data"] = "" + projectID;
-            
+
             jsonObj["body"][0]["columns"][1]["items"][1]["text"] = getValue("projectTitle");
-            jsonObj["body"][2]["text"] = getValue("projectSkills") != "" ? getValue("projectSkills") : "No Skills were specified.";
-            jsonObj["body"][4]["text"] = getValue("projectDataSamples") != "" ? getValue("projectDataSamples") : "No Data Samples were given.";
-            jsonObj["body"][6]["text"] = getValue("projectDevices") != "" ? getValue("projectDevices") : "No Devices were specified."; 
-            
+            jsonObj["body"][2]["text"] = getValue("projectSkills") != ""
+                ? getValue("projectSkills")
+                : "No Skills were specified.";
+            jsonObj["body"][4]["text"] = getValue("projectDataSamples") != ""
+                ? getValue("projectDataSamples")
+                : "No Data Samples were given.";
+            jsonObj["body"][6]["text"] = getValue("projectDevices") != ""
+                ? getValue("projectDevices")
+                : "No Devices were specified.";
+
             return new Attachment()
             {
                 ContentType = "application/vnd.microsoft.card.adaptive",
@@ -205,14 +217,14 @@ namespace ixnChatbot
         {
             string json = File.ReadAllText("Cards/projectCard.json");
             dynamic jsonObj = JsonConvert.DeserializeObject(json);
-            
+
             //Setup card so that when it is tapped, it points to this project ID
             jsonObj["selectAction"]["data"]["data"] = "" + projectID;
-            
+
             jsonObj["body"][0]["text"] = getValue("projectTitle");
             jsonObj["body"][1]["columns"][1]["items"][0]["text"] = getValue("organizationName");
             jsonObj["body"][1]["columns"][1]["items"][1]["text"] = getValue("contactName");
-            
+
             jsonObj["body"][1]["columns"][0]["items"][0]["url"] = getOrganizationLogo(getValue("organizationName"));
 
             return new Attachment()
@@ -226,10 +238,10 @@ namespace ixnChatbot
         {
             string json = File.ReadAllText("Cards/contractCard.json");
             dynamic jsonObj = JsonConvert.DeserializeObject(json);
-            
+
             //Setup settings for back button so that it points back to the ID of this project
             jsonObj["body"][0]["columns"][0]["items"][0]["selectAction"]["data"]["data"] = "" + projectID;
-            
+
             string[] timelinePoints = {"generatedContract", "studentSignedContract", "organizationSignedContract"};
             int timelinePointsCompleted = 0;
 
@@ -248,51 +260,53 @@ namespace ixnChatbot
                     ++timelinePointsCompleted;
                 }
             }
+
             //If the contract has been completed
             if (timelinePointsCompleted == timelinePoints.Length)
             {
                 jsonObj["body"][6]["text"] = "Contract Completed on " + getValue("contractDateSigned");
             }
+
             //If the contract signatories section was filled out
             if (getValue("contractSignatories").Trim().Length != 0)
             {
                 jsonObj["body"][7]["text"] = "Contract Signatories";
                 jsonObj["body"][8]["text"] = getValue("contractSignatories");
             }
-            
+
             return new Attachment()
             {
                 ContentType = "application/vnd.microsoft.card.adaptive",
                 Content = jsonObj
             };
         }
-        
+
         public Attachment getNDACard()
         {
             string json = File.ReadAllText("Cards/ndaCard.json");
             dynamic jsonObj = JsonConvert.DeserializeObject(json);
-            
+
             //Setup settings for back button so that it points back to the ID of this project
             jsonObj["body"][0]["columns"][0]["items"][0]["selectAction"]["data"]["data"] = "" + projectID;
-            
+
             if (getValue("ndaSigned") == "True")
             {
-                    jsonObj["body"][3]["columns"][0]["items"][0]["columns"][0]["items"][0]["url"] =
-                        "https://upload.wikimedia.org/wikipedia/commons/thumb/0/0b/BlueFlat_tick_icon.svg/1200px-BlueFlat_tick_icon.svg.png";
-                    jsonObj["body"][3]["columns"][0]["items"][0]["columns"][1]["items"][0]["text"] = "Completed";
-                    jsonObj["body"][3]["columns"][1]["items"][0]["url"] =
-                        "https://webstockreview.net/images/circle-clipart-plain-18.png"; 
-                    jsonObj["body"][4]["text"] = "NDA Completed on " + getValue("ndaDateSigned");
+                jsonObj["body"][3]["columns"][0]["items"][0]["columns"][0]["items"][0]["url"] =
+                    "https://upload.wikimedia.org/wikipedia/commons/thumb/0/0b/BlueFlat_tick_icon.svg/1200px-BlueFlat_tick_icon.svg.png";
+                jsonObj["body"][3]["columns"][0]["items"][0]["columns"][1]["items"][0]["text"] = "Completed";
+                jsonObj["body"][3]["columns"][1]["items"][0]["url"] =
+                    "https://webstockreview.net/images/circle-clipart-plain-18.png";
+                jsonObj["body"][4]["text"] = "NDA Completed on " + getValue("ndaDateSigned");
 
             }
-            
+
             //If the contract signatories section was filled out
             if (getValue("ndaSignatories").Trim().Length != 0)
             {
                 jsonObj["body"][5]["text"] = "NDA Signatories";
                 jsonObj["body"][6]["text"] = getValue("ndaSignatories");
             }
-            
+
             return new Attachment()
             {
                 ContentType = "application/vnd.microsoft.card.adaptive",
@@ -302,7 +316,7 @@ namespace ixnChatbot
 
         public Attachment getAcademicCard()
         {
-            
+
             string json = File.ReadAllText("Cards/academicCard.json");
             dynamic jsonObj = JsonConvert.DeserializeObject(json);
 
@@ -322,6 +336,7 @@ namespace ixnChatbot
                 jsonObj["body"][4]["columns"][0]["items"][1]["text"] = "Reason for Ethics Disapproval";
                 jsonObj["body"][4]["columns"][1]["items"][1]["text"] = getValue("reasonForEthicsDisapproval");
             }
+
             //If the ethics assessor info is available, add it
             if (getValue("ethicsAssessor").Trim().Length != 0)
             {
@@ -329,12 +344,16 @@ namespace ixnChatbot
                 jsonObj["body"][4]["columns"][1]["items"][2]["text"] = getValue("ethicsAssessor");
             }
 
-            jsonObj["body"][6]["columns"][1]["items"][0]["text"] = getValue("primaryAssessor").Trim().Length == 0 ?
-                "N/A" :  getValue("primaryAssessor");
-            jsonObj["body"][6]["columns"][1]["items"][1]["text"] = getValue("secondaryAssessor").Trim().Length == 0 ? 
-                "N/A" : getValue("secondaryAssessor");
-            jsonObj["body"][6]["columns"][1]["items"][2]["text"] = getValue("dateAssessed").Trim().Length == 0 ?
-                "To be Assessed" : getValue("dateAssessed");;
+            jsonObj["body"][6]["columns"][1]["items"][0]["text"] = getValue("primaryAssessor").Trim().Length == 0
+                ? "N/A"
+                : getValue("primaryAssessor");
+            jsonObj["body"][6]["columns"][1]["items"][1]["text"] = getValue("secondaryAssessor").Trim().Length == 0
+                ? "N/A"
+                : getValue("secondaryAssessor");
+            jsonObj["body"][6]["columns"][1]["items"][2]["text"] = getValue("dateAssessed").Trim().Length == 0
+                ? "To be Assessed"
+                : getValue("dateAssessed");
+            ;
 
             //If comments were added, add them here
             if (getValue("comments").Trim().Length == 0)
@@ -349,13 +368,13 @@ namespace ixnChatbot
                 Content = jsonObj
             };
         }
-        
+
         private string getOrganizationLogo(string organizationName)
         {
             string json = File.ReadAllText("Cards/companyLogos.json");
             dynamic jsonObj = JsonConvert.DeserializeObject(json);
             JArray logos = (JArray) jsonObj["logos"];
-            
+
             for (int i = 0; i < logos.Count; i++)
             {
                 if (organizationName.ToLower().Contains(logos[i]["name"].ToString()))
@@ -363,7 +382,18 @@ namespace ixnChatbot
                     return logos[i]["link"].ToString();
                 }
             }
+
             return jsonObj["default"];
+        }
+
+        public bool HasNda()
+        {
+            return hasNda;
+        }
+
+        public bool IsAcademic()
+        {
+            return isAcademic; 
         }
     }
 }

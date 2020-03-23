@@ -7,13 +7,34 @@
   "tokenizerVersion": "1.0.0",
   "intents": [
     {
+      "name": "academicOfProject"
+    },
+    {
+      "name": "cancelDialog"
+    },
+    {
+      "name": "contractOfProject"
+    },
+    {
+      "name": "descriptionOfProject"
+    },
+    {
       "name": "displayMoreProjects"
     },
     {
       "name": "listProjects"
     },
     {
+      "name": "ndaOfProject"
+    },
+    {
       "name": "None"
+    },
+    {
+      "name": "partnerOfProject"
+    },
+    {
+      "name": "skillsDataDevicesOfProjects"
     }
   ],
   "entities": [
@@ -81,8 +102,18 @@
       "entities": []
     },
     {
+      "text": "describe this project",
+      "intent": "descriptionOfProject",
+      "entities": []
+    },
+    {
       "text": "display more results",
       "intent": "displayMoreProjects",
+      "entities": []
+    },
+    {
+      "text": "does this project have a contract",
+      "intent": "contractOfProject",
       "entities": []
     },
     {
@@ -124,6 +155,17 @@
       ]
     },
     {
+      "text": "find projects led by joseph connor",
+      "intent": "listProjects",
+      "entities": [
+        {
+          "entity": "contactName",
+          "startPos": 21,
+          "endPos": 33
+        }
+      ]
+    },
+    {
       "text": "get me all medical projects by ibm led by joseph connor",
       "intent": "listProjects",
       "entities": [
@@ -156,6 +198,21 @@
       ]
     },
     {
+      "text": "has a contract been signed",
+      "intent": "contractOfProject",
+      "entities": []
+    },
+    {
+      "text": "has this project been assessed",
+      "intent": "academicOfProject",
+      "entities": []
+    },
+    {
+      "text": "has this project had an ethics assessment",
+      "intent": "academicOfProject",
+      "entities": []
+    },
+    {
       "text": "hello?",
       "intent": "None",
       "entities": []
@@ -166,8 +223,38 @@
       "entities": []
     },
     {
+      "text": "i have no more questions",
+      "intent": "cancelDialog",
+      "entities": []
+    },
+    {
       "text": "im trying to be like adnan",
       "intent": "None",
+      "entities": []
+    },
+    {
+      "text": "is there a confidentiality agreement",
+      "intent": "ndaOfProject",
+      "entities": []
+    },
+    {
+      "text": "is there a non disclosure agreement",
+      "intent": "ndaOfProject",
+      "entities": []
+    },
+    {
+      "text": "is there an nda",
+      "intent": "ndaOfProject",
+      "entities": []
+    },
+    {
+      "text": "is this a university project",
+      "intent": "academicOfProject",
+      "entities": []
+    },
+    {
+      "text": "is this an academic project",
+      "intent": "academicOfProject",
       "entities": []
     },
     {
@@ -269,6 +356,11 @@
       "entities": []
     },
     {
+      "text": "list more projects",
+      "intent": "displayMoreProjects",
+      "entities": []
+    },
+    {
       "text": "list projects by the rcgp",
       "intent": "listProjects",
       "entities": [
@@ -276,6 +368,17 @@
           "entity": "organizationName",
           "startPos": 21,
           "endPos": 24
+        }
+      ]
+    },
+    {
+      "text": "list projects led by joseph connor",
+      "intent": "listProjects",
+      "entities": [
+        {
+          "entity": "contactName",
+          "startPos": 21,
+          "endPos": 33
         }
       ]
     },
@@ -290,9 +393,51 @@
       "entities": []
     },
     {
+      "text": "nah",
+      "intent": "cancelDialog",
+      "entities": []
+    },
+    {
+      "text": "no",
+      "intent": "cancelDialog",
+      "entities": []
+    },
+    {
+      "text": "no thank you",
+      "intent": "cancelDialog",
+      "entities": []
+    },
+    {
+      "text": "nope",
+      "intent": "cancelDialog",
+      "entities": []
+    },
+    {
       "text": "ok",
       "intent": "None",
       "entities": []
+    },
+    {
+      "text": "projects by gosh",
+      "intent": "listProjects",
+      "entities": [
+        {
+          "entity": "organizationName",
+          "startPos": 12,
+          "endPos": 15
+        }
+      ]
+    },
+    {
+      "text": "projects by ibm",
+      "intent": "listProjects",
+      "entities": [
+        {
+          "entity": "organizationName",
+          "startPos": 12,
+          "endPos": 14
+        }
+      ]
     },
     {
       "text": "projects from gosh",
@@ -328,6 +473,17 @@
       ]
     },
     {
+      "text": "show me ai projects",
+      "intent": "listProjects",
+      "entities": [
+        {
+          "entity": "projectDescription",
+          "startPos": 8,
+          "endPos": 9
+        }
+      ]
+    },
+    {
       "text": "show me all projects by the rcgp",
       "intent": "listProjects",
       "entities": [
@@ -337,6 +493,11 @@
           "endPos": 31
         }
       ]
+    },
+    {
+      "text": "show me details about the contract",
+      "intent": "contractOfProject",
+      "entities": []
     },
     {
       "text": "show me fhir projects",
@@ -361,6 +522,22 @@
       ]
     },
     {
+      "text": "show me ibm projects",
+      "intent": "listProjects",
+      "entities": [
+        {
+          "entity": "organizationName",
+          "startPos": 8,
+          "endPos": 10
+        }
+      ]
+    },
+    {
+      "text": "show me more projects",
+      "intent": "displayMoreProjects",
+      "entities": []
+    },
+    {
       "text": "show me projcets led by joseph",
       "intent": "listProjects",
       "entities": [
@@ -372,9 +549,31 @@
       ]
     },
     {
+      "text": "show me projcts by joseph connor",
+      "intent": "listProjects",
+      "entities": [
+        {
+          "entity": "contactName",
+          "startPos": 19,
+          "endPos": 31
+        }
+      ]
+    },
+    {
       "text": "show me projects",
       "intent": "listProjects",
       "entities": []
+    },
+    {
+      "text": "show me projects by dean",
+      "intent": "listProjects",
+      "entities": [
+        {
+          "entity": "contactName",
+          "startPos": 20,
+          "endPos": 23
+        }
+      ]
     },
     {
       "text": "show me projects by google",
@@ -388,6 +587,17 @@
       ]
     },
     {
+      "text": "show me projects by gosh",
+      "intent": "listProjects",
+      "entities": [
+        {
+          "entity": "organizationName",
+          "startPos": 20,
+          "endPos": 23
+        }
+      ]
+    },
+    {
       "text": "show me projects by ibm",
       "intent": "listProjects",
       "entities": [
@@ -395,6 +605,22 @@
           "entity": "organizationName",
           "startPos": 20,
           "endPos": 22
+        }
+      ]
+    },
+    {
+      "text": "show me projects by ibm that use ai",
+      "intent": "listProjects",
+      "entities": [
+        {
+          "entity": "organizationName",
+          "startPos": 20,
+          "endPos": 22
+        },
+        {
+          "entity": "projectDescription",
+          "startPos": 33,
+          "endPos": 34
         }
       ]
     },
@@ -421,6 +647,17 @@
       ]
     },
     {
+      "text": "show me projects by jsph connor",
+      "intent": "listProjects",
+      "entities": [
+        {
+          "entity": "contactName",
+          "startPos": 20,
+          "endPos": 30
+        }
+      ]
+    },
+    {
       "text": "show me projects by rcgp",
       "intent": "listProjects",
       "entities": [
@@ -443,6 +680,17 @@
       ]
     },
     {
+      "text": "show me projects by zain ahmad",
+      "intent": "listProjects",
+      "entities": [
+        {
+          "entity": "contactName",
+          "startPos": 20,
+          "endPos": 29
+        }
+      ]
+    },
+    {
       "text": "show me projects involving joseph connor",
       "intent": "listProjects",
       "entities": [
@@ -450,6 +698,72 @@
           "entity": "contactName",
           "startPos": 27,
           "endPos": 39
+        }
+      ]
+    },
+    {
+      "text": "show me projects led by gemm",
+      "intent": "listProjects",
+      "entities": [
+        {
+          "entity": "contactName",
+          "startPos": 24,
+          "endPos": 27
+        }
+      ]
+    },
+    {
+      "text": "show me projects led by gemma",
+      "intent": "listProjects",
+      "entities": [
+        {
+          "entity": "contactName",
+          "startPos": 24,
+          "endPos": 28
+        }
+      ]
+    },
+    {
+      "text": "show me projects led by gemma molyneaux",
+      "intent": "listProjects",
+      "entities": [
+        {
+          "entity": "contactName",
+          "startPos": 24,
+          "endPos": 38
+        }
+      ]
+    },
+    {
+      "text": "show me projects led by joe",
+      "intent": "listProjects",
+      "entities": [
+        {
+          "entity": "contactName",
+          "startPos": 24,
+          "endPos": 26
+        }
+      ]
+    },
+    {
+      "text": "show me projects led by josep",
+      "intent": "listProjects",
+      "entities": [
+        {
+          "entity": "contactName",
+          "startPos": 24,
+          "endPos": 28
+        }
+      ]
+    },
+    {
+      "text": "show me projects led by joseph",
+      "intent": "listProjects",
+      "entities": [
+        {
+          "entity": "contactName",
+          "startPos": 24,
+          "endPos": 29
         }
       ]
     },
@@ -465,9 +779,25 @@
       ]
     },
     {
+      "text": "show me the project abstract",
+      "intent": "descriptionOfProject",
+      "entities": []
+    },
+    {
       "text": "show me who im trying to be like:",
       "intent": "None",
       "entities": []
+    },
+    {
+      "text": "show mee projects by ibm",
+      "intent": "listProjects",
+      "entities": [
+        {
+          "entity": "organizationName",
+          "startPos": 21,
+          "endPos": 23
+        }
+      ]
     },
     {
       "text": "show more",
@@ -480,13 +810,131 @@
       "entities": []
     },
     {
+      "text": "show projects by ibm",
+      "intent": "listProjects",
+      "entities": [
+        {
+          "entity": "organizationName",
+          "startPos": 17,
+          "endPos": 19
+        }
+      ]
+    },
+    {
+      "text": "show projects by joseph connor",
+      "intent": "listProjects",
+      "entities": [
+        {
+          "entity": "contactName",
+          "startPos": 17,
+          "endPos": 29
+        }
+      ]
+    },
+    {
+      "text": "show projects by rcgp",
+      "intent": "listProjects",
+      "entities": [
+        {
+          "entity": "organizationName",
+          "startPos": 17,
+          "endPos": 20
+        }
+      ]
+    },
+    {
+      "text": "tell me about the devices required",
+      "intent": "skillsDataDevicesOfProjects",
+      "entities": []
+    },
+    {
+      "text": "tell me about the information it uses",
+      "intent": "skillsDataDevicesOfProjects",
+      "entities": []
+    },
+    {
+      "text": "tell me about this project",
+      "intent": "descriptionOfProject",
+      "entities": []
+    },
+    {
+      "text": "thats everything thanks",
+      "intent": "cancelDialog",
+      "entities": []
+    },
+    {
       "text": "tyler the creator is the greatest rapper of all time",
       "intent": "None",
       "entities": []
     },
     {
+      "text": "what company leads this",
+      "intent": "partnerOfProject",
+      "entities": []
+    },
+    {
+      "text": "what data does it use",
+      "intent": "skillsDataDevicesOfProjects",
+      "entities": []
+    },
+    {
+      "text": "what details are there on nda",
+      "intent": "ndaOfProject",
+      "entities": []
+    },
+    {
+      "text": "what devices does it use",
+      "intent": "skillsDataDevicesOfProjects",
+      "entities": []
+    },
+    {
+      "text": "what does it need",
+      "intent": "skillsDataDevicesOfProjects",
+      "entities": []
+    },
+    {
+      "text": "what does this project do",
+      "intent": "descriptionOfProject",
+      "entities": []
+    },
+    {
+      "text": "what ethics are involved in this project",
+      "intent": "academicOfProject",
+      "entities": []
+    },
+    {
+      "text": "what is this project",
+      "intent": "descriptionOfProject",
+      "entities": []
+    },
+    {
+      "text": "what skills are required",
+      "intent": "skillsDataDevicesOfProjects",
+      "entities": []
+    },
+    {
+      "text": "when was the nda signed",
+      "intent": "ndaOfProject",
+      "entities": []
+    },
+    {
+      "text": "when was this project assessed",
+      "intent": "academicOfProject",
+      "entities": []
+    },
+    {
       "text": "where are the rest of the results",
       "intent": "displayMoreProjects",
+      "entities": []
+    },
+    {
+      "text": "which devices are needed by this project",
+      "intent": "skillsDataDevicesOfProjects",
+      "entities": []
+    },
+    {
+      "text": "which organization leads this project",
+      "intent": "partnerOfProject",
       "entities": []
     },
     {
@@ -499,6 +947,41 @@
           "endPos": 38
         }
       ]
+    },
+    {
+      "text": "which skills are needed by this project",
+      "intent": "skillsDataDevicesOfProjects",
+      "entities": []
+    },
+    {
+      "text": "which university was this project made at",
+      "intent": "academicOfProject",
+      "entities": []
+    },
+    {
+      "text": "who assessed this project",
+      "intent": "academicOfProject",
+      "entities": []
+    },
+    {
+      "text": "who has signed the nda",
+      "intent": "ndaOfProject",
+      "entities": []
+    },
+    {
+      "text": "who is partnered with this project",
+      "intent": "partnerOfProject",
+      "entities": []
+    },
+    {
+      "text": "who leads this project",
+      "intent": "partnerOfProject",
+      "entities": []
+    },
+    {
+      "text": "who runs this project",
+      "intent": "partnerOfProject",
+      "entities": []
     },
     {
       "text": "yes",

@@ -55,15 +55,6 @@ namespace ixnChatbot
             return projects.Length;
         }
 
-        private int getIndexOfField(string field, string[] fields)
-        {
-            for (int i = 0; i < fields.Length; i++)
-            {
-                if (fields[i] == field) return i;
-            }
-            return -1;
-        }
-        
         private string projectSelectionQueryBuilder(String[] contactJobTitle, String[] contactName, String[] organizationName,
             String[] projectUsages,
             String[] projectLocation, String[] projectCriteria, String[] projectDescription, String[] organizationOverview)
@@ -99,7 +90,15 @@ namespace ixnChatbot
                         likeStatementBuilder("projectDataSamples", projectUsages) + " OR " + 
                         likeStatementBuilder("anyOtherInformation", projectUsages) + " OR ";
             }
-            return query.Substring(0, query.Length - 3) + ";";
+            //If LUIS identified any entities, the if statements above would be executed and at the end of the query,
+            //'OR ' would be left. This lets us isolate the case where no entities are found, so that we get rid of
+            //the WHERE clause in the query
+            if (query.Substring(query.Length-3, 3) == "OR ")
+            {
+                return query.Substring(0, query.Length - 3) + ";";
+            }
+            //Gets rid of the WHERE clause
+            return query.Substring(0, query.Length - 6);
         }
         
         private string likeStatementBuilder(String entityName, String[] entities)

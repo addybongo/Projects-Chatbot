@@ -19,9 +19,16 @@ namespace ixnChatbot
         public string AlteredText;
 
         public enum Intent {
+            academicOfProject,
+            cancelDialog,
+            contractOfProject,
+            descriptionOfProject,
             displayMoreProjects,
             listProjects,
-            None
+            ndaOfProject,
+            None,
+            partnerOfProject,
+            skillsDataDevicesOfProjects
         };
         [JsonProperty("intents")]
         public Dictionary<Intent, IntentScore> Intents;
@@ -62,7 +69,7 @@ namespace ixnChatbot
 
         public void Convert(dynamic result)
         {
-            var app = JsonConvert.DeserializeObject<luisResultContainer>(JsonConvert.SerializeObject(result, new JsonSerializerSettings { NullValueHandling = NullValueHandling.Ignore }));
+            var app = JsonConvert.DeserializeObject <luisResultContainer>(JsonConvert.SerializeObject(result, new JsonSerializerSettings { NullValueHandling = NullValueHandling.Ignore }));
             Text = app.Text;
             AlteredText = app.AlteredText;
             Intents = app.Intents;

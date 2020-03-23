@@ -76,6 +76,7 @@ namespace ixnChatbot.Dialogs
             {
                 case luisResultContainer.Intent.listProjects:
                     searchIndex = 0;
+                    sendMessage(stepContext, "Please bare with me, I am searching for projects that match your criteria", cancellationToken);
                     projectBundle searchResult = new projectBundle(entities);
                     
                     if (searchResult.getNumberOfProjects() == 0)
@@ -94,12 +95,13 @@ namespace ixnChatbot.Dialogs
                         sendMessage(stepContext, "Here are some more results for your last search.", cancellationToken);
                         await displayProjects(projectResults, stepContext, cancellationToken);
                     }
-                    else
-                    {
-                        sendMessage(stepContext, "There is no projects to show! Please search for projects first.", cancellationToken);
-                    }
+                    else sendMessage(stepContext, "There is no projects to show! Please search for projects first.", cancellationToken);
+                    
                     break;
                 
+                case luisResultContainer.Intent.cancelDialog:
+                    return await stepContext.ReplaceDialogAsync(InitialDialogId, "Could I help you with anything else?", cancellationToken);
+
                 default:
                     var promptMessage = "I'm sorry, I am having trouble understanding you. What would you like me to do?";
                     return await stepContext.ReplaceDialogAsync(InitialDialogId, promptMessage, cancellationToken);

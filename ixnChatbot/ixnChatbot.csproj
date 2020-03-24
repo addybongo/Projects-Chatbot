@@ -29,4 +29,10 @@
       </EmbeddedResource>
     </ItemGroup>
 
+    <ItemGroup>
+      <Compile Include=".NET\AdapterWithErrorHandler.cs" />
+      <Compile Include=".NET\Program.cs" />
+      <Compile Include=".NET\Startup.cs" />
+    </ItemGroup>
+
 </Project>

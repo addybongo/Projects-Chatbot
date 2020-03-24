@@ -83,7 +83,7 @@ namespace ixnChatbot
                         likeStatementBuilder("projectDescription", projectDescription) + " OR " + 
                         likeStatementBuilder("anyOtherInformation", projectDescription) + " OR ";
             }
-            if(projectLocation != null) query+= likeStatementBuilder("projectLocation", projectLocation) + " OR ";
+            if(projectLocation != null) query+= likeStatementBuilder("organizationAddress", projectLocation) + " OR ";
             if (projectUsages != null)
             {
                 query+= likeStatementBuilder("projectDevices", projectUsages) + " OR " + 
@@ -101,15 +101,15 @@ namespace ixnChatbot
             return query.Substring(0, query.Length - 6);
         }
         
-        private string likeStatementBuilder(String entityName, String[] entities)
+        private string likeStatementBuilder(String field, String[] entities)
         {
             string likeStatement = "";
             
             for (int i = 0; i < entities.Length - 1; i++)
             {
-                likeStatement += "p." + entityName + " LIKE '%" + entities[i] + "%' OR ";
+                likeStatement += "p." + field + " LIKE '%" + entities[i] + "%' OR ";
             }
-            likeStatement += "p." + entityName + " LIKE '%" + entities[entities.Length - 1] + "%'";
+            likeStatement += "p." + field + " LIKE '%" + entities[entities.Length - 1] + "%'";
             
             return likeStatement;
         }

@@ -10,6 +10,7 @@ namespace ixnChatbot.Dialogs
     {
         protected luisRecogniser _luisRecogniser;
         protected sqlConnector connector;
+        static protected projectBundle projectResults;
 
         public dialogBase(luisRecogniser luisRecogniser, string dialogID) : base(dialogID)
         {

@@ -12,9 +12,8 @@ namespace ixnChatbot.Dialogs
 {
     public class searchDatabase : dialogBase
     {
-        private projectBundle projectResults;
         private int SEARCH_RESULT_LIMIT = 4; //Number of projects that can be listed at once
-        private int searchIndex = 0; //Index of projects currently being listen
+        private int searchIndex; //Index of projects currently being listen
         
         public searchDatabase(luisRecogniser luisRecogniser) : base(luisRecogniser, nameof(searchDatabase))
         {

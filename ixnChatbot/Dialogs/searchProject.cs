@@ -12,7 +12,6 @@ namespace ixnChatbot.Dialogs
 {
     public class searchProject : dialogBase
     {
-        private int SEARCH_RESULT_LIMIT = 4;
         private Project project; //The project that this dialog focuses on
         
         public searchProject(luisRecogniser luisRecogniser) : base(luisRecogniser, nameof(searchProject))
@@ -39,7 +38,7 @@ namespace ixnChatbot.Dialogs
             {
                 if (stepContext.Options.GetType() == typeof(Project))
                 {
-                    project ??= (Project) stepContext.Options;
+                    project = (Project) stepContext.Options;
                     project.toDetailedProject();
                     await stepContext.Context.SendActivityAsync(MessageFactory.Attachment(project.getPatientCard()),
                         cancellationToken);
@@ -59,7 +58,18 @@ namespace ixnChatbot.Dialogs
             switch (stepContext.Result.ToString())
             { 
                 case "#AC_SP":
-                    return await stepContext.ReplaceDialogAsync(InitialDialogId, project, cancellationToken);
+                    dynamic jsonObj = JsonConvert.DeserializeObject(stepContext.Context.Activity.Value.ToString());
+                    int id = jsonObj["data"];
+
+                    Project projectFromCardClick = projectResults.getProjectByID(id);
+
+                    if (projectFromCardClick is null)
+                    {
+                        sendMessage(stepContext, "Sorry, you need to search for this project again to access it here.", cancellationToken);
+                        break;
+                    }
+                
+                    return await stepContext.ReplaceDialogAsync(InitialDialogId, projectFromCardClick, cancellationToken);
                 case "#AC_Description":
                     await stepContext.Context.SendActivityAsync(MessageFactory.Attachment(project.getDescriptionCard()),
                         cancellationToken);

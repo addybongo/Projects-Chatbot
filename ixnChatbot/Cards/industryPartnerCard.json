@@ -55,32 +55,37 @@
       "type": "TextBlock",
       "text": "What do they do?",
       "weight": "Bolder",
-      "spacing": "Small"
+      "spacing": "Small",
+      "color": "Accent"
     },
     {
       "type": "TextBlock",
       "text": "Charity supporting GPs with the aim of improving patient care",
       "spacing": "None",
-      "separator": true
+      "separator": true,
+      "wrap": true
     },
     {
       "type": "TextBlock",
       "text": "Where are they located?",
       "weight": "Bolder",
-      "spacing": "Small"
+      "spacing": "Small",
+      "color": "Accent"
     },
     {
       "type": "TextBlock",
       "text": "London",
       "separator": true,
-      "spacing": "None"
+      "spacing": "None",
+      "wrap": true
     },
     {
       "type": "TextBlock",
       "text": "Partner Contact",
       "weight": "Bolder",
       "size": "Medium",
-      "spacing": "None"
+      "spacing": "None",
+      "color": "Accent"
     },
     {
       "type": "Container",

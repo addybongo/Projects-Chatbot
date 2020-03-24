@@ -90,13 +90,29 @@ namespace ixnChatbot.Dialogs
                 
                 case luisResultContainer.Intent.displayMoreProjects:
                     searchIndex += 4;
-                    if (projectResults != null)
+                    if (projectResults == null)
                     {
-                        sendMessage(stepContext, "Here are some more results for your last search.", cancellationToken);
-                        await displayProjects(projectResults, stepContext, cancellationToken);
+                        sendMessage(stepContext, "There is no projects to show! Please search for projects first.", cancellationToken);
+                        break;
                     }
-                    else sendMessage(stepContext, "There is no projects to show! Please search for projects first.", cancellationToken);
+
+                    if (searchIndex >= projectResults.getNumberOfProjects())
+                    {
+                        sendMessage(stepContext, "There are no more projects to show from this search! Here are the last 4 projects.", cancellationToken);
+                        searchIndex -= 4;
+                    }
+                    else sendMessage(stepContext, "Here are some more results for your last search.", cancellationToken);
                     
+                    int numberOfSearchResults = projectResults.getNumberOfProjects() < SEARCH_RESULT_LIMIT
+                        ? projectResults.getNumberOfProjects() : SEARCH_RESULT_LIMIT;
+                    
+                    for (int i = searchIndex; i < searchIndex + numberOfSearchResults; i++)
+                    {
+                        Project currentRecord = projectResults.getProject(i);
+                        var response = MessageFactory.Attachment(currentRecord.getSimplePatientCard());
+                        await stepContext.Context.SendActivityAsync(response, cancellationToken);
+                    }
+
                     break;
                 
                 case luisResultContainer.Intent.cancelDialog:
@@ -118,7 +134,7 @@ namespace ixnChatbot.Dialogs
             sendMessage(stepContext, "I found " + searchResult.getNumberOfProjects() + " related " + 
                                      (searchResult.getNumberOfProjects() == 1 ? "project. " : "projects. Here are the top results:") , cancellationToken);
             
-            for (int i = 0; i < numberOfSearchResults; i++)
+            for (int i = searchIndex; i < searchIndex + numberOfSearchResults; i++)
             {
                 Project currentRecord = searchResult.getProject(i);
                 var response = MessageFactory.Attachment(currentRecord.getSimplePatientCard());

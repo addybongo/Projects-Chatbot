@@ -110,7 +110,8 @@ namespace ixnChatbot.Dialogs
                     break;
 
                 case luisResultContainer.Intent.contractOfProject:
-                    await stepContext.Context.SendActivityAsync(MessageFactory.Attachment(project.getContractCard()),
+                    if(!project.HasContract()) sendMessage(stepContext, "This project doesn't have any contractual agreement", cancellationToken);
+                    else await stepContext.Context.SendActivityAsync(MessageFactory.Attachment(project.getContractCard()),
                         cancellationToken);
                     break;
 
@@ -126,7 +127,7 @@ namespace ixnChatbot.Dialogs
                     break;
 
                 case luisResultContainer.Intent.academicOfProject:
-                    if(!project.IsAcademic()) sendMessage(stepContext, "This project doesn't have any information on that.", cancellationToken);
+                    if(!project.IsAcademic()) sendMessage(stepContext, "That information is only stored with academic projects, not this one.", cancellationToken);
                     else await stepContext.Context.SendActivityAsync(MessageFactory.Attachment(project.getAcademicCard()),
                         cancellationToken);
                     break;

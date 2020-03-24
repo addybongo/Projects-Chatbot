@@ -14,6 +14,7 @@ namespace ixnChatbot
         private string[] values;
         private bool isAcademic;
         private bool hasNda;
+        private bool hasContract;
 
         protected string[] fieldGetterQueryWholeTable
             =
@@ -82,6 +83,8 @@ namespace ixnChatbot
 
             hasNda = (getValue("ndaRequired") == "True");
             isAcademic = getValue("academicID") != "";
+            hasContract = getValue("requiresContract") == "True";
+
         }
 
         public string getValue(string field)
@@ -118,17 +121,17 @@ namespace ixnChatbot
 
             string x = getValue("requiresContract");
 
-            if (getValue("requiresContract") == "False")
+            if (!hasContract)
             {
                 jsonObj["actions"][3] = "";
             }
 
-            if (getValue("ndaRequired") == "False")
+            if (!hasNda)
             {
                 jsonObj["actions"][4] = "";
             }
 
-            if (getValue("academicID") == "")
+            if (!isAcademic)
             {
                 jsonObj["actions"][5] = "";
 
@@ -394,6 +397,11 @@ namespace ixnChatbot
         public bool IsAcademic()
         {
             return isAcademic; 
+        }
+        
+        public bool HasContract()
+        {
+            return hasContract; 
         }
     }
 }

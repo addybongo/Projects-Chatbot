@@ -11,6 +11,14 @@
     { 
       "name" : "gosh",
       "link" : "https://cypmedtech.nihr.ac.uk/wp-content/uploads/2019/05/Partners-GOSH-DRIVE-Logo.jpg"
+    },
+    {
+      "name" : "microsoft",
+      "link" : "https://pbs.twimg.com/profile_images/1195545566681403394/g48WOfie_400x400.jpg"
+    },
+    {
+      "name" : "ucl",
+      "link" : "https://www.ucl.ac.uk/economics/sites/economics/files/styles/large_image/public/events/ucl-logo_5.png?itok=IMaNMZ6k"
     }
     ],
   "default" : "https://static.vecteezy.com/system/resources/thumbnails/000/552/199/small/gears_006.jpg"

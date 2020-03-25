@@ -112,7 +112,7 @@ namespace ixnChatbot.Dialogs
                     int numberOfSearchResults = projectResults.getNumberOfProjects() - searchIndex < SEARCH_RESULT_LIMIT
                         ? projectResults.getNumberOfProjects() - searchIndex : SEARCH_RESULT_LIMIT;
                     
-                    for (int i = 0; i < numberOfSearchResults - searchIndex; i++)
+                    for (int i = 0; i < numberOfSearchResults; i++)
                     {
                         Project currentRecord = projectResults.getProject(i + searchIndex);
                         var response = MessageFactory.Attachment(currentRecord.getSimplePatientCard());

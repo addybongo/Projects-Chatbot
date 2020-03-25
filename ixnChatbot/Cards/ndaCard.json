@@ -93,7 +93,7 @@
               ]
             }
           ],
-          "width": "150px"
+          "width": 40
         },
         {
           "type": "Column",
@@ -160,7 +160,7 @@
               ]
             }
           ],
-          "width": "150px"
+          "width": 40
         },
         {
           "type": "Column",

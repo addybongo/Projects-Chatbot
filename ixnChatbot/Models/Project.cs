@@ -118,9 +118,7 @@ namespace ixnChatbot
         {
             string json = File.ReadAllText("Cards/detailedIxnProjectCard.json");
             dynamic jsonObj = JsonConvert.DeserializeObject(json);
-
-            string x = getValue("requiresContract");
-
+            
             if (!hasContract)
             {
                 jsonObj["actions"][3] = "";

@@ -104,9 +104,9 @@ namespace ixnChatbot.Dialogs
 
                     if (searchIndex >= projectResults.getNumberOfProjects())
                     {
+                        searchIndex -= 4;
                         sendMessage(stepContext, "There are no more projects to show from this search! Here are the last " 
                                                  +  (projectResults.getNumberOfProjects() - searchIndex) + " projects.", cancellationToken);
-                        searchIndex -= 4;
                     }
                     else sendMessage(stepContext, "Here are some more results for your last search.", cancellationToken);
                     

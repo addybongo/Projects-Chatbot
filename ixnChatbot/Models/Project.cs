@@ -320,6 +320,9 @@ namespace ixnChatbot
             string json = File.ReadAllText("Cards/academicCard.json");
             dynamic jsonObj = JsonConvert.DeserializeObject(json);
 
+            //Setup settings for back button so that it points back to the ID of this project
+            jsonObj["body"][0]["columns"][0]["items"][0]["selectAction"]["data"]["data"] = "" + projectID;
+            
             //Create section that specifies institution
             if (getValue("institute").Trim().Length == 0)
             {

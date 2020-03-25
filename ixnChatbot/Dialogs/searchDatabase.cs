@@ -101,11 +101,8 @@ namespace ixnChatbot.Dialogs
                         searchIndex -= 4;
                     }
                     else sendMessage(stepContext, "Here are some more results for your last search.", cancellationToken);
-                    
-                    int numberOfSearchResults = projectResults.getNumberOfProjects() < SEARCH_RESULT_LIMIT
-                        ? projectResults.getNumberOfProjects() : SEARCH_RESULT_LIMIT;
-                    
-                    for (int i = searchIndex; i < searchIndex + numberOfSearchResults; i++)
+
+                    for (int i = searchIndex; i < projectResults.getNumberOfProjects(); i++)
                     {
                         Project currentRecord = projectResults.getProject(i);
                         var response = MessageFactory.Attachment(currentRecord.getSimplePatientCard());
@@ -115,7 +112,7 @@ namespace ixnChatbot.Dialogs
                     break;
                 
                 case luisResultContainer.Intent.cancelDialog:
-                    return await stepContext.ReplaceDialogAsync(InitialDialogId, "Could I help you with anything else?", cancellationToken);
+                    break;
 
                 default:
                     var promptMessage = "I'm sorry, I am having trouble understanding you. What would you like me to do?";

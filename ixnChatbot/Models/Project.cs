@@ -319,7 +319,6 @@ namespace ixnChatbot
 
         public Attachment getAcademicCard()
         {
-
             string json = File.ReadAllText("Cards/academicCard.json");
             dynamic jsonObj = JsonConvert.DeserializeObject(json);
 

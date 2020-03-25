@@ -74,6 +74,13 @@ namespace ixnChatbot.Dialogs
             switch (luisResult.TopIntent().intent)
             {
                 case luisResultContainer.Intent.listProjects:
+                    if (!checkForEntities(entities))
+                    {
+                        sendMessage(stepContext, "I'm sorry, please specify a criteria for me to search for, such as" +
+                                                 " keywords or names.", cancellationToken);
+                        break;
+                    }
+                    
                     searchIndex = 0;
                     sendMessage(stepContext, "Please bare with me, I am searching for projects that match your criteria", cancellationToken);
                     projectBundle searchResult = new projectBundle(entities);
@@ -140,6 +147,15 @@ namespace ixnChatbot.Dialogs
 
             //Assigns the current search to the scope of the dialog in case the user wants to do more with these results
             projectResults = searchResult;
+        }
+
+        private bool checkForEntities(luisResultContainer._Entities entities)
+        {
+            if (entities.contactJobTitle is null && entities.contactName is null && entities.organizationName is null
+                && entities.projectUsages is null && entities.projectLocation is null &&
+                entities.projectCriteria is null
+                && entities.projectDescription is null && entities.organizationOverview is null) return false;
+            return true;
         }
     } 
 }

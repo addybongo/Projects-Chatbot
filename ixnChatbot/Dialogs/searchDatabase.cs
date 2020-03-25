@@ -109,8 +109,10 @@ namespace ixnChatbot.Dialogs
                     }
                     else sendMessage(stepContext, "Here are some more results for your last search.", cancellationToken);
                     
+                    int numberOfSearchResults = projectResults.getNumberOfProjects() - searchIndex < SEARCH_RESULT_LIMIT
+                        ? projectResults.getNumberOfProjects() - searchIndex : SEARCH_RESULT_LIMIT;
                     
-                    for (int i = 0; i < projectResults.getNumberOfProjects() - searchIndex; i++)
+                    for (int i = 0; i < numberOfSearchResults - searchIndex; i++)
                     {
                         Project currentRecord = projectResults.getProject(i + searchIndex);
                         var response = MessageFactory.Attachment(currentRecord.getSimplePatientCard());

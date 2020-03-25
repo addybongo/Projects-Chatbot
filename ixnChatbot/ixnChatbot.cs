@@ -27,29 +27,20 @@ namespace ixnChatbot
             _dialog = dialog;
         }
         
-        protected override async Task OnEventActivityAsync(ITurnContext<IEventActivity> turnContext, CancellationToken cancellationToken)
-        {
-            if (turnContext.Activity.Name == "webchat/join") {
-                await turnContext.SendActivityAsync("Welcome Message!");
-            }
-        }
-        
         protected override async Task OnMembersAddedAsync(IList<ChannelAccount> membersAdded, ITurnContext<IConversationUpdateActivity> turnContext, CancellationToken cancellationToken)
         {
-            if (turnContext.Activity.ChannelId != "webchat" && turnContext.Activity.ChannelId != "directline")
+            foreach (var member in membersAdded)
             {
-                foreach (var member in membersAdded)
+                if (member.Id == turnContext.Activity.Recipient.Id)
                 {
-                    if (member.Id == turnContext.Activity.Recipient.Id)
-                    {
-                        var welcomeCard = CreateAdaptiveCardAttachment();
-                        var response = MessageFactory.Attachment(welcomeCard);
-                        await turnContext.SendActivityAsync(response, cancellationToken);
-                        await _dialog.RunAsync(turnContext,
+                    var welcomeCard = CreateAdaptiveCardAttachment();
+                    var response = MessageFactory.Attachment(welcomeCard);
+                    await turnContext.SendActivityAsync(response, cancellationToken);
+                    await _dialog.RunAsync(turnContext,
                             _conversationState.CreateProperty<DialogState>(nameof(DialogState)), cancellationToken);
-                    }
                 }
             }
+            
         }
         
         public override async Task OnTurnAsync(ITurnContext turnContext, CancellationToken cancellationToken = default(CancellationToken))

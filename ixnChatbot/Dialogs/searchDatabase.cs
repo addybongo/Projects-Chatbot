@@ -101,10 +101,11 @@ namespace ixnChatbot.Dialogs
                         searchIndex -= 4;
                     }
                     else sendMessage(stepContext, "Here are some more results for your last search.", cancellationToken);
-
-                    for (int i = searchIndex; i < projectResults.getNumberOfProjects(); i++)
+                    
+                    
+                    for (int i = 0; i < projectResults.getNumberOfProjects() - searchIndex; i++)
                     {
-                        Project currentRecord = projectResults.getProject(i);
+                        Project currentRecord = projectResults.getProject(i + searchIndex);
                         var response = MessageFactory.Attachment(currentRecord.getSimplePatientCard());
                         await stepContext.Context.SendActivityAsync(response, cancellationToken);
                     }

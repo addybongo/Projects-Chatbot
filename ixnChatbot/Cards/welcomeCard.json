@@ -21,7 +21,7 @@
       "type": "TextBlock",
       "size": "default",
       "isSubtle": "true",
-      "text": "Type in a query below to find out more about projecs. If you are stuck, click on these links",
+      "text": "Type in a query below to find out more about projects. If you are stuck, click on these links",
       "wrap": true,
       "maxLines": 0
     }

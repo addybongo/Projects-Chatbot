@@ -13,7 +13,7 @@
               "altText": "",
               "url": "https://cdn2.iconfinder.com/data/icons/simple-circular-icons-line/84/Left_Arrow_-512.png",
               "width": "40px",
-              "style" : "Person",
+              "style": "Person",
               "selectAction": {
                 "type": "Action.Submit",
                 "title": "selectProject",
@@ -93,7 +93,7 @@
               ]
             }
           ],
-          "width": "150px"
+          "width": 30
         },
         {
           "type": "Column",
@@ -160,7 +160,7 @@
               ]
             }
           ],
-          "width": "150px"
+          "width": 30
         },
         {
           "type": "Column",
@@ -228,7 +228,7 @@
               ]
             }
           ],
-          "width": "150px"
+          "width": 30
         },
         {
           "type": "Column",
@@ -296,7 +296,7 @@
               ]
             }
           ],
-          "width": "150px"
+          "width": 30
         },
         {
           "type": "Column",

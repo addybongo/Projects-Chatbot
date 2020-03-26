@@ -82,7 +82,7 @@ namespace ixnChatbot.Dialogs
                     }
                     
                     searchIndex = 0;
-                    sendMessage(stepContext, "Please bare with me, I am searching for projects that match your criteria", cancellationToken);
+                    sendMessage(stepContext, "Please bear with me, I am searching for projects that match your criteria", cancellationToken);
                     projectBundle searchResult = new projectBundle(entities);
                     
                     if (searchResult.getNumberOfProjects() == 0)

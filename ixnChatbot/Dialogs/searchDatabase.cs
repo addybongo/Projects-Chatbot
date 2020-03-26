@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.IO;
 using System.Net.Mime;
 using System.Threading;
 using System.Threading.Tasks;
@@ -14,6 +15,7 @@ namespace ixnChatbot.Dialogs
     {
         private readonly int SEARCH_RESULT_LIMIT = 4; //Number of projects that can be listed at once
         private int searchIndex = 0; //Index of projects currently being listen
+        private bool started = false;
         
         public searchDatabase(luisRecogniser luisRecogniser) : base(luisRecogniser, nameof(searchDatabase))
         {
@@ -39,6 +41,14 @@ namespace ixnChatbot.Dialogs
             if (!_luisRecogniser.IsConfigured)
             {
                 sendMessage(stepContext, "LUIS is not configured correctly!", cancellationToken);
+            }
+            
+            if(!started)
+            {
+                string json = File.ReadAllText("Cards/welcomeCard.json");
+                dynamic jsonObj = JsonConvert.DeserializeObject(json);
+                stepContext.Context.SendActivityAsync(MessageFactory.Attachment(jsonObj));
+                started = true;
             }
             
             var messageText = stepContext.Options?.ToString() ?? "Hi! What are you looking for?";

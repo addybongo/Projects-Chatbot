@@ -7,6 +7,7 @@ using System.Threading.Tasks;
 using Microsoft.Bot.Builder
     ;
 using Microsoft.Bot.Builder.Dialogs;
+using Microsoft.Bot.Schema;
 using Newtonsoft.Json;
 
 namespace ixnChatbot.Dialogs
@@ -47,7 +48,12 @@ namespace ixnChatbot.Dialogs
             {
                 string json = File.ReadAllText("Cards/welcomeCard.json");
                 dynamic jsonObj = JsonConvert.DeserializeObject(json);
-                stepContext.Context.SendActivityAsync(MessageFactory.Attachment(jsonObj));
+                Attachment welcomeCard = new Attachment()
+                {
+                    ContentType = "application/vnd.microsoft.card.adaptive",
+                    Content = jsonObj
+                }; 
+                await stepContext.Context.SendActivityAsync(MessageFactory.Attachment(welcomeCard), cancellationToken);
                 started = true;
             }
             

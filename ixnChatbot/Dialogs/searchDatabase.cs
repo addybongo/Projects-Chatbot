@@ -76,8 +76,8 @@ namespace ixnChatbot.Dialogs
                 case luisResultContainer.Intent.listProjects:
                     if (!checkForEntities(entities))
                     {
-                        sendMessage(stepContext, "I'm sorry, please specify a criteria for me to search for, such as" +
-                                                 " keywords or names.", cancellationToken);
+                        sendMessage(stepContext, "I'm sorry, please specify a criteria for me to search for. " +
+                                                 "(Try saying 'show me projects by gosh' or 'list projects that use ai'", cancellationToken);
                         break;
                     }
                     

@@ -25,6 +25,7 @@ namespace ixnChatbot
 
             List<List<String>> projectSearchResults = _sqlConnector.select(searchQuery);
             
+            //Create a Project object for each project found and populate it with its values
             for (int i = 0; i < projectSearchResults.Count; i++)
             {
                 projects.Add(new Project(fields, projectSearchResults[i].ToArray()));

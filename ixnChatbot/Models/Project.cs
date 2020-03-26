@@ -203,9 +203,8 @@ namespace ixnChatbot
             jsonObj["body"][4]["text"] = getValue("organizationAddress");
             jsonObj["body"][6]["items"][0]["columns"][1]["items"][0]["text"] = getValue("contactName");
             jsonObj["body"][6]["items"][0]["columns"][1]["items"][1]["text"] = getValue("contactTitle");
-            jsonObj["body"][6]["items"][0]["columns"][1]["items"][1]["text"] = getValue("contactTitle");
             jsonObj["body"][6]["items"][0]["columns"][1]["items"][2]["text"] = getValue("contactNumber");
-            jsonObj["body"][6]["items"][0]["columns"][1]["items"][2]["text"] = getValue("contactEmail");
+            jsonObj["body"][6]["items"][0]["columns"][1]["items"][3]["text"] = getValue("contactEmail");
 
             return new Attachment()
             {

@@ -16,6 +16,7 @@ namespace ixnChatbot
         private bool hasNda;
         private bool hasContract;
 
+        //Queries that gather fields from all 4 tables of schema
         protected string[] fieldGetterQueryWholeTable
             =
             {
@@ -36,8 +37,9 @@ namespace ixnChatbot
         public Project(string[] rawFields, string[] values)
         {
             this.values = values;
-            isAcademic = values[3] == "" ? false : true;
+            isAcademic = values[3] == "" ? false : true; //values[3] stores the academicID; if it is missing, it isn't an academic project
 
+            //Adds all fields and values to dictionary
             for (int i = 0; i < rawFields.Length; i++)
             {
                 fields.Add(rawFields[i], i);
@@ -61,14 +63,15 @@ namespace ixnChatbot
             values = _sqlConnector.select(searchQuery)[0].ToArray();
             this.fields = new Dictionary<string, int>(); //Resets the field dictionary to empty
 
-            List<String> fields = new List<string>();
-            // int ixnTableSize = _sqlConnector.select(fieldGetterQueryIXNTable).Count;
+            List<String> fields = new List<string>();  
+            
+            //Add all the fields into a single list
             for (int i = 0; i < fieldGetterQueryWholeTable.Length; i++)
             {
                 fields.AddRange(transpose(_sqlConnector.select(fieldGetterQueryWholeTable[i])));
             }
 
-            //Re add all values to the fields dictionary
+            //Re add all values with their fields to the fields dictionary
             for (int i = 0; i < fields.Count; i++)
             {
                 try
@@ -77,7 +80,7 @@ namespace ixnChatbot
                 }
                 catch (Exception)
                 {
-                    this.fields.Add("f." + fields[i], i);
+                    this.fields.Add("f." + fields[i], i); //If a key collision occurs (shouldn't be possible) append f. to it
                 }
             }
 
@@ -95,13 +98,12 @@ namespace ixnChatbot
             {
                 return values[index];
             }
-            else
-            {
-                throw new Exception("The project with ID " + projectID + " does not contain a value for the field "
+
+            throw new Exception("The project with ID " + projectID + " does not contain a value for the field "
                                     + field + "! Please check your field name or the database schema");
-            }
         }
 
+        //Used to transpose when getting a list of fields, as they return as a 2d array of one column
         private List<String> transpose(List<List<String>> data)
         {
             List<String> result = new List<String>();
@@ -119,6 +121,7 @@ namespace ixnChatbot
             string json = File.ReadAllText("Cards/detailedIxnProjectCard.json");
             dynamic jsonObj = JsonConvert.DeserializeObject(json);
             
+            //If the project is missing any one of the following attributes, the button to get to that card is removed
             if (!hasContract)
             {
                 jsonObj["actions"][3] = "";
@@ -154,6 +157,7 @@ namespace ixnChatbot
         {
             string json = File.ReadAllText("Cards/descriptionCard.json");
             dynamic jsonObj = JsonConvert.DeserializeObject(json);
+            
             //Setup settings for back button so that it points back to the ID of this project
             jsonObj["body"][0]["columns"][0]["items"][0]["selectAction"]["data"]["data"] = "" + projectID;
 
@@ -176,6 +180,8 @@ namespace ixnChatbot
             jsonObj["body"][0]["columns"][0]["items"][0]["selectAction"]["data"]["data"] = "" + projectID;
 
             jsonObj["body"][0]["columns"][1]["items"][1]["text"] = getValue("projectTitle");
+            
+            //If any of the below values are empty, they are replaced with 'No <field> were specified'
             jsonObj["body"][2]["text"] = getValue("projectSkills") != ""
                 ? getValue("projectSkills")
                 : "No Skills were specified.";
@@ -193,6 +199,7 @@ namespace ixnChatbot
             };
         }
 
+        //Gets card of partner contact and organization
         public Attachment getPartnerCard()
         {
             string json = File.ReadAllText("Cards/industryPartnerCard.json");
@@ -213,6 +220,7 @@ namespace ixnChatbot
             };
         }
 
+        //Simple card is returned when showing search results - it is smaller and more concise
         public Attachment getSimplePatientCard()
         {
             string json = File.ReadAllText("Cards/projectCard.json");
@@ -242,14 +250,17 @@ namespace ixnChatbot
             //Setup settings for back button so that it points back to the ID of this project
             jsonObj["body"][0]["columns"][0]["items"][0]["selectAction"]["data"]["data"] = "" + projectID;
 
+            //All the points along the timeline of contract generation
             string[] timelinePoints = {"generatedContract", "studentSignedContract", "organizationSignedContract"};
-            int timelinePointsCompleted = 0;
+            int timelinePointsCompleted = 0; //Used to keep track of whether all points were successfully created
 
+            //Assigns a completed tick to the 'requires contract' timeline point as this must be true if a contract exists
             jsonObj["body"][2]["columns"][0]["items"][0]["columns"][0]["items"][0]["url"] =
                 "https://upload.wikimedia.org/wikipedia/commons/thumb/0/0b/BlueFlat_tick_icon.svg/1200px-BlueFlat_tick_icon.svg.png";
-
+            
             for (int i = 0; i < timelinePoints.Length; i++)
             {
+                //If this timeline point has been completed, set it to appear so and add one to the counter of timelines completed
                 if (getValue(timelinePoints[i]) == "True")
                 {
                     jsonObj["body"][3 + i]["columns"][0]["items"][0]["columns"][0]["items"][0]["url"] =
@@ -261,7 +272,7 @@ namespace ixnChatbot
                 }
             }
 
-            //If the contract has been completed
+            //If all the timeline points were completed, the contract is completed 
             if (timelinePointsCompleted == timelinePoints.Length)
             {
                 jsonObj["body"][6]["text"] = "Contract Completed on " + getValue("contractDateSigned");
@@ -289,6 +300,7 @@ namespace ixnChatbot
             //Setup settings for back button so that it points back to the ID of this project
             jsonObj["body"][0]["columns"][0]["items"][0]["selectAction"]["data"]["data"] = "" + projectID;
 
+            //If the NDA was signed, set it to appear so
             if (getValue("ndaSigned") == "True")
             {
                 jsonObj["body"][3]["columns"][0]["items"][0]["columns"][0]["items"][0]["url"] =
@@ -346,6 +358,7 @@ namespace ixnChatbot
                 jsonObj["body"][4]["columns"][1]["items"][2]["text"] = getValue("ethicsAssessor");
             }
 
+            //If any of the below sections are not available, they are replaced with "N/A" or To be assessed for date
             jsonObj["body"][6]["columns"][1]["items"][0]["text"] = getValue("primaryAssessor").Trim().Length == 0
                 ? "N/A"
                 : getValue("primaryAssessor");
@@ -371,6 +384,8 @@ namespace ixnChatbot
             };
         }
 
+        //This method gets the corresponding link for each company logo based on the organization name
+        //If it isn't found, a default image of gears is used
         private string getOrganizationLogo(string organizationName)
         {
             string json = File.ReadAllText("Cards/companyLogos.json");

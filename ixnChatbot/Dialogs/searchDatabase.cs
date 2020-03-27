@@ -16,7 +16,6 @@ namespace ixnChatbot.Dialogs
     {
         private readonly int SEARCH_RESULT_LIMIT = 4; //Number of projects that can be listed at once
         private int searchIndex = 0; //Index of projects currently being listen
-        private bool started = false;
         
         public searchDatabase(luisRecogniser luisRecogniser) : base(luisRecogniser, nameof(searchDatabase))
         {
@@ -43,20 +42,7 @@ namespace ixnChatbot.Dialogs
             {
                 sendMessage(stepContext, "LUIS is not configured correctly!", cancellationToken);
             }
-            
-            if(!started)
-            {
-                string json = File.ReadAllText("Cards/welcomeCard.json");
-                dynamic jsonObj = JsonConvert.DeserializeObject(json);
-                Attachment welcomeCard = new Attachment()
-                {
-                    ContentType = "application/vnd.microsoft.card.adaptive",
-                    Content = jsonObj
-                }; 
-                await stepContext.Context.SendActivityAsync(MessageFactory.Attachment(welcomeCard), cancellationToken);
-                started = true;
-            }
-            
+
             var messageText = stepContext.Options?.ToString() ?? "Hi! What are you looking for?";
             var promptOptions = new PromptOptions { Prompt = MessageFactory.Text(messageText) };
             return await stepContext.PromptAsync(nameof(TextPrompt), promptOptions, cancellationToken);
@@ -84,6 +70,19 @@ namespace ixnChatbot.Dialogs
         private async Task<DialogTurnResult> intentAnswer(WaterfallStepContext stepContext,
             CancellationToken cancellationToken)
         {
+            if (stepContext.Result.ToString() == "help")
+            {
+                string json = File.ReadAllText("Cards/helpCard.json");
+                dynamic jsonObj = JsonConvert.DeserializeObject(json);
+                Attachment card = new Attachment()
+                {
+                    ContentType = "application/vnd.microsoft.card.adaptive",
+                    Content = jsonObj
+                };
+                await stepContext.Context.SendActivityAsync(MessageFactory.Attachment(card), cancellationToken);
+                return await stepContext.ReplaceDialogAsync(InitialDialogId, "Here is the help page. What can I help you with?", cancellationToken);
+            }
+            
             var luisResult = await _luisRecogniser.RecognizeAsync<luisResultContainer>(stepContext.Context, cancellationToken);
             luisResultContainer._Entities entities = luisResult.Entities;
 
@@ -93,7 +92,7 @@ namespace ixnChatbot.Dialogs
                     if (!checkForEntities(entities))
                     {
                         sendMessage(stepContext, "I'm sorry, please specify a criteria for me to search for. " +
-                                                 "(Try saying 'show me projects by gosh' or 'list projects that use ai'", cancellationToken);
+                                                 "Type in 'help' for instructions and commands on how to search for projects.", cancellationToken);
                         break;
                     }
                     
@@ -142,7 +141,8 @@ namespace ixnChatbot.Dialogs
                     break;
 
                 default:
-                    var promptMessage = "I'm sorry, I am having trouble understanding you. What would you like me to do?";
+                    var promptMessage = "I'm sorry, I am having trouble understanding you. What would you like me to do?" +
+                                        " If you are stuck, type in 'help' for instructions and commands.";
                     return await stepContext.ReplaceDialogAsync(InitialDialogId, promptMessage, cancellationToken);
             }
             return await stepContext.ReplaceDialogAsync(InitialDialogId, "Could I help you with anything else?", cancellationToken);

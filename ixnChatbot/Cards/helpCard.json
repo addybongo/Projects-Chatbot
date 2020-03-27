@@ -1,0 +1,131 @@
+﻿{
+  "type": "AdaptiveCard",
+  "body": [
+    {
+      "type": "Container",
+      "items": [
+        {
+          "type": "TextBlock",
+          "text": "Help",
+          "size": "Large",
+          "horizontalAlignment": "Center",
+          "weight": "Bolder",
+          "color": "Accent"
+        }
+      ],
+      "style": "emphasis"
+    },
+    {
+      "type": "TextBlock",
+      "text": "Welcome to the projects chatbot, where you can search for any projects you might be interested in. ",
+      "horizontalAlignment": "Left",
+      "wrap": true,
+      "weight": "Lighter"
+    },
+    {
+      "type": "TextBlock",
+      "text": "Commands",
+      "horizontalAlignment": "Center",
+      "weight": "Bolder",
+      "size": "Medium"
+    },
+    {
+      "type": "TextBlock",
+      "text": "Searching for Projects",
+      "wrap": true,
+      "weight": "Bolder"
+    },
+    {
+      "type": "ColumnSet",
+      "columns": [
+        {
+          "type": "Column",
+          "width": "auto",
+          "items": [
+            {
+              "type": "TextBlock",
+              "text": "Project Keywords",
+              "color": "Accent"
+            },
+            {
+              "type": "TextBlock",
+              "text": "Location",
+              "color": "Accent"
+            },
+            {
+              "type": "TextBlock",
+              "text": "Organization Name",
+              "color": "Accent"
+            },
+            {
+              "type": "TextBlock",
+              "text": "Contact",
+              "color": "Accent"
+            },
+            {
+              "type": "TextBlock",
+              "text": "Devices used",
+              "color": "Accent"
+            }
+          ]
+        },
+        {
+          "type": "Column",
+          "width": "stretch",
+          "items": [
+            {
+              "type": "TextBlock",
+              "text": "\"show me projects that use AI\""
+            },
+            {
+              "type": "TextBlock",
+              "text": "\"List all projects in London\""
+            },
+            {
+              "type": "TextBlock",
+              "text": "\"show me projects by IBM\""
+            },
+            {
+              "type": "TextBlock",
+              "text": "\"list projects led by Joseph Connor\""
+            },
+            {
+              "type": "TextBlock",
+              "text": "\"Show projects that use IOS devices\""
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "type": "TextBlock",
+      "text": "See More Results",
+      "weight": "Bolder"
+    },
+    {
+      "type": "TextBlock",
+      "text": "To see the more results from your search, simply ask the chatbot!"
+    },
+    {
+      "type": "RichTextBlock",
+      "inlines": [
+        {
+          "type": "TextRun",
+          "text": "e.g. \"show me more projects\" \n or \"are there more results?\""
+        }
+      ]
+    },
+    {
+      "type": "TextBlock",
+      "text": "Learn More About a Project",
+      "weight": "Bolder"
+    },
+    {
+      "type": "TextBlock",
+      "text": "Once you've searched for a project, click on it to view more detailed information. You can click the buttons on the cards to view individual sections, or ask the chatbot for information you can't find e.g. \"show me the ethics assessment\"",
+      "wrap": true
+    }
+  ],
+  "$schema": "http://adaptivecards.io/schemas/adaptive-card.json",
+  "version": "1.0"
+}

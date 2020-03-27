@@ -45,11 +45,14 @@ namespace ixnChatbot
                 fields.Add(rawFields[i], i);
             }
 
+            string configFile = File.ReadAllText("Database/dbconfig.json");
+            dynamic config = JsonConvert.DeserializeObject(configFile);
+            
             projectID = Int32.Parse(values[fields["projectID"]]);
             searchQuery =
-                "SELECT * FROM RCGP_Projects.projectentries i LEFT JOIN RCGP_Projects.Projects p ON "
-                + "i.ixnID = p.projectID LEFT JOIN RCGP_Projects.Contracts c ON i.contractID = c.contractID LEFT JOIN "
-                + "RCGP_Projects.academics a ON i.academicID = a.academicID WHERE i.projectID = " + projectID;
+                "SELECT * FROM RCGP_Projects.projectentries i LEFT JOIN " + config["database"] + ".Projects p ON "
+                + "i.ixnID = p.projectID LEFT JOIN " + config["database"] + ".Contracts c ON i.contractID = c.contractID LEFT JOIN "
+                + config["database"] + ".academics a ON i.academicID = a.academicID WHERE i.projectID = " + projectID;
         }
 
         //When a project is first instantiated, it only stores information on ixnID, ixnEntry, projectTitle,

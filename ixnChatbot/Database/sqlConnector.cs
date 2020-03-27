@@ -32,10 +32,9 @@ using System.Threading.Tasks;
                 connection.Open();
                 connected = true;
             }
-            catch (MySqlException)
+            catch (MySqlException e)
             {
-                throw new Exception("The connection setting for the projects database are incorrect. Please " +
-                                    "change the configuration.");
+                throw e;
             }
         }
 

@@ -1,11 +1,15 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.IO;
 using System.Linq;
+using Newtonsoft.Json;
 
 namespace ixnChatbot
 {
     public class projectBundle
     {
+        private static dynamic config;
+        
         private Project[] projects;
         private Dictionary<int, Project> idToProject;
         private readonly sqlConnector _sqlConnector;
@@ -14,6 +18,9 @@ namespace ixnChatbot
         
         public projectBundle(luisResultContainer._Entities entities)
         {
+            string configFile = File.ReadAllText("Database/dbconfig.json");
+            config = JsonConvert.DeserializeObject(configFile);
+            
             _sqlConnector = new sqlConnector();
             _sqlConnector.OpenConnection();
             List<Project> projects = new List<Project>();
@@ -61,7 +68,7 @@ namespace ixnChatbot
             String[] projectLocation, String[] projectCriteria, String[] projectDescription, String[] organizationOverview, String[] projectDate)
         {
             string query = "SELECT i.projectID, i.ixnID, i.contractID, i.academicID, p.projectTitle, "
-            + "p.organizationName, p.contactName FROM RCGP_Projects.projectentries i LEFT JOIN RCGP_Projects.Projects p ON i.ixnID = p.projectID WHERE ";
+            + "p.organizationName, p.contactName FROM " + config["database"] + ".projectentries i LEFT JOIN " + config["database"] + ".Projects p ON i.ixnID = p.projectID WHERE ";
 
             if(contactJobTitle != null) query+= likeStatementBuilder("contactTitle", contactJobTitle) + " OR ";
             if(contactName != null)

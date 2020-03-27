@@ -1,6 +1,6 @@
 ﻿{
-  "server": "127.0.0.1",
-  "database": "rcgp_local",
-  "username": "root",
-  "password": ""
+  "server": "rcgpprojects.mysql.database.azure.com",
+  "database": "RCGP_Projects",
+  "username": "rcgpadmin@rcgpprojects",
+  "password": "rcgp!12345678"
 }

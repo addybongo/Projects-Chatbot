@@ -21,7 +21,7 @@ namespace ixnChatbot
             string searchQuery = projectSelectionQueryBuilder(entities.contactJobTitle, entities.contactName,
                 entities.organizationName,
                 entities.projectUsages, entities.projectLocation, entities.projectCriteria, entities.projectDescription,
-                entities.organizationOverview);
+                entities.organizationOverview, entities.projectDate);
 
             List<List<String>> projectSearchResults = _sqlConnector.select(searchQuery);
             
@@ -58,7 +58,7 @@ namespace ixnChatbot
 
         private string projectSelectionQueryBuilder(String[] contactJobTitle, String[] contactName, String[] organizationName,
             String[] projectUsages,
-            String[] projectLocation, String[] projectCriteria, String[] projectDescription, String[] organizationOverview)
+            String[] projectLocation, String[] projectCriteria, String[] projectDescription, String[] organizationOverview, String[] projectDate)
         {
             string query = "SELECT i.projectID, i.ixnID, i.contractID, i.academicID, p.projectTitle, "
             + "p.organizationName, p.contactName FROM RCGP_Projects.projectentries i LEFT JOIN RCGP_Projects.Projects p ON i.ixnID = p.projectID WHERE ";
@@ -91,6 +91,9 @@ namespace ixnChatbot
                         likeStatementBuilder("projectDataSamples", projectUsages) + " OR " + 
                         likeStatementBuilder("anyOtherInformation", projectUsages) + " OR ";
             }
+
+            if (projectDate != null) query += likeStatementBuilder("uploadDate", projectDate) + " OR ";
+
             //If LUIS identified any entities, the if statements above would be executed and at the end of the query,
             //'OR ' would be left. This lets us isolate the case where no entities are found, so that we get rid of
             //the WHERE clause in the query

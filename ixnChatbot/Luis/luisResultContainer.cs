@@ -20,10 +20,10 @@ namespace ixnChatbot
 
         public enum Intent {
             academicOfProject,
-            cancelDialog,
             contractOfProject,
             descriptionOfProject,
             displayMoreProjects,
+            help,
             listProjects,
             ndaOfProject,
             None,
@@ -41,6 +41,7 @@ namespace ixnChatbot
             public string[] organizationName;
             public string[] organizationOverview;
             public string[] projectCriteria;
+            public string[] projectDate;
             public string[] projectDescription;
             public string[] projectLocation;
             public string[] projectUsages;
@@ -54,6 +55,7 @@ namespace ixnChatbot
                 public InstanceData[] organizationName;
                 public InstanceData[] organizationOverview;
                 public InstanceData[] projectCriteria;
+                public InstanceData[] projectDate;
                 public InstanceData[] projectDescription;
                 public InstanceData[] projectLocation;
                 public InstanceData[] projectUsages;
@@ -69,7 +71,7 @@ namespace ixnChatbot
 
         public void Convert(dynamic result)
         {
-            var app = JsonConvert.DeserializeObject <luisResultContainer>(JsonConvert.SerializeObject(result, new JsonSerializerSettings { NullValueHandling = NullValueHandling.Ignore }));
+            var app = JsonConvert.DeserializeObject<luisResultContainer>(JsonConvert.SerializeObject(result, new JsonSerializerSettings { NullValueHandling = NullValueHandling.Ignore }));
             Text = app.Text;
             AlteredText = app.AlteredText;
             Intents = app.Intents;

@@ -10,9 +10,6 @@
       "name": "academicOfProject"
     },
     {
-      "name": "cancelDialog"
-    },
-    {
       "name": "contractOfProject"
     },
     {
@@ -20,6 +17,9 @@
     },
     {
       "name": "displayMoreProjects"
+    },
+    {
+      "name": "help"
     },
     {
       "name": "listProjects"
@@ -56,6 +56,10 @@
     },
     {
       "name": "projectCriteria",
+      "roles": []
+    },
+    {
+      "name": "projectDate",
       "roles": []
     },
     {
@@ -114,6 +118,21 @@
     {
       "text": "does this project have a contract",
       "intent": "contractOfProject",
+      "entities": []
+    },
+    {
+      "text": "does this project have ethics approval",
+      "intent": "academicOfProject",
+      "entities": []
+    },
+    {
+      "text": "does this project require an nda",
+      "intent": "ndaOfProject",
+      "entities": []
+    },
+    {
+      "text": "e",
+      "intent": "None",
       "entities": []
     },
     {
@@ -203,6 +222,16 @@
       "entities": []
     },
     {
+      "text": "has the contract been generated?",
+      "intent": "contractOfProject",
+      "entities": []
+    },
+    {
+      "text": "has the contract been signed?",
+      "intent": "contractOfProject",
+      "entities": []
+    },
+    {
       "text": "has this project been assessed",
       "intent": "academicOfProject",
       "entities": []
@@ -218,13 +247,44 @@
       "entities": []
     },
     {
+      "text": "help",
+      "intent": "help",
+      "entities": []
+    },
+    {
+      "text": "hi",
+      "intent": "None",
+      "entities": []
+    },
+    {
+      "text": "hi, show me more projects please",
+      "intent": "displayMoreProjects",
+      "entities": []
+    },
+    {
+      "text": "how many projects exist",
+      "intent": "listProjects",
+      "entities": []
+    },
+    {
+      "text": "how many projects exist by gosh?",
+      "intent": "listProjects",
+      "entities": [
+        {
+          "entity": "organizationName",
+          "startPos": 27,
+          "endPos": 30
+        }
+      ]
+    },
+    {
       "text": "i back it tho",
       "intent": "None",
       "entities": []
     },
     {
-      "text": "i have no more questions",
-      "intent": "cancelDialog",
+      "text": "i would like to update the contract information",
+      "intent": "contractOfProject",
       "entities": []
     },
     {
@@ -238,6 +298,11 @@
       "entities": []
     },
     {
+      "text": "is there a contract",
+      "intent": "contractOfProject",
+      "entities": []
+    },
+    {
       "text": "is there a non disclosure agreement",
       "intent": "ndaOfProject",
       "entities": []
@@ -245,6 +310,11 @@
     {
       "text": "is there an nda",
       "intent": "ndaOfProject",
+      "entities": []
+    },
+    {
+      "text": "is there any more projects?",
+      "intent": "displayMoreProjects",
       "entities": []
     },
     {
@@ -258,6 +328,11 @@
       "entities": []
     },
     {
+      "text": "list",
+      "intent": "displayMoreProjects",
+      "entities": []
+    },
+    {
       "text": "list all artificial intelligence projects by microsoft",
       "intent": "listProjects",
       "entities": [
@@ -267,6 +342,11 @@
           "endPos": 31
         }
       ]
+    },
+    {
+      "text": "list all projects",
+      "intent": "listProjects",
+      "entities": []
     },
     {
       "text": "list all projects by ibm",
@@ -361,6 +441,17 @@
       "entities": []
     },
     {
+      "text": "list projects by rcgp",
+      "intent": "listProjects",
+      "entities": [
+        {
+          "entity": "organizationName",
+          "startPos": 17,
+          "endPos": 20
+        }
+      ]
+    },
+    {
       "text": "list projects by the rcgp",
       "intent": "listProjects",
       "entities": [
@@ -383,6 +474,17 @@
       ]
     },
     {
+      "text": "list projects that use ai",
+      "intent": "listProjects",
+      "entities": [
+        {
+          "entity": "projectDescription",
+          "startPos": 23,
+          "endPos": 24
+        }
+      ]
+    },
+    {
       "text": "make me become adnan",
       "intent": "None",
       "entities": []
@@ -393,23 +495,13 @@
       "entities": []
     },
     {
-      "text": "nah",
-      "intent": "cancelDialog",
+      "text": "more",
+      "intent": "displayMoreProjects",
       "entities": []
     },
     {
-      "text": "no",
-      "intent": "cancelDialog",
-      "entities": []
-    },
-    {
-      "text": "no thank you",
-      "intent": "cancelDialog",
-      "entities": []
-    },
-    {
-      "text": "nope",
-      "intent": "cancelDialog",
+      "text": "nothing",
+      "intent": "None",
       "entities": []
     },
     {
@@ -473,6 +565,17 @@
       ]
     },
     {
+      "text": "projects with fhir",
+      "intent": "listProjects",
+      "entities": [
+        {
+          "entity": "projectUsages",
+          "startPos": 14,
+          "endPos": 17
+        }
+      ]
+    },
+    {
       "text": "show me ai projects",
       "intent": "listProjects",
       "entities": [
@@ -495,8 +598,29 @@
       ]
     },
     {
+      "text": "show me all the projects from gosh",
+      "intent": "listProjects",
+      "entities": [
+        {
+          "entity": "organizationName",
+          "startPos": 30,
+          "endPos": 33
+        }
+      ]
+    },
+    {
+      "text": "show me all the projects you have",
+      "intent": "listProjects",
+      "entities": []
+    },
+    {
       "text": "show me details about the contract",
       "intent": "contractOfProject",
+      "entities": []
+    },
+    {
+      "text": "show me ethics",
+      "intent": "academicOfProject",
       "entities": []
     },
     {
@@ -533,9 +657,30 @@
       ]
     },
     {
+      "text": "show me more",
+      "intent": "displayMoreProjects",
+      "entities": []
+    },
+    {
       "text": "show me more projects",
       "intent": "displayMoreProjects",
       "entities": []
+    },
+    {
+      "text": "show me nda",
+      "intent": "ndaOfProject",
+      "entities": []
+    },
+    {
+      "text": "show me prjects by gosh",
+      "intent": "listProjects",
+      "entities": [
+        {
+          "entity": "organizationName",
+          "startPos": 19,
+          "endPos": 22
+        }
+      ]
     },
     {
       "text": "show me projcets led by joseph",
@@ -560,9 +705,31 @@
       ]
     },
     {
+      "text": "show me project from gosh",
+      "intent": "listProjects",
+      "entities": [
+        {
+          "entity": "organizationName",
+          "startPos": 21,
+          "endPos": 24
+        }
+      ]
+    },
+    {
       "text": "show me projects",
       "intent": "listProjects",
       "entities": []
+    },
+    {
+      "text": "show me projects by ai",
+      "intent": "listProjects",
+      "entities": [
+        {
+          "entity": "organizationName",
+          "startPos": 20,
+          "endPos": 21
+        }
+      ]
     },
     {
       "text": "show me projects by dean",
@@ -636,6 +803,17 @@
       ]
     },
     {
+      "text": "show me projects by josep",
+      "intent": "listProjects",
+      "entities": [
+        {
+          "entity": "contactName",
+          "startPos": 20,
+          "endPos": 24
+        }
+      ]
+    },
+    {
       "text": "show me projects by joseph",
       "intent": "listProjects",
       "entities": [
@@ -691,6 +869,94 @@
       ]
     },
     {
+      "text": "show me projects from dean",
+      "intent": "listProjects",
+      "entities": [
+        {
+          "entity": "contactName",
+          "startPos": 22,
+          "endPos": 25
+        }
+      ]
+    },
+    {
+      "text": "show me projects from gosh",
+      "intent": "listProjects",
+      "entities": [
+        {
+          "entity": "organizationName",
+          "startPos": 22,
+          "endPos": 25
+        }
+      ]
+    },
+    {
+      "text": "show me projects from ibm",
+      "intent": "listProjects",
+      "entities": [
+        {
+          "entity": "organizationName",
+          "startPos": 22,
+          "endPos": 24
+        }
+      ]
+    },
+    {
+      "text": "show me projects from joseph",
+      "intent": "listProjects",
+      "entities": [
+        {
+          "entity": "contactName",
+          "startPos": 22,
+          "endPos": 27
+        }
+      ]
+    },
+    {
+      "text": "show me projects from the rcgp",
+      "intent": "listProjects",
+      "entities": [
+        {
+          "entity": "organizationName",
+          "startPos": 26,
+          "endPos": 29
+        }
+      ]
+    },
+    {
+      "text": "show me projects from ucl",
+      "intent": "listProjects",
+      "entities": [
+        {
+          "entity": "organizationName",
+          "startPos": 22,
+          "endPos": 24
+        }
+      ]
+    },
+    {
+      "text": "show me projects in london",
+      "intent": "listProjects",
+      "entities": [
+        {
+          "entity": "projectLocation",
+          "startPos": 20,
+          "endPos": 25
+        }
+      ]
+    },
+    {
+      "text": "show me projects in newport",
+      "intent": "listProjects",
+      "entities": [
+        {
+          "entity": "projectLocation",
+          "startPos": 20,
+          "endPos": 26
+        }
+      ]
+    },
+    {
       "text": "show me projects involving joseph connor",
       "intent": "listProjects",
       "entities": [
@@ -698,6 +964,17 @@
           "entity": "contactName",
           "startPos": 27,
           "endPos": 39
+        }
+      ]
+    },
+    {
+      "text": "show me projects led by chris",
+      "intent": "listProjects",
+      "entities": [
+        {
+          "entity": "contactName",
+          "startPos": 24,
+          "endPos": 28
         }
       ]
     },
@@ -735,6 +1012,28 @@
       ]
     },
     {
+      "text": "show me projects led by gemms",
+      "intent": "listProjects",
+      "entities": [
+        {
+          "entity": "contactName",
+          "startPos": 24,
+          "endPos": 28
+        }
+      ]
+    },
+    {
+      "text": "show me projects led by jo",
+      "intent": "listProjects",
+      "entities": [
+        {
+          "entity": "contactName",
+          "startPos": 24,
+          "endPos": 25
+        }
+      ]
+    },
+    {
       "text": "show me projects led by joe",
       "intent": "listProjects",
       "entities": [
@@ -742,6 +1041,28 @@
           "entity": "contactName",
           "startPos": 24,
           "endPos": 26
+        }
+      ]
+    },
+    {
+      "text": "show me projects led by joe standing",
+      "intent": "listProjects",
+      "entities": [
+        {
+          "entity": "contactName",
+          "startPos": 24,
+          "endPos": 35
+        }
+      ]
+    },
+    {
+      "text": "show me projects led by john",
+      "intent": "listProjects",
+      "entities": [
+        {
+          "entity": "contactName",
+          "startPos": 24,
+          "endPos": 27
         }
       ]
     },
@@ -779,8 +1100,146 @@
       ]
     },
     {
+      "text": "show me projects led my john",
+      "intent": "listProjects",
+      "entities": [
+        {
+          "entity": "contactName",
+          "startPos": 24,
+          "endPos": 27
+        }
+      ]
+    },
+    {
+      "text": "show me projects published in 2019",
+      "intent": "listProjects",
+      "entities": [
+        {
+          "entity": "projectDate",
+          "startPos": 30,
+          "endPos": 33
+        }
+      ]
+    },
+    {
+      "text": "show me projects published in 2020",
+      "intent": "listProjects",
+      "entities": [
+        {
+          "entity": "projectDate",
+          "startPos": 30,
+          "endPos": 33
+        }
+      ]
+    },
+    {
+      "text": "show me projects related to ai",
+      "intent": "listProjects",
+      "entities": [
+        {
+          "entity": "projectDescription",
+          "startPos": 28,
+          "endPos": 29
+        }
+      ]
+    },
+    {
+      "text": "show me projects that began in 2019",
+      "intent": "listProjects",
+      "entities": [
+        {
+          "entity": "projectDate",
+          "startPos": 31,
+          "endPos": 34
+        }
+      ]
+    },
+    {
+      "text": "show me projects that use ai",
+      "intent": "listProjects",
+      "entities": [
+        {
+          "entity": "projectDescription",
+          "startPos": 26,
+          "endPos": 27
+        }
+      ]
+    },
+    {
+      "text": "show me projects that use blockchain",
+      "intent": "listProjects",
+      "entities": [
+        {
+          "entity": "projectUsages",
+          "startPos": 26,
+          "endPos": 35
+        }
+      ]
+    },
+    {
+      "text": "show me projects that use ios devices",
+      "intent": "listProjects",
+      "entities": [
+        {
+          "entity": "projectUsages",
+          "startPos": 26,
+          "endPos": 28
+        }
+      ]
+    },
+    {
+      "text": "show me the academic information of this project",
+      "intent": "academicOfProject",
+      "entities": []
+    },
+    {
+      "text": "show me the contract",
+      "intent": "contractOfProject",
+      "entities": []
+    },
+    {
+      "text": "show me the description",
+      "intent": "descriptionOfProject",
+      "entities": []
+    },
+    {
+      "text": "show me the ethics assessment",
+      "intent": "academicOfProject",
+      "entities": []
+    },
+    {
+      "text": "show me the ethics assessor",
+      "intent": "academicOfProject",
+      "entities": []
+    },
+    {
+      "text": "show me the nda",
+      "intent": "ndaOfProject",
+      "entities": []
+    },
+    {
+      "text": "show me the nda for this project",
+      "intent": "ndaOfProject",
+      "entities": []
+    },
+    {
+      "text": "show me the nda information",
+      "intent": "ndaOfProject",
+      "entities": []
+    },
+    {
+      "text": "show me the project",
+      "intent": "descriptionOfProject",
+      "entities": []
+    },
+    {
       "text": "show me the project abstract",
       "intent": "descriptionOfProject",
+      "entities": []
+    },
+    {
+      "text": "show me the rest of the projects",
+      "intent": "displayMoreProjects",
       "entities": []
     },
     {
@@ -807,6 +1266,11 @@
     {
       "text": "show more projects",
       "intent": "displayMoreProjects",
+      "entities": []
+    },
+    {
+      "text": "show projects",
+      "intent": "listProjects",
       "entities": []
     },
     {
@@ -843,6 +1307,17 @@
       ]
     },
     {
+      "text": "show projects led by gemma",
+      "intent": "listProjects",
+      "entities": [
+        {
+          "entity": "contactName",
+          "startPos": 21,
+          "endPos": 25
+        }
+      ]
+    },
+    {
       "text": "tell me about the devices required",
       "intent": "skillsDataDevicesOfProjects",
       "entities": []
@@ -853,13 +1328,18 @@
       "entities": []
     },
     {
+      "text": "tell me about the project",
+      "intent": "descriptionOfProject",
+      "entities": []
+    },
+    {
       "text": "tell me about this project",
       "intent": "descriptionOfProject",
       "entities": []
     },
     {
-      "text": "thats everything thanks",
-      "intent": "cancelDialog",
+      "text": "tell me what you can do",
+      "intent": "help",
       "entities": []
     },
     {
@@ -874,6 +1354,21 @@
     },
     {
       "text": "what data does it use",
+      "intent": "skillsDataDevicesOfProjects",
+      "entities": []
+    },
+    {
+      "text": "what data does the project use",
+      "intent": "skillsDataDevicesOfProjects",
+      "entities": []
+    },
+    {
+      "text": "what data is needed",
+      "intent": "skillsDataDevicesOfProjects",
+      "entities": []
+    },
+    {
+      "text": "what data samples are taken for this project",
       "intent": "skillsDataDevicesOfProjects",
       "entities": []
     },
@@ -893,6 +1388,11 @@
       "entities": []
     },
     {
+      "text": "what does the project do",
+      "intent": "descriptionOfProject",
+      "entities": []
+    },
+    {
       "text": "what does this project do",
       "intent": "descriptionOfProject",
       "entities": []
@@ -908,8 +1408,18 @@
       "entities": []
     },
     {
+      "text": "what is this project about",
+      "intent": "descriptionOfProject",
+      "entities": []
+    },
+    {
       "text": "what skills are required",
       "intent": "skillsDataDevicesOfProjects",
+      "entities": []
+    },
+    {
+      "text": "when did they make this project",
+      "intent": "descriptionOfProject",
       "entities": []
     },
     {
@@ -923,8 +1433,18 @@
       "entities": []
     },
     {
+      "text": "where are the other projects",
+      "intent": "displayMoreProjects",
+      "entities": []
+    },
+    {
       "text": "where are the rest of the results",
       "intent": "displayMoreProjects",
+      "entities": []
+    },
+    {
+      "text": "where is this project",
+      "intent": "partnerOfProject",
       "entities": []
     },
     {
@@ -979,12 +1499,22 @@
       "entities": []
     },
     {
+      "text": "who leads this project?",
+      "intent": "partnerOfProject",
+      "entities": []
+    },
+    {
       "text": "who runs this project",
       "intent": "partnerOfProject",
       "entities": []
     },
     {
       "text": "yes",
+      "intent": "None",
+      "entities": []
+    },
+    {
+      "text": "yoooooo",
       "intent": "None",
       "entities": []
     }

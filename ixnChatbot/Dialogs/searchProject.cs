@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.IO;
 using System.Runtime.InteropServices.WindowsRuntime;
 using System.Threading;
 using System.Threading.Tasks;
@@ -142,9 +143,16 @@ namespace ixnChatbot.Dialogs
                         cancellationToken);
                     break;
                 
-                case luisResultContainer.Intent.cancelDialog:
-                    sendMessage(stepContext, "Glad I could help!", cancellationToken);
-                    return await stepContext.EndDialogAsync(stepContext.Result, cancellationToken);
+                case luisResultContainer.Intent.help:
+                    string json = File.ReadAllText("Cards/helpCard.json");
+                    dynamic jsonObj = JsonConvert.DeserializeObject(json);
+                    Attachment card = new Attachment()
+                    {
+                        ContentType = "application/vnd.microsoft.card.adaptive",
+                        Content = jsonObj
+                    };
+                    await stepContext.Context.SendActivityAsync(MessageFactory.Attachment(card), cancellationToken);
+                    break;
 
                 default:
                     string errorMessage = "I'm sorry, I don't understand that. What would you like to know?";

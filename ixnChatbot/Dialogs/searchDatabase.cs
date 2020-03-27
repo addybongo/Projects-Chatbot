@@ -70,19 +70,7 @@ namespace ixnChatbot.Dialogs
         private async Task<DialogTurnResult> intentAnswer(WaterfallStepContext stepContext,
             CancellationToken cancellationToken)
         {
-            if (stepContext.Result.ToString() == "help")
-            {
-                string json = File.ReadAllText("Cards/helpCard.json");
-                dynamic jsonObj = JsonConvert.DeserializeObject(json);
-                Attachment card = new Attachment()
-                {
-                    ContentType = "application/vnd.microsoft.card.adaptive",
-                    Content = jsonObj
-                };
-                await stepContext.Context.SendActivityAsync(MessageFactory.Attachment(card), cancellationToken);
-                return await stepContext.ReplaceDialogAsync(InitialDialogId, "Here is the help page. What can I help you with?", cancellationToken);
-            }
-            
+           
             var luisResult = await _luisRecogniser.RecognizeAsync<luisResultContainer>(stepContext.Context, cancellationToken);
             luisResultContainer._Entities entities = luisResult.Entities;
 
@@ -137,8 +125,16 @@ namespace ixnChatbot.Dialogs
 
                     break;
                 
-                case luisResultContainer.Intent.cancelDialog:
-                    break;
+                case luisResultContainer.Intent.help:
+                    string json = File.ReadAllText("Cards/helpCard.json");
+                    dynamic jsonObj = JsonConvert.DeserializeObject(json);
+                    Attachment card = new Attachment()
+                    {
+                        ContentType = "application/vnd.microsoft.card.adaptive",
+                        Content = jsonObj
+                    };
+                    await stepContext.Context.SendActivityAsync(MessageFactory.Attachment(card), cancellationToken);
+                    return await stepContext.ReplaceDialogAsync(InitialDialogId, "Here is the help page. What can I help you with?", cancellationToken);
 
                 default:
                     var promptMessage = "I'm sorry, I am having trouble understanding you. What would you like me to do?" +

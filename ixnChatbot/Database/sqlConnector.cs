@@ -34,7 +34,7 @@ using System.Threading.Tasks;
             }
             catch (MySqlException e)
             {
-                throw e;
+                throw new Exception("There is an error in the MySQL settings provided in dbconfig.json. Please check and try again.");
             }
         }
 

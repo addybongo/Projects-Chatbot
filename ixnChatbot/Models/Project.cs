@@ -50,7 +50,7 @@ namespace ixnChatbot
             
             projectID = Int32.Parse(values[fields["projectID"]]);
             searchQuery =
-                "SELECT * FROM RCGP_Projects.projectentries i LEFT JOIN " + config["database"] + ".Projects p ON "
+                "SELECT * FROM " + config["database"] + ".projectentries i LEFT JOIN " + config["database"] + ".Projects p ON "
                 + "i.ixnID = p.projectID LEFT JOIN " + config["database"] + ".Contracts c ON i.contractID = c.contractID LEFT JOIN "
                 + config["database"] + ".academics a ON i.academicID = a.academicID WHERE i.projectID = " + projectID;
         }
